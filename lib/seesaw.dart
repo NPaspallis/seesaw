@@ -8,6 +8,8 @@ const double minSeesawHeight = 10;
 class Seesaw extends CustomPainter {
 
   double tiltRadius = 0.0;
+  int recolorSeed = 0;
+  var ballColors = List<Color>.from(preparedBallColors);
 
   // check out animations here: https://blog.codemagic.io/flutter-custom-painter
   @override
@@ -109,67 +111,93 @@ class Seesaw extends CustomPainter {
 
     // draw balls - left side
     {
-      var path = Path();
-      path.addOval(Rect.fromCircle(
-        center: Offset(size.width/2 - seesawSize.width/2 + ballRadius, size.height/2 - 2*ballRadius + minSeesawHeight/3),
-        radius: ballRadius,
-      ));
-      path.addOval(Rect.fromCircle(
-        center: Offset(size.width/2 - seesawSize.width/2 + 3.3*ballRadius, size.height/2 - 2*ballRadius + minSeesawHeight/3),
-        radius: ballRadius,
-      ));
-      path.addOval(Rect.fromCircle(
-        center: Offset(size.width/2 - seesawSize.width/2 + 5.6*ballRadius, size.height/2 - 2*ballRadius + minSeesawHeight/3),
-        radius: ballRadius,
-      ));
-      path.addOval(Rect.fromCircle(
-        center: Offset(size.width/2 - seesawSize.width/2 + 2.15*ballRadius, size.height/2 - 4*ballRadius + minSeesawHeight/3),
-        radius: ballRadius,
-      ));
-      path.addOval(Rect.fromCircle(
-        center: Offset(size.width/2 - seesawSize.width/2 + 4.45*ballRadius, size.height/2 - 4*ballRadius + minSeesawHeight/3),
-        radius: ballRadius,
-      ));
-      path.addOval(Rect.fromCircle(
-        center: Offset(size.width/2 - seesawSize.width/2 + 3.3*ballRadius, size.height/2 - 6*ballRadius + minSeesawHeight/3),
-        radius: ballRadius,
-      ));
       canvas.drawPath(
-          path,
-          Paint()..color = const Color(0xFFFFA0A0)
+          Path()..addOval(Rect.fromCircle(
+            center: Offset(size.width/2 - seesawSize.width/2 + ballRadius, size.height/2 - 2*ballRadius + minSeesawHeight/3),
+            radius: ballRadius,
+          )),
+          Paint()..color = preparedBallColors[0]
+      );
+      canvas.drawPath(
+          Path()..addOval(Rect.fromCircle(
+            center: Offset(size.width/2 - seesawSize.width/2 + 3.3*ballRadius, size.height/2 - 2*ballRadius + minSeesawHeight/3),
+            radius: ballRadius,
+          )),
+          Paint()..color = preparedBallColors[1]
+      );
+      canvas.drawPath(
+          Path()..addOval(Rect.fromCircle(
+            center: Offset(size.width/2 - seesawSize.width/2 + 5.6*ballRadius, size.height/2 - 2*ballRadius + minSeesawHeight/3),
+            radius: ballRadius,
+          )),
+          Paint()..color = preparedBallColors[2]
+      );
+      canvas.drawPath(
+          Path()..addOval(Rect.fromCircle(
+            center: Offset(size.width/2 - seesawSize.width/2 + 2.15*ballRadius, size.height/2 - 4*ballRadius + minSeesawHeight/3),
+            radius: ballRadius,
+          )),
+          Paint()..color = preparedBallColors[3]
+      );
+      canvas.drawPath(
+          Path()..addOval(Rect.fromCircle(
+            center: Offset(size.width/2 - seesawSize.width/2 + 4.45*ballRadius, size.height/2 - 4*ballRadius + minSeesawHeight/3),
+            radius: ballRadius,
+          )),
+          Paint()..color = preparedBallColors[4]
+      );
+      canvas.drawPath(
+          Path()..addOval(Rect.fromCircle(
+            center: Offset(size.width/2 - seesawSize.width/2 + 3.3*ballRadius, size.height/2 - 6*ballRadius + minSeesawHeight/3),
+            radius: ballRadius,
+          )),
+          Paint()..color = preparedBallColors[5]
       );
     }
 
     // draw balls - right side
     {
-      var path = Path();
-      path.addOval(Rect.fromCircle(
-        center: Offset(size.width /2 + seesawSize.width/2 - ballRadius, size.height/2 - 2*ballRadius + minSeesawHeight/3),
-        radius: ballRadius,
-      ));
-      path.addOval(Rect.fromCircle(
-        center: Offset(size.width /2 + seesawSize.width/2 - 3.3*ballRadius, size.height/2 - 2*ballRadius + minSeesawHeight/3),
-        radius: ballRadius,
-      ));
-      path.addOval(Rect.fromCircle(
-        center: Offset(size.width/2 + seesawSize.width/2 - 5.6*ballRadius, size.height/2 - 2*ballRadius + minSeesawHeight/3),
-        radius: ballRadius,
-      ));
-      path.addOval(Rect.fromCircle(
-        center: Offset(size.width/2 + seesawSize.width/2 - 2.15*ballRadius, size.height/2 - 4*ballRadius + minSeesawHeight/3),
-        radius: ballRadius,
-      ));
-      path.addOval(Rect.fromCircle(
-        center: Offset(size.width/2 + seesawSize.width/2 - 4.45*ballRadius, size.height/2 - 4*ballRadius + minSeesawHeight/3),
-        radius: ballRadius,
-      ));
-      path.addOval(Rect.fromCircle(
-        center: Offset(size.width/2 + seesawSize.width/2 - 3.3*ballRadius, size.height/2 - 6*ballRadius + minSeesawHeight/3),
-        radius: ballRadius,
-      ));
       canvas.drawPath(
-          path,
-          Paint()..color = const Color(0xFF7FB9C2)
+          Path()..addOval(Rect.fromCircle(
+            center: Offset(size.width /2 + seesawSize.width/2 - ballRadius, size.height/2 - 2*ballRadius + minSeesawHeight/3),
+            radius: ballRadius,
+          )),
+          Paint()..color = preparedBallColors[6]
+      );
+      canvas.drawPath(
+          Path()..addOval(Rect.fromCircle(
+            center: Offset(size.width /2 + seesawSize.width/2 - 3.3*ballRadius, size.height/2 - 2*ballRadius + minSeesawHeight/3),
+            radius: ballRadius,
+          )),
+          Paint()..color = preparedBallColors[7]
+      );
+      canvas.drawPath(
+          Path()..addOval(Rect.fromCircle(
+            center: Offset(size.width/2 + seesawSize.width/2 - 5.6*ballRadius, size.height/2 - 2*ballRadius + minSeesawHeight/3),
+            radius: ballRadius,
+          )),
+          Paint()..color = preparedBallColors[8]
+      );
+      canvas.drawPath(
+          Path()..addOval(Rect.fromCircle(
+            center: Offset(size.width/2 + seesawSize.width/2 - 2.15*ballRadius, size.height/2 - 4*ballRadius + minSeesawHeight/3),
+            radius: ballRadius,
+          )),
+          Paint()..color = preparedBallColors[9]
+      );
+      canvas.drawPath(
+          Path()..addOval(Rect.fromCircle(
+            center: Offset(size.width/2 + seesawSize.width/2 - 4.45*ballRadius, size.height/2 - 4*ballRadius + minSeesawHeight/3),
+            radius: ballRadius,
+          )),
+          Paint()..color = preparedBallColors[10]
+      );
+      canvas.drawPath(
+          Path()..addOval(Rect.fromCircle(
+            center: Offset(size.width/2 + seesawSize.width/2 - 3.3*ballRadius, size.height/2 - 6*ballRadius + minSeesawHeight/3),
+            radius: ballRadius,
+          )),
+          Paint()..color = preparedBallColors[11]
       );
     }
 
@@ -217,7 +245,12 @@ class Seesaw extends CustomPainter {
   @override
   bool shouldRebuildSemantics(Seesaw oldDelegate) => false;
 
-  Seesaw.tilt(this.tiltRadius);
+  Seesaw.tilt(this.tiltRadius) {
+    ballColors.shuffle(math.Random(recolorSeed));
+  }
+  Seesaw.recolor(this.recolorSeed) {
+    ballColors.shuffle(math.Random(recolorSeed));
+  }
 }
 
 class BalancingSeesaw extends StatefulWidget {
@@ -279,7 +312,7 @@ class _BalancingSeesawState extends State<BalancingSeesaw>
           painter: Seesaw.tilt(animation.value),
           child: Container(),
         );
-      },
+      }
     );
   }
 }
