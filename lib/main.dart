@@ -1,6 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:seesaw/seesaw.dart';
+
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(const MyApp());
@@ -68,13 +73,33 @@ class _MyHomePageState extends State<MyHomePage> {
         color: preparedPrimaryColor,
         child: Column(
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height/3),
+            Container(
+              height: MediaQuery.of(context).size.height/3,
+              width: MediaQuery.of(context).size.height/3,
+              padding: const EdgeInsets.all(30),
+              child: ElevatedButton(
+                onPressed: () { print('pressed!'); }, //todo
+                style: ButtonStyle(
+                    // padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(0)),
+                    padding: MaterialStateProperty.resolveWith<EdgeInsetsGeometry>((Set<MaterialState> states) =>
+                      EdgeInsets.all(states.contains(MaterialState.pressed) ? 1 : 0)), // default elevation,
+                    backgroundColor: MaterialStateProperty.all<Color>(preparedPrimaryColor),
+                    shadowColor: MaterialStateProperty.all<Color>(preparedShadeColor),
+                    elevation: MaterialStateProperty.resolveWith<double>((Set<MaterialState> states) {
+                        return states.contains(MaterialState.pressed) ? 5 : 15; // default elevation
+                      },
+                    ),
+                    animationDuration: const Duration(milliseconds: 200)
+                ),
+                child: Image.asset('assets/press_start_button_green.png'),
+              )
+            ),
             const Expanded(child: BalancingSeesaw()),
             const Padding(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 30),
                 child: Text(
-                    'an interactive experience demonstrating ethical tradeoffs in times of crisis',
-                    style: TextStyle(fontSize: 24, color: preparedWhiteColor))
+                    'An interactive experience demonstrating ethical tradeoffs in times of crisis',
+                    style: TextStyle(fontSize: 32, color: preparedWhiteColor))
             )
           ]
         )

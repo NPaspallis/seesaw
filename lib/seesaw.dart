@@ -80,7 +80,6 @@ class Seesaw extends CustomPainter {
 
     // draw basis triangle top shade
     {
-      // double leftY =
       var path = Path();
       path.moveTo(size.width/2, size.height/2 + minSeesawHeight);
       path.lineTo(size.width/2 - (triangleSide/2/3), size.height/2 + triangleSide/3 + minSeesawHeight);
