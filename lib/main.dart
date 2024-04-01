@@ -1,11 +1,7 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:seesaw/seesaw.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
+import 'evaluation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -74,13 +70,30 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height/3,
-              width: MediaQuery.of(context).size.height/3,
+              height: MediaQuery.of(context).size.height/4,
+              width: MediaQuery.of(context).size.height/4,
               padding: const EdgeInsets.all(30),
               child: ElevatedButton(
-                onPressed: () { print('pressed!'); }, //todo
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) => const EvaluationPage(),
+                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                            const begin = Offset(0.0, 1.0);
+                            const end = Offset.zero;
+                            final tween = Tween(begin: begin, end: end);
+                            final offsetAnimation = animation.drive(tween);
+
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          }
+                      )
+                  );
+                },
                 style: ButtonStyle(
-                    // padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(0)),
                     padding: MaterialStateProperty.resolveWith<EdgeInsetsGeometry>((Set<MaterialState> states) =>
                       EdgeInsets.all(states.contains(MaterialState.pressed) ? 1 : 0)), // default elevation,
                     backgroundColor: MaterialStateProperty.all<Color>(preparedPrimaryColor),

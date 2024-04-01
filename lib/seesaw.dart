@@ -21,7 +21,7 @@ class Seesaw extends CustomPainter {
     );
 
     final Size seesawSize = Size(size.width * 0.9, math.max(minSeesawHeight, size.height * 0.02));
-    final double triangleSide = math.min(size.width/5, size.height/5);
+    final double triangleSide = math.min(size.width / 5, size.height / 5);
     final double ballRadius = math.min(size.width / 25, size.height / 25);
 
     final Rect seesawBar = Rect.fromLTRB(size.width/2 - seesawSize.width/2, size.height/2 - seesawSize.height/2, size.width/2 + seesawSize.width/2, size.height/2 + seesawSize.height/2);
@@ -80,10 +80,15 @@ class Seesaw extends CustomPainter {
 
     // draw basis triangle top shade
     {
+      var d = math.sin(tiltRadius) / 2;
+      var y1 = size.height/2 + (triangleSide/3 + minSeesawHeight) * (1 - d);
+      var y2 = size.height/2 + (triangleSide/3 + minSeesawHeight) * (1 + d);
+      var x1 = size.width/2 - (triangleSide/6 + minSeesawHeight/12) * (1 - d);
+      var x2 = size.width/2 + (triangleSide/6 + minSeesawHeight/12) * (1 + d);
       var path = Path();
       path.moveTo(size.width/2, size.height/2 + minSeesawHeight);
-      path.lineTo(size.width/2 - (triangleSide/2/3), size.height/2 + triangleSide/3 + minSeesawHeight);
-      path.lineTo(size.width/2 + (triangleSide/2/3), size.height/2 + triangleSide/3 + minSeesawHeight);
+      path.lineTo(x1, y1);
+      path.lineTo(x2, y2);
       path.lineTo(size.width/2, size.height/2 + minSeesawHeight);
       canvas.drawPath(
           path,
@@ -212,27 +217,6 @@ class Seesaw extends CustomPainter {
     // textPainter.paint(canvas, Offset(10, size.height * 2 / 3));
   }
 
-  @override
-  SemanticsBuilderCallback get semanticsBuilder {
-    return (Size size) {
-      // Annotate a rectangle containing the picture of the sun with the label
-      // "Sun". When text to speech feature is enabled on the device, a user
-      // will be able to locate the sun on this picture by touch.
-      Rect rect = Offset.zero & size;
-      final double width = size.shortestSide * 0.4;
-      rect = const Alignment(0.8, -0.9).inscribe(Size(width, width), rect);
-      return <CustomPainterSemantics>[
-        CustomPainterSemantics(
-          rect: rect,
-          properties: const SemanticsProperties(
-            label: 'Sun',
-            textDirection: TextDirection.ltr,
-          ),
-        ),
-      ];
-    };
-  }
-
   // Since this painter has no fields, it always paints the same thing and
   // semantics information is the same.
   // Therefore we return false here. If we had fields (set from the
@@ -256,11 +240,11 @@ class BalancingSeesaw extends StatefulWidget {
   const BalancingSeesaw({super.key});
 
   @override
-  _BalancingSeesawState createState() => _BalancingSeesawState();
+  State<BalancingSeesaw> createState() => _BalancingSeesawState();
 }
 
-// const maxTilt = math.pi/16; // largest leaning
-const maxTilt = math.pi/128; // min leaning
+// const maxTilt = math.pi/4; // largest leaning
+const maxTilt = math.pi/96; // min leaning
 
 const animationSeconds = 2; // the larger, the slower
 
