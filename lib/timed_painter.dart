@@ -18,7 +18,7 @@ const int stepInMilliseconds = 20;
 
 class _TimedBackgroundState extends State<TimedBackground> {
 
-  final int delayInMilliseconds = 10 * 1000; // 10 seconds
+  final int delayInMilliseconds = 5 * 1000; // 5 seconds
 
   late Timer timer;
   int _elapsedTimeMilliseconds = 0;

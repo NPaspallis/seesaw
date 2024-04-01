@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:seesaw/perspective.dart';
 import 'package:seesaw/seesaw.dart';
-
-import 'evaluation.dart';
+import 'package:seesaw/state_model.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => StateModel(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 const preparedPrimaryColor = Color(0xFF007689);
@@ -12,20 +18,20 @@ const preparedSecondaryColor = Color(0xFF97C13C);
 const preparedShadeColor = Color(0xFF006272);
 const preparedDarkShadeColor = Color(0xFF59862B);
 const preparedWhiteColor = Color(0xFFFFFFFF);
+const preparedBlueColor = Color(0xFF17486A);
+const preparedGreyColor = Colors.grey;
 const preparedBallColors = [
-  Color(0xFF17486A),
+  preparedBlueColor,
   Color(0xFFDD1667),
   Color(0xFF29BCE2),
   Color(0xFFFD9E22),
-  // Color(0xFF3F7D44),
   Color(0xFFE7263B),
   Color(0xFFA21A3F),
   Color(0xFF9C1567),
-  Color(0xFF17486A),
+  preparedBlueColor,
   Color(0xFFDD1667),
   Color(0xFF29BCE2),
   Color(0xFFFD9E22),
-  // Color(0xFF3F7D44),
   Color(0xFFE7263B),
   Color(0xFFA21A3F),
   Color(0xFF9C1567),
@@ -51,6 +57,44 @@ class MyApp extends StatelessWidget {
   }
 }
 
+void navigateTo(final BuildContext context, final Widget targetWidget) {
+  Navigator.push(
+      context,
+      PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => targetWidget,
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(0.0, 1.0);
+            const end = Offset.zero;
+            final tween = Tween(begin: begin, end: end);
+            final offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(
+              position: offsetAnimation,
+              child: child,
+            );
+          }
+      )
+  );
+}
+
+ElevatedButton getElevatedButton(final BuildContext context, final Widget widget, final Widget targetWidget) {
+  return ElevatedButton(
+    onPressed: () => navigateTo(context, targetWidget),
+    style: ButtonStyle(
+        padding: MaterialStateProperty.resolveWith<EdgeInsetsGeometry>((Set<MaterialState> states) =>
+            EdgeInsets.all(states.contains(MaterialState.pressed) ? 1 : 0)), // default elevation,
+        backgroundColor: MaterialStateProperty.all<Color>(preparedPrimaryColor),
+        shadowColor: MaterialStateProperty.all<Color>(preparedShadeColor),
+        elevation: MaterialStateProperty.resolveWith<double>((Set<MaterialState> states) {
+          return states.contains(MaterialState.pressed) ? 5 : 15; // default elevation
+        },
+        ),
+        animationDuration: const Duration(milliseconds: 200)
+    ),
+    child: widget,
+  );
+}
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -61,6 +105,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  late BalancingSeesaw _balancingSeesaw;
+
+  @override
+  void initState() {
+    super.initState();
+    _balancingSeesaw = const BalancingSeesaw();
+  }
+
+  @override
+  void activate() {
+    super.activate();
+    // _balancingSeesaw.reset();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,41 +132,9 @@ class _MyHomePageState extends State<MyHomePage> {
               height: MediaQuery.of(context).size.height/4,
               width: MediaQuery.of(context).size.height/4,
               padding: const EdgeInsets.all(30),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) => const EvaluationPage(),
-                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                            const begin = Offset(0.0, 1.0);
-                            const end = Offset.zero;
-                            final tween = Tween(begin: begin, end: end);
-                            final offsetAnimation = animation.drive(tween);
-
-                            return SlideTransition(
-                              position: offsetAnimation,
-                              child: child,
-                            );
-                          }
-                      )
-                  );
-                },
-                style: ButtonStyle(
-                    padding: MaterialStateProperty.resolveWith<EdgeInsetsGeometry>((Set<MaterialState> states) =>
-                      EdgeInsets.all(states.contains(MaterialState.pressed) ? 1 : 0)), // default elevation,
-                    backgroundColor: MaterialStateProperty.all<Color>(preparedPrimaryColor),
-                    shadowColor: MaterialStateProperty.all<Color>(preparedShadeColor),
-                    elevation: MaterialStateProperty.resolveWith<double>((Set<MaterialState> states) {
-                        return states.contains(MaterialState.pressed) ? 5 : 15; // default elevation
-                      },
-                    ),
-                    animationDuration: const Duration(milliseconds: 200)
-                ),
-                child: Image.asset('assets/press_start_button_green.png'),
-              )
+              child: getElevatedButton(context, Image.asset('assets/press_start_button_green.png'), const ChoosePerspective())
             ),
-            const Expanded(child: BalancingSeesaw()),
+            Expanded(child: _balancingSeesaw),
             const Padding(
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 30),
                 child: Text(

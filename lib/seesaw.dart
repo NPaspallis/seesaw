@@ -1,7 +1,10 @@
 import 'dart:math' as math;
-import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:seesaw/main.dart';
+import 'package:seesaw/state_model.dart';
+import 'package:seesaw/tilt_direction.dart';
 
 const double minSeesawHeight = 10;
 
@@ -29,7 +32,7 @@ class Seesaw extends CustomPainter {
     // draw left balance shade
     {
       var path = Path();
-      double leftMagnifier = ((2*maxTilt-tiltRadius)/maxTilt).abs();
+      double leftMagnifier = ((2*defaultMaxTilt-tiltRadius)/defaultMaxTilt).abs();
       double xMagnifier = 25 + 2*leftMagnifier;
       double yMagnifier = 0.5*leftMagnifier;
       double centerX = size.width/2 - seesawSize.width/2 + 3.3*ballRadius;
@@ -43,7 +46,7 @@ class Seesaw extends CustomPainter {
     // draw right balance shade
     {
       var path = Path();
-      double rightMagnifier = ((-tiltRadius-2*maxTilt)/maxTilt).abs();
+      double rightMagnifier = ((-tiltRadius-2*defaultMaxTilt)/defaultMaxTilt).abs();
       double xMagnifier = 25 + 3*rightMagnifier;
       double yMagnifier = 0.5*rightMagnifier;
       double centerX = size.width/2 + seesawSize.width/2 - 3.3*ballRadius;
@@ -207,21 +210,8 @@ class Seesaw extends CustomPainter {
 
     canvas.restore();
 
-    // const textStyle = TextStyle(color: Color(0xFF000000), fontSize: 20);
-    // TextSpan textSpan = TextSpan(text: '$tiltRadius', style: textStyle);
-    // TextPainter textPainter = TextPainter(text: textSpan, textDirection: TextDirection.ltr);
-    // textPainter.layout(
-    //   minWidth: 0,
-    //   maxWidth: size.width,
-    // );
-    // textPainter.paint(canvas, Offset(10, size.height * 2 / 3));
   }
 
-  // Since this painter has no fields, it always paints the same thing and
-  // semantics information is the same.
-  // Therefore we return false here. If we had fields (set from the
-  // constructor) then we would return true if any of them differed from the
-  // same fields on the oldDelegate.
   @override
   bool shouldRepaint(Seesaw oldDelegate) => true;
 
@@ -236,15 +226,19 @@ class Seesaw extends CustomPainter {
   }
 }
 
+// const maxTilt = math.pi/4; // largest leaning
+const defaultMaxTilt = math.pi/96; // min leaning
+
 class BalancingSeesaw extends StatefulWidget {
-  const BalancingSeesaw({super.key});
+  final double maxTilt;
+  final VoidCallback? callback;
+
+  const BalancingSeesaw({this.maxTilt = defaultMaxTilt, this.callback, super.key});
 
   @override
   State<BalancingSeesaw> createState() => _BalancingSeesawState();
-}
 
-// const maxTilt = math.pi/4; // largest leaning
-const maxTilt = math.pi/96; // min leaning
+}
 
 const animationSeconds = 2; // the larger, the slower
 
@@ -253,8 +247,6 @@ class _BalancingSeesawState extends State<BalancingSeesaw>
 
   late AnimationController controller;
   late Animation<double> animation;
-
-  final Tween<double> _rotationTween = Tween(begin: -maxTilt, end: maxTilt);
 
   @override
   void initState() {
@@ -265,17 +257,8 @@ class _BalancingSeesawState extends State<BalancingSeesaw>
       duration: const Duration(seconds: animationSeconds),
     );
 
-    animation = _rotationTween.animate(controller)
-      ..addListener(() {
-        setState(() {});
-      })
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          controller.reverse();
-        } else if (status == AnimationStatus.dismissed) {
-          controller.forward();
-        }
-      });
+    animation = Tween(begin: -widget.maxTilt, end: widget.maxTilt).animate(controller)
+      ..addStatusListener((status) => animationRunner(status, true));
 
     controller.forward();
   }
@@ -286,16 +269,40 @@ class _BalancingSeesawState extends State<BalancingSeesaw>
     super.dispose();
   }
 
+  double latestTilt = 0;
+
+  void animationRunner(AnimationStatus status, bool loop) {
+    if (status == AnimationStatus.completed) {
+      if(loop) {
+        controller.reverse();
+      } else {
+        if(widget.callback != null) widget.callback!.call();
+      }
+    } else if (status == AnimationStatus.dismissed) {
+      controller.forward();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: animation,
-      builder: (context, snapshot) {
-        return CustomPaint(
-          painter: Seesaw.tilt(animation.value),
-          child: Container(),
-        );
-      }
+    return Consumer<StateModel>(
+        builder: (context, state, child) {
+          if(state.tiltDirection != TiltDirection.loop) {
+            animation = Tween(begin: latestTilt, end: state.tiltDirection == TiltDirection.left ? -2*defaultMaxTilt : 2*defaultMaxTilt).animate(controller)
+              ..addStatusListener((status) => animationRunner(status, false));
+            controller.forward();
+          }
+          return AnimatedBuilder(
+              animation: animation,
+              builder: (context, snapshot) {
+                latestTilt = animation.value;
+                return CustomPaint(
+                  painter: Seesaw.tilt(latestTilt),
+                  child: Container(),
+                );
+              }
+          );
+        }
     );
   }
 }
