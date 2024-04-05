@@ -20,6 +20,7 @@ class ThankYouPage extends StatelessWidget {
             TimedBackground(() {
               Provider.of<StateModel>(context, listen: false).setTiltDirection(TiltDirection.loop);
               Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.of(context).popUntil((route) => route.isFirst);
             }),
             const Center(child: Text('Thank you for participating to this interactive experience.', style: TextStyle(fontSize: 32, color: preparedWhiteColor), textAlign: TextAlign.center))
           ],

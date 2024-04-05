@@ -4,6 +4,8 @@ import 'package:seesaw/perspective.dart';
 import 'package:seesaw/seesaw.dart';
 import 'package:seesaw/state_model.dart';
 
+import 'buttons.dart';
+
 void main() {
   runApp(
     ChangeNotifierProvider(
@@ -44,7 +46,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Seesaw App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: preparedPrimaryColor),
         primaryColor: preparedPrimaryColor,
@@ -77,24 +79,6 @@ void navigateTo(final BuildContext context, final Widget targetWidget) {
   );
 }
 
-ElevatedButton getElevatedButton(final BuildContext context, final Widget widget, final Widget targetWidget) {
-  return ElevatedButton(
-    onPressed: () => navigateTo(context, targetWidget),
-    style: ButtonStyle(
-        padding: MaterialStateProperty.resolveWith<EdgeInsetsGeometry>((Set<MaterialState> states) =>
-            EdgeInsets.all(states.contains(MaterialState.pressed) ? 1 : 0)), // default elevation,
-        backgroundColor: MaterialStateProperty.all<Color>(preparedPrimaryColor),
-        shadowColor: MaterialStateProperty.all<Color>(preparedShadeColor),
-        elevation: MaterialStateProperty.resolveWith<double>((Set<MaterialState> states) {
-          return states.contains(MaterialState.pressed) ? 5 : 15; // default elevation
-        },
-        ),
-        animationDuration: const Duration(milliseconds: 200)
-    ),
-    child: widget,
-  );
-}
-
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -114,10 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
     _balancingSeesaw = const BalancingSeesaw();
   }
 
-  @override
-  void activate() {
-    super.activate();
-    // _balancingSeesaw.reset();
+  void choosePerspective() {
+    navigateTo(context, const ChoosePerspective());
   }
 
   @override
@@ -132,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
               height: MediaQuery.of(context).size.height/4,
               width: MediaQuery.of(context).size.height/4,
               padding: const EdgeInsets.all(30),
-              child: getElevatedButton(context, Image.asset('assets/press_start_button_green.png'), const ChoosePerspective())
+              child: getElevatedButtonWithLabel(context, 'Press to Start', choosePerspective)
             ),
             Expanded(child: _balancingSeesaw),
             const Padding(
