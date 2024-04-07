@@ -7,6 +7,7 @@ import 'package:seesaw/state_model.dart';
 import 'package:seesaw/thank_you.dart';
 
 import 'buttons.dart';
+import 'choose_hcs_refresher.dart';
 
 const preparedPrimaryColor = Color(0xFF007689);
 const preparedSecondaryColor = Color(0xFF97C13C);
@@ -93,6 +94,8 @@ class _SeesawAppState extends State<SeesawApp> {
           return const Text('error: todo'); //todo
         case SeesawState.perspectiveCommitteeMember:
           return const PerspectiveCommitteeMember();
+        case SeesawState.chooseHcsRefresher:
+          return const HcsChooseRefresher();
         default:
           return const Text('error: todo'); //todo
       }
@@ -194,6 +197,9 @@ class _SeesawAppState extends State<SeesawApp> {
                       child: getElevatedButtonWithLabel(
                           context, 'Policy Maker', choosePolicyMaker),
                     )),
+                Visibility(
+                    visible: _seesawState == SeesawState.welcome,
+                    child:
                 SizedBox(
                     width: 300,
                     height: 300,
@@ -201,7 +207,7 @@ class _SeesawAppState extends State<SeesawApp> {
                       padding: const EdgeInsets.fromLTRB(10, 10, 10, 30),
                       child: getElevatedButtonWithLabel(context,
                           'Research Ethics Committee Member', chooseCommitteeMember),
-                    ))
+                    )))
               ],
             )
           ],

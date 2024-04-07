@@ -6,6 +6,7 @@ enum SeesawState {
   choosePerspective,
   perspectivePolicyMaker,
   perspectiveCommitteeMember,
+  chooseHcsRefresher,
   evaluation,
   thankYou
 }

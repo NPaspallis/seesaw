@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:seesaw/main.dart';
+import 'package:seesaw/state_model.dart';
 
 import 'buttons.dart';
 
@@ -21,6 +22,7 @@ class _PerspectiveCommitteeMemberState
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+        width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 2 / 3,
         child: Row(
           children: [
@@ -34,14 +36,14 @@ class _PerspectiveCommitteeMemberState
                     children: [
                       Text('Perspective',
                           style: TextStyle(
-                              fontSize: 32,
+                              fontSize: 24,
                               color: Colors.black,
                               decoration: TextDecoration.none)),
                       SizedBox(height: 10),
                       Text('Research ethics committee member',
                           style: TextStyle(
-                              fontSize: 48,
-                              color: preparedWhiteColor,
+                              fontSize: 36,
+                              color: preparedSecondaryColor,
                               decoration: TextDecoration.none))
                     ],
                   )),
@@ -50,9 +52,9 @@ class _PerspectiveCommitteeMemberState
             SizedBox(
               width: MediaQuery.of(context).size.width * 1 / 2,
               child: const Padding(
-                  padding: EdgeInsets.all(40),
+                  padding: EdgeInsets.fromLTRB(40, 40, 0, 40),
                   child: Text(
-                        'Go back in time to early 2020. Are you ready to take a decision about COVID-19?',
+                        'Go back in time to early 2020.\nAre you ready to take a decision about COVID-19?',
                         style: TextStyle(
                             fontSize: 46,
                             color: preparedWhiteColor,
@@ -60,18 +62,22 @@ class _PerspectiveCommitteeMemberState
                         textAlign: TextAlign.end,
                       ),
                   ),
-              // child: const Text('Go back in time to early 2020. Are you ready to take a decision about COVID-19?')
             ),
-            Padding(
-              padding: const EdgeInsets.all(40),
-              child: getElevatedButtonWithLabel(
-                  context, 'Press here', proceed),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 1 / 4,
+              child: Padding(
+                padding: const EdgeInsets.all(80),
+                child: getElevatedButtonWithLabel(
+                    context, 'Press here', proceed),
+              )
             )
           ],
         ));
   }
 
   void proceed() {
-    debugPrint('Pressed here'); //todo
+    debugPrint('Proceed to choose '); //todo
+    final StateModel stateModel = Provider.of<StateModel>(context, listen: false);
+    stateModel.setSeesawState(SeesawState.chooseHcsRefresher);
   }
 }
