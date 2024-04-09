@@ -7,6 +7,7 @@ enum SeesawState {
   perspectivePolicyMaker,
   perspectiveCommitteeMember,
   chooseHcsRefresher,
+  chooseHcsRefresherGo,
   evaluation,
   thankYou
 }
@@ -19,16 +20,6 @@ class StateModel extends ChangeNotifier {
 
   void setSeesawState(SeesawState seesawState) {
     _seesawState = seesawState;
-    notifyListeners();
-  }
-
-  // todo delete?
-  TiltDirection _tiltDirection = TiltDirection.loop;
-
-  TiltDirection get tiltDirection => _tiltDirection;
-
-  void setTiltDirection(final TiltDirection tiltDirection) {
-    _tiltDirection = tiltDirection;
     notifyListeners();
   }
 }

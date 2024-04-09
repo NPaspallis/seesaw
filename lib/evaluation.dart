@@ -1,15 +1,21 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:seesaw/thank_you.dart';
+import 'package:provider/provider.dart';
+import 'package:seesaw/buttons.dart';
+import 'package:seesaw/state_model.dart';
 
 import 'main.dart';
 
-const Color dividerColor = preparedWhiteColor;
+const Color dividerColor = preparedDarkShadeColor;
+
+const lines = <String>[
+  'The pandemic seesaw provided me with a better understanding of pandemic decision making.',
+  'The pandemic seesaw gave me new insights into other’s perspectives related to pandemic decision making',
+  'I have changed my opinion about some aspect of pandemic decision making (this is not totally captured in the process - someone might still make the same final decision but some aspect of their opinion might still have changed)',
+  'I would recommend the pandemic seesaw to others'
+];
 
 class EvaluationPage extends StatefulWidget {
-
   const EvaluationPage({super.key});
 
   @override
@@ -17,100 +23,71 @@ class EvaluationPage extends StatefulWidget {
 }
 
 class _EvaluationPageState extends State<EvaluationPage> {
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            color: preparedPrimaryColor,
-            child: Padding(
-              padding: const EdgeInsets.all(50),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Divider(thickness: 1, color: dividerColor),
-
-                      getRatingLine(0),
-
-                      const Divider(thickness: 1, color: dividerColor),
-
-                      getRatingLine(1),
-
-                      const Divider(thickness: 1, color: dividerColor),
-
-                      getRatingLine(2),
-
-                      const Divider(thickness: 1, color: dividerColor),
-
-                      getRatingLine(3),
-
-                      const Divider(thickness: 1, color: dividerColor),
-
-                      Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Row(
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: preparedPrimaryColor,
+        child: Padding(
+            padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width / 8, 50, MediaQuery.of(context).size.width / 8, 50),
+            child: SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    getPrompt(),
+                    const Divider(thickness: 1, color: dividerColor),
+                    getRatingLine(0),
+                    const Divider(thickness: 1, color: dividerColor),
+                    getRatingLine(1),
+                    const Divider(thickness: 1, color: dividerColor),
+                    getRatingLine(2),
+                    const Divider(thickness: 1, color: dividerColor),
+                    getRatingLine(3),
+                    Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              OutlinedButton(
-                                onPressed: () => skip(context),
-                                style: OutlinedButton.styleFrom(
-                                    side: const BorderSide(
-                                      color: preparedSecondaryColor, //Set border color
-                                      width: 2, //Set border width
-                                    )
-                                ),
-                                child: const Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: Text('SKIP', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500, color: Colors.white))
-                                ),
-                              ),
-
+                              getOutlinedButton(
+                                  context, 'SKIP', () => skip(context)),
                               const SizedBox(width: 20),
+                              getElevatedButton(
+                                  context, 'SUBMIT', () => submit(context)),
+                            ]))
+                  ])))
+            );
+  }
 
-                              ElevatedButton(
-                                onPressed: () => submit(context),
-                                style: const ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll<Color>(preparedSecondaryColor),
-                                ),
-                                child: const Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: Text('SUBMIT', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900, color: Colors.white))
-                                )
-                              )
-                            ]
-                          )
-                      )
-                    ]
-                )
-            )
-        )
-    );
+  Widget getPrompt() {
+    return const Text(
+        'Please provide your feedback on the following questions, by choosing 1-7 stars for each answer.',
+        style: TextStyle(fontSize: textSizeMedium  , color: preparedSecondaryColor));
   }
 
   Widget getRatingLine(final int index) {
     return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          const Text('The pandemic seesaw provided me with a better understanding of pandemic decision making', style: TextStyle(fontSize: 32, color: preparedWhiteColor)),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text('fully disagree', style: TextStyle(fontSize: 16)),
-              const SizedBox(width: 10),
-              getRatingBar(index),
-              const SizedBox(width: 10),
-              const Text('fully agree', style: TextStyle(fontSize: 16)),
-            ],
-          ),
-        ],
-      )
-    );
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Text(
+                lines[index],
+                style: const TextStyle(fontSize: textSizeMedium, color: preparedWhiteColor)),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('fully disagree', style: TextStyle(fontSize: textSizeSmallest)),
+                const SizedBox(width: 10),
+                getRatingBar(index),
+                const SizedBox(width: 10),
+                const Text('fully agree', style: TextStyle(fontSize: textSizeSmallest)),
+              ],
+            ),
+          ],
+        ));
   }
 
   List<double> ratings = List<double>.filled(4, 0);
@@ -124,8 +101,7 @@ class _EvaluationPageState extends State<EvaluationPage> {
       ratingWidget: RatingWidget(
           full: const Icon(Icons.star),
           half: const Icon(Icons.star_half),
-          empty: const Icon(Icons.star_border)
-      ),
+          empty: const Icon(Icons.star_border)),
       itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
       onRatingUpdate: (rating) {
         ratings[index] = rating;
@@ -141,8 +117,9 @@ class _EvaluationPageState extends State<EvaluationPage> {
   void submit(BuildContext context) {
     debugPrint('ratings: $ratings');
     final bool anyRatingUnselected = ratings.any((element) => element == 0);
-    if(anyRatingUnselected) {
-      showSnack(context, 'You must choose a rating for each item before submitting');
+    if (anyRatingUnselected) {
+      showSnack(
+          context, 'You must choose a rating for each item before submitting');
     } else {
       showSnack(context, 'Your choices were submitted');
       openThankYouPage(context);
@@ -150,26 +127,17 @@ class _EvaluationPageState extends State<EvaluationPage> {
   }
 
   void openThankYouPage(BuildContext context) {
-    Navigator.push(
-        context,
-        PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => const ThankYouPage(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              const begin = Offset(0.0, 1.0);
-              const end = Offset.zero;
-              final tween = Tween(begin: begin, end: end);
-              final offsetAnimation = animation.drive(tween);
-
-              return SlideTransition(
-                position: offsetAnimation,
-                child: child,
-              );
-            }
-        )
-    );
+    final StateModel stateModel =
+        Provider.of<StateModel>(context, listen: false);
+    stateModel.setSeesawState(SeesawState.thankYou);
   }
 
   void showSnack(final BuildContext context, final String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message, style: const TextStyle(fontSize: 24, color: preparedWhiteColor), textAlign: TextAlign.center,)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+      message,
+      style: const TextStyle(fontSize: 24, color: preparedWhiteColor),
+      textAlign: TextAlign.center,
+    )));
   }
 }

@@ -1,50 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:seesaw/evaluation.dart';
 import 'package:seesaw/perspective_committee_member.dart';
 import 'package:seesaw/seesaw.dart';
 import 'package:seesaw/state_model.dart';
+import 'package:seesaw/thank_you.dart';
+import 'package:seesaw/welcome.dart';
 
 import 'buttons.dart';
 import 'choose_hcs_refresher.dart';
-
-const preparedPrimaryColor = Color(0xFF007689);
-const preparedSecondaryColor = Color(0xFF97C13C);
-const preparedShadeColor = Color(0xFF006272);
-const preparedDarkShadeColor = Color(0xFF59862B);
-const preparedWhiteColor = Color(0xFFFFFFFF);
-const preparedBlueColor = Color(0xFF17486A);
-const preparedGreyColor = Colors.grey;
-const preparedBallColors = [
-  preparedBlueColor,
-  Color(0xFFDD1667),
-  Color(0xFF29BCE2),
-  Color(0xFFFD9E22),
-  Color(0xFFE7263B),
-  Color(0xFFA21A3F),
-  Color(0xFF9C1567),
-  preparedBlueColor,
-  Color(0xFFDD1667),
-  Color(0xFF29BCE2),
-  Color(0xFFFD9E22),
-  Color(0xFFE7263B),
-  Color(0xFFA21A3F),
-  Color(0xFF9C1567),
-];
-
-const double largeTextSize = 42;
-const double textSizeMedium = 36;
-const double textSizeSmall = 24;
-
-void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => StateModel(),
-      child: const SeesawApp(),
-    ),
-  );
-}
+import 'hcs_refresher.dart';
+import 'main.dart';
 
 class SeesawApp extends StatefulWidget {
   const SeesawApp({super.key});
@@ -64,15 +31,18 @@ class _SeesawAppState extends State<SeesawApp> {
     super.initState();
     _balancingSeesaw = const BalancingSeesaw();
     _seesawState = SeesawState.welcome;
-  }
 
-  void pressedStart() {
-    debugPrint('choosePerspective');
-    final StateModel stateModel =
-        Provider.of<StateModel>(context, listen: false);
-    stateModel.setSeesawState(SeesawState.choosePerspective);
-    _scrollController.animateTo(_scrollController.position.minScrollExtent,
-        duration: const Duration(milliseconds: 500), curve: Curves.ease);
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   if (_seesawState == SeesawState.welcome) {
+    //     debugPrint('animateTo maxScrollExtent');
+    //     _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+    //         duration: const Duration(milliseconds: 500), curve: Curves.ease);
+    //   } else {
+    //     debugPrint('animateTo minScrollExtent');
+    //     _scrollController.animateTo(_scrollController.position.minScrollExtent,
+    //         duration: const Duration(milliseconds: 500), curve: Curves.ease);
+    //   }
+    // });
   }
 
   void choosePolicyMaker() {
@@ -90,36 +60,48 @@ class _SeesawAppState extends State<SeesawApp> {
   }
 
   void _resetInteraction(BuildContext context) {
-    debugPrint('reset');
-
     // show the dialog
     showDialog<String>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-          title: const Text('Reset?'),
-          content: const Text('Are you sure you want to reset? All your progress will be lost.', style: TextStyle(fontSize: textSizeSmall)),
-          actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel', style: TextStyle(fontSize: textSizeSmall))),
-            TextButton(onPressed: () { _doResetInteraction(); Navigator.pop(context); }, child: const Text('Reset', style: TextStyle(fontSize: textSizeSmall)))
-          ],
-          elevation: 24.0,
-        )
-    );
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+              title: const Text('Reset?'),
+              content: const Text(
+                  'Are you sure you want to reset? All your progress will be lost.',
+                  style: TextStyle(fontSize: textSizeSmall)),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('Cancel',
+                        style: TextStyle(fontSize: textSizeSmall))),
+                TextButton(
+                    onPressed: () {
+                      _doResetInteraction();
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Reset',
+                        style: TextStyle(fontSize: textSizeSmall)))
+              ],
+              elevation: 24.0,
+            ));
   }
 
   void _doResetInteraction() {
-    debugPrint('doReset');
     final StateModel stateModel =
-    Provider.of<StateModel>(context, listen: false);
+        Provider.of<StateModel>(context, listen: false);
     stateModel.setSeesawState(SeesawState.welcome);
-    _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 500), curve: Curves.ease);
+    _scrollController.animateTo(
+        _scrollController
+            .position.maxScrollExtent, // todo generalize as a post-build action
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease);
   }
 
-  Widget _getMainContainer(final StateModel state) { // must add up to 2/3 of height
+  Widget _getMainContainer(final StateModel state) {
+    // must add up to 2/3 of height
+    debugPrint('state: ${state.seesawState}');
     switch (state.seesawState) {
       case SeesawState.welcome:
-        return getWelcomeWidget();
+        return Welcome(_scrollController);
       case SeesawState.choosePerspective:
         return getChoosePerspectiveWidget();
       case SeesawState.perspectivePolicyMaker:
@@ -128,8 +110,15 @@ class _SeesawAppState extends State<SeesawApp> {
         return const PerspectiveCommitteeMember();
       case SeesawState.chooseHcsRefresher:
         return const HcsChooseRefresher();
+      case SeesawState.chooseHcsRefresherGo:
+        return const HcsRefresher();
+      case SeesawState.evaluation:
+        return const EvaluationPage();
+      case SeesawState.thankYou:
+        return ThankYou(_scrollController);
       default:
-        return Text('error: unknown state: ${state.seesawState}', style: const TextStyle(color: Colors.red));
+        return Text('error: unknown state: ${state.seesawState}',
+            style: const TextStyle(color: Colors.red));
     }
   }
 
@@ -142,14 +131,21 @@ class _SeesawAppState extends State<SeesawApp> {
   }
 
   String _getNavigationLabel(final SeesawState seesawState) {
-    debugPrint('seesawState: $seesawState');
-    switch(seesawState) {
+    switch (seesawState) {
       case SeesawState.choosePerspective:
         return 'Choose perspective';
       case SeesawState.perspectiveCommitteeMember:
         return 'Perspective | Research ethics committee member';
       case SeesawState.perspectivePolicyMaker:
         return 'Perspective | Policy maker';
+      case SeesawState.chooseHcsRefresher:
+        return 'Human Challenge Studies | Refresher?';
+      case SeesawState.chooseHcsRefresherGo:
+        return 'Human Challenge Studies | Refresher';
+      case SeesawState.evaluation:
+        return 'Evaluation';
+      case SeesawState.thankYou:
+        return 'Thank you!';
       case SeesawState.welcome:
       default:
         return 'unknown';
@@ -159,37 +155,36 @@ class _SeesawAppState extends State<SeesawApp> {
   Container _getNavigationWidget(final SeesawState seesawState) {
     String label = _getNavigationLabel(seesawState);
     return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 24,
-      color: preparedShadeColor,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(textSizeSmall, 0, 0 ,0),
-            child: Text(
-              label,
-              style: const TextStyle(fontSize: textSizeSmall, color: preparedSecondaryColor, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
-            )
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0 , textSizeSmall, 0),
-            child: Builder(
-              builder: (context) => ElevatedButton(
-                  onPressed: () => _resetInteraction(context),
-                  child: const Row(
-                    children: [
-                      Icon(Icons.reset_tv),
-                      SizedBox(width: 10),
-                      Text('RESET')
-                    ],
-                  )
-              )
-            )
-          ),
-        ],
-      )
-    );
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height / 24,
+        color: preparedShadeColor,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+                padding: const EdgeInsets.fromLTRB(textSizeSmall, 0, 0, 0),
+                child: Text(
+                  label,
+                  style: const TextStyle(
+                      fontSize: textSizeSmall,
+                      color: preparedSecondaryColor,
+                      fontWeight: FontWeight.normal,
+                      decoration: TextDecoration.none),
+                )),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, textSizeSmall, 0),
+                child: Builder(
+                    builder: (context) => ElevatedButton(
+                        onPressed: () => _resetInteraction(context),
+                        child: const Row(
+                          children: [
+                            Icon(Icons.reset_tv),
+                            SizedBox(width: 10),
+                            Text('RESET')
+                          ],
+                        )))),
+          ],
+        ));
   }
 
   Container _getTopContainer() {
@@ -215,24 +210,11 @@ class _SeesawAppState extends State<SeesawApp> {
           padding: EdgeInsets.all(20),
           child: Text(
               'An interactive experience demonstrating ethical tradeoffs in times of crisis',
-              style: TextStyle(fontSize: largeTextSize,
-                  color: preparedWhiteColor, decoration: TextDecoration.none)),
+              style: TextStyle(
+                  fontSize: textSizeLarge,
+                  color: preparedWhiteColor,
+                  decoration: TextDecoration.none)),
         )));
-  }
-
-  Widget getWelcomeWidget() {
-    return SizedBox(
-        height: MediaQuery.of(context).size.height * 2 / 3,
-        child: Align(
-            alignment: Alignment.bottomCenter,
-            child: SizedBox(
-                width: 300,
-                height: 300,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 30),
-                  child: getElevatedButtonWithPreparedLabel(
-                      context, 'Press to Start', pressedStart),
-                ))));
   }
 
   Widget getChoosePerspectiveWidget() {
@@ -279,11 +261,28 @@ class _SeesawAppState extends State<SeesawApp> {
         ));
   }
 
+
+  @override
+  void activate() {
+    super.activate();
+    _scrollController.animateTo(
+        _scrollController.position.minScrollExtent,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease);
+  }
+
   @override
   Widget build(BuildContext context) {
-    // scroll down when first loaded
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_seesawState == SeesawState.welcome) {
+        debugPrint('animateTo maxScrollExtent');
+        _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 500), curve: Curves.ease);
+      } else {
+        debugPrint('animateTo minScrollExtent');
+        _scrollController.animateTo(_scrollController.position.minScrollExtent,
+            duration: const Duration(milliseconds: 500), curve: Curves.ease);
+      }
     });
 
     return MaterialApp(
@@ -298,7 +297,7 @@ class _SeesawAppState extends State<SeesawApp> {
         home: Scaffold(
             body: ScrollConfiguration(
                 behavior:
-                ScrollConfiguration.of(context).copyWith(scrollbars: false),
+                    ScrollConfiguration.of(context).copyWith(scrollbars: false),
                 child: SingleChildScrollView(
                     controller: _scrollController,
                     physics: const NeverScrollableScrollPhysics(),
@@ -306,23 +305,21 @@ class _SeesawAppState extends State<SeesawApp> {
                         color: preparedPrimaryColor,
                         child: Consumer<StateModel>(
                             builder: (context, state, child) {
-                              return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    _getNavigationWidget(state.seesawState),
-                                    Visibility(
-                                        visible: _seesawState != SeesawState.welcome,
-                                        child: _getTopContainer()), // 1/6
-                                    _getMainContainer(state), // 2/3
-                                    _getBalancingSeesaw(),  // 1/3
-                                    Visibility(
-                                        visible: _seesawState == SeesawState.welcome,
-                                        child: _getBottomWidget()) // 1/6
-                                  ]
-                              );
-                            }
-                        )
-                    ))))
-        );
+                          return Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                _getNavigationWidget(state.seesawState),
+                                Visibility(
+                                    visible:
+                                        _seesawState != SeesawState.welcome,
+                                    child: _getTopContainer()), // 1/6
+                                _getMainContainer(state), // 2/3
+                                _getBalancingSeesaw(), // 1/3
+                                Visibility(
+                                    visible:
+                                        _seesawState == SeesawState.welcome,
+                                    child: _getBottomWidget()) // 1/6
+                              ]);
+                        }))))));
   }
 }

@@ -18,7 +18,7 @@ const int stepInMilliseconds = 20;
 
 class _TimedBackgroundState extends State<TimedBackground> {
 
-  final int delayInMilliseconds = 5 * 1000; // 5 seconds
+  final int delayInMilliseconds = 1 * 1000; // 5 seconds TODO
 
   late Timer timer;
   int _elapsedTimeMilliseconds = 0;

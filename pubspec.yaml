@@ -41,6 +41,12 @@ dependencies:
   # https://pub.dev/packages/provider
   provider: ^6.1.2
 
+  # https://pub.dev/packages/video_player
+  video_player: ^2.8.5
+
+  # https://pub.dev/packages/http
+  http: ^1.2.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

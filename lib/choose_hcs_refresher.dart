@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
+import 'package:seesaw/main.dart';
+import 'package:seesaw/state_model.dart';
 
-import 'main.dart';
-
-class HcsChooseRefresher extends StatelessWidget {
+class HcsChooseRefresher extends StatefulWidget {
   const HcsChooseRefresher({super.key});
+
+  @override
+  State createState() => _HcsChooseRefresherState();
+}
+
+class _HcsChooseRefresherState extends State<HcsChooseRefresher> {
 
   @override
   Widget build(BuildContext context) {
@@ -17,28 +24,28 @@ class HcsChooseRefresher extends StatelessWidget {
                 padding: EdgeInsets.all(50),
                 child: Text('Human Challenge Studies',
                     style: TextStyle(
-                        fontSize: 46,
-                        color: preparedWhiteColor,
+                        fontSize: textSizeLarge,
+                        color: preparedSecondaryColor,
                         decoration: TextDecoration.none))),
             Row(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   SizedBox(
-                    width: MediaQuery.of(context).size.width / 2,
+                    width: MediaQuery.of(context).size.width / 4,
                     child: const Text(
                         'Press here if you know what human challenge studies are',
                         style: TextStyle(
-                            fontSize: 48,
+                            fontSize: textSizeMedium,
                             color: preparedWhiteColor,
                             decoration: TextDecoration.none), textAlign: TextAlign.center),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width / 2,
+                    width: MediaQuery.of(context).size.width / 4,
                     child: const Text(
                         'Press here if you would like a refresher',
                         style: TextStyle(
-                            fontSize: 48,
+                            fontSize: textSizeMedium,
                             color: preparedWhiteColor,
                             decoration: TextDecoration.none), textAlign: TextAlign.center),
                   ),
@@ -63,5 +70,8 @@ class HcsChooseRefresher extends StatelessWidget {
 
   void doRefresher() {
     debugPrint('doRefresher');
+    final StateModel stateModel =
+        Provider.of<StateModel>(context, listen: false);
+    stateModel.setSeesawState(SeesawState.chooseHcsRefresherGo);
   }
 }
