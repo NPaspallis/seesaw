@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
               height: MediaQuery.of(context).size.height/4,
               width: MediaQuery.of(context).size.height/4,
               padding: const EdgeInsets.all(30),
-              child: getElevatedButtonWithLabel(context, 'Press to Start', choosePerspective)
+              child: getElevatedButtonWithPreparedLabel(context, 'Press to Start', choosePerspective)
             ),
             Expanded(child: _balancingSeesaw),
             const Padding(

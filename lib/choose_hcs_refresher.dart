@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:seesaw/buttons.dart';
 
 import 'main.dart';
 
@@ -14,29 +15,53 @@ class HcsChooseRefresher extends StatelessWidget {
           children: [
             const Padding(
                 padding: EdgeInsets.all(50),
-                child: Text('Human Challenge Trials', style: TextStyle(
-                    fontSize: 46,
-                    color: preparedWhiteColor,
-                    decoration: TextDecoration.none))
+                child: Text('Human Challenge Studies',
+                    style: TextStyle(
+                        fontSize: 46,
+                        color: preparedWhiteColor,
+                        decoration: TextDecoration.none))),
+            Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: const Text(
+                        'Press here if you know what human challenge studies are',
+                        style: TextStyle(
+                            fontSize: 48,
+                            color: preparedWhiteColor,
+                            decoration: TextDecoration.none), textAlign: TextAlign.center),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: const Text(
+                        'Press here if you would like a refresher',
+                        style: TextStyle(
+                            fontSize: 48,
+                            color: preparedWhiteColor,
+                            decoration: TextDecoration.none), textAlign: TextAlign.center),
+                  ),
+                ]),
+            const SizedBox(height: 50),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                getElevatedButtonWithPreparedLabel(
+                    context, 'Press HERE', skipRefresher),
+                getElevatedButtonWithPreparedLabel(context, 'Press HERE', doRefresher),
+              ],
             ),
-            OutlinedButton(
-                onPressed: skipRefresher,
-                child: const Text(
-                    'Press here if you know what human challenge trials are', style: TextStyle(
-                    fontSize: 32,
-                    color: preparedWhiteColor,
-                    decoration: TextDecoration.none))),
-            OutlinedButton(
-                onPressed: doRefresher,
-                child: const Text('Press here if you would like a refresher', style: TextStyle(
-                    fontSize: 32,
-                    color: preparedWhiteColor,
-                    decoration: TextDecoration.none))),
           ],
         ));
   }
 
-  void skipRefresher() {}
+  void skipRefresher() {
+    debugPrint('skipRefresher');
+  }
 
-  void doRefresher() {}
+  void doRefresher() {
+    debugPrint('doRefresher');
+  }
 }

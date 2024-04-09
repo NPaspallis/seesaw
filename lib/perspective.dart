@@ -28,8 +28,8 @@ class _ChoosePerspectiveState extends State<ChoosePerspective> {
   @override
   void initState() {
     super.initState();
-    policyMakerButton = getElevatedButtonWithLabel(context, 'Policy Maker', choosePolicyMaker);
-    committeeMemberButton = getElevatedButtonWithLabel(context, 'Research Ethics Committee Member', chooseCommitteeMember);
+    policyMakerButton = getElevatedButtonWithPreparedLabel(context, 'Policy Maker', choosePolicyMaker);
+    committeeMemberButton = getElevatedButtonWithPreparedLabel(context, 'Research Ethics Committee Member', chooseCommitteeMember);
     _balancingSeesaw = BalancingSeesaw(callback: () {
       debugPrint('policyMaker: $policyMaker');
       navigateTo(context, const EvaluationPage());

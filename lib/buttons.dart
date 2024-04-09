@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'main.dart';
 
-ElevatedButton getElevatedButtonWithLabel(final BuildContext context,
+ElevatedButton getElevatedButtonWithPreparedLabel(final BuildContext context,
     final String text, final VoidCallback callback) {
   return ElevatedButton(
       onPressed: () => callback.call(),

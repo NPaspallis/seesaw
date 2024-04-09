@@ -67,7 +67,7 @@ class _PerspectiveCommitteeMemberState
               width: MediaQuery.of(context).size.width * 1 / 4,
               child: Padding(
                 padding: const EdgeInsets.all(80),
-                child: getElevatedButtonWithLabel(
+                child: getElevatedButtonWithPreparedLabel(
                     context, 'Press here', proceed),
               )
             )
