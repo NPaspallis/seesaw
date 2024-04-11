@@ -147,6 +147,7 @@ class _SeesawAppState extends State<SeesawApp> {
       case SeesawState.thankYou:
         return 'Thank you!';
       case SeesawState.welcome:
+        return 'Welcome';
       default:
         return 'unknown';
     }
