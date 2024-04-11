@@ -1,11 +1,9 @@
 # seesaw
 seesaw - an interactive experience demonstrating ethical tradeoffs in times of crisis.
 
-## See live experience
-
-[seesaw](https://npaspallis.github.io/seesaw)
-
 ![seesaw](seesaw.png)
+
+See it live at [https://npaspallis.github.io/seesaw](https://npaspallis.github.io/seesaw)
 
 ## Build for Web
 
