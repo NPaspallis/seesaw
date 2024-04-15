@@ -64,22 +64,18 @@ class _SeesawAppState extends State<SeesawApp> {
     showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-              title: const Text('Reset?'),
               content: const Text(
-                  'Are you sure you want to reset? All your progress will be lost.',
+                  'Are you sure you want to reset the session?\nAll progress will be lost.',
                   style: TextStyle(fontSize: textSizeSmall)),
               actions: [
                 TextButton(
                     onPressed: () => Navigator.pop(context),
                     child: const Text('Cancel',
-                        style: TextStyle(fontSize: textSizeSmall))),
-                TextButton(
-                    onPressed: () {
-                      _doResetInteraction();
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Reset',
-                        style: TextStyle(fontSize: textSizeSmall)))
+                        style: TextStyle(fontSize: textSizeSmall, fontWeight: FontWeight.bold, color: preparedSecondaryColor))),
+                getElevatedButton(context, 'RESET', () {
+                  _doResetInteraction();
+                  Navigator.pop(context);
+                }),
               ],
               elevation: 24.0,
             ));
@@ -228,35 +224,93 @@ class _SeesawAppState extends State<SeesawApp> {
             const Text(
               'Please choose from which perspective you want to take decisions',
               style: TextStyle(
-                  fontSize: 32,
-                  color: preparedWhiteColor,
+                  fontSize: textSizeMedium,
+                  color: preparedSecondaryColor,
                   decoration: TextDecoration.none),
               textAlign: TextAlign.center,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                SizedBox(
-                    width: 300,
-                    height: 300,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 30),
-                      child: getElevatedButtonWithPreparedLabel(
-                          context, 'Policy Maker', choosePolicyMaker),
-                    )),
-                Visibility(
-                    visible: _seesawState == SeesawState.welcome,
-                    child: SizedBox(
-                        width: 300,
-                        height: 300,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 30),
-                          child: getElevatedButtonWithPreparedLabel(
-                              context,
-                              'Research Ethics Committee Member',
-                              chooseCommitteeMember),
-                        )))
-              ],
+                Column(
+                  children: [
+                    const SizedBox(
+                      width: 400,
+                      height: 200,
+                      child: Center(
+                        child: Text('Policy Maker',
+                            style: TextStyle(
+                                fontSize: textSizeLarge,
+                                color: preparedWhiteColor,
+                                decoration: TextDecoration.none),
+                            textAlign: TextAlign.center)
+                      )),
+                      getElevatedButton(context, 'SELECT', choosePolicyMaker)
+                  ],
+                ),
+
+                Column(
+                  children: [
+                    const SizedBox(
+                      width: 400,
+                      height: 200,
+                      child: Center(
+                        child: Text('Research Ethics Committee Member',
+                            style: TextStyle(
+                                fontSize: textSizeLarge,
+                                color: preparedWhiteColor,
+                                decoration: TextDecoration.none),
+                            textAlign: TextAlign.center)
+                      )),
+                      getElevatedButton(context, 'SELECT', chooseCommitteeMember)
+                  ],
+                ),
+              ]
+
+                // SizedBox(
+                //     width: 300,
+                //     height: 300,
+                //     child: Padding(
+                //       padding: const EdgeInsets.fromLTRB(10, 10, 10, 30),
+                //       // child: getElevatedButtonWithPreparedLabel(
+                //       //     context, 'Policy Maker', choosePolicyMaker),
+                //       child: Column(
+                //         children: [
+                //           const Text('Policy Maker',
+                //           style: TextStyle(
+                //               fontSize: textSizeLarge,
+                //               color: preparedWhiteColor,
+                //               decoration: TextDecoration.none),
+                //           textAlign: TextAlign.center),
+                //           const SizedBox(height: 50),
+                //           getElevatedButton(context, 'SELECT', choosePolicyMaker)
+                //         ],
+                //       )
+                //     )),
+                // Visibility(
+                //     visible: _seesawState == SeesawState.welcome,
+                //     child: SizedBox(
+                //         width: 400,
+                //         height: 300,
+                //         child: Padding(
+                //           padding: const EdgeInsets.fromLTRB(10, 10, 10, 30),
+                //           // child: getElevatedButtonWithPreparedLabel(
+                //           //     context,
+                //           //     'Research Ethics Committee Member',
+                //           //     chooseCommitteeMember),
+                //             child: Column(
+                //               children: [
+                //                 const Text('Research Ethics Committee Member',
+                //                     style: TextStyle(
+                //                         fontSize: textSizeLarge,
+                //                         color: preparedWhiteColor,
+                //                         decoration: TextDecoration.none),
+                //                     textAlign: TextAlign.center),
+                //                 const SizedBox(height: 50),
+                //                 getElevatedButton(context, 'SELECT', chooseCommitteeMember)
+                //               ],
+                //             )
+                //         )))              ],
             )
           ],
         ));
