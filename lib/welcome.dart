@@ -25,8 +25,7 @@ class _WelcomeState extends State<Welcome> {
                 height: 300,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 30),
-                  child: getElevatedButtonWithPreparedLabel(
-                      context, 'Press to Start', pressedStart),
+                  child: getStartButton(context, pressedStart)
                 ))));
   }
 

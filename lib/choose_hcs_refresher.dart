@@ -55,9 +55,10 @@ class _HcsChooseRefresherState extends State<HcsChooseRefresher> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                getElevatedButtonWithPreparedLabel(
-                    context, 'Press HERE', skipRefresher),
-                getElevatedButtonWithPreparedLabel(context, 'Press HERE', doRefresher),
+                getOutlinedButton(context, 'SKIP REFRESHER', skipRefresher),
+                // getElevatedButtonWithPreparedLabel(context, 'Press HERE', skipRefresher),
+                getElevatedButton(context, 'DO REFRESHER', doRefresher)
+                // getElevatedButtonWithPreparedLabel(context, 'Press HERE', doRefresher),
               ],
             ),
           ],

@@ -3,6 +3,39 @@ import 'package:flutter/material.dart';
 
 import 'main.dart';
 
+ElevatedButton getStartButton(final BuildContext context, final VoidCallback callback) {
+
+  return ElevatedButton(
+      onPressed: () => callback.call(),
+      style: ButtonStyle(
+          padding: MaterialStateProperty.resolveWith<EdgeInsetsGeometry>((
+              Set<MaterialState> states) =>
+              EdgeInsets.all(states.contains(MaterialState.pressed) ? 0 : 0)),
+          // default elevation,
+          backgroundColor: MaterialStateProperty.all<Color>(
+              preparedPrimaryColor),
+          shadowColor: MaterialStateProperty.all<Color>(preparedShadeColor),
+          elevation: MaterialStateProperty.resolveWith<double>((
+              Set<MaterialState> states) {
+            return states.contains(MaterialState.pressed)
+                ? 5
+                : 15; // default elevation
+          }),
+          animationDuration: const Duration(milliseconds: 200),
+          shape: const MaterialStatePropertyAll(CircleBorder())
+      ),
+      child: Stack(
+        children: [
+          Container(
+              width: 300,
+              color: Colors.transparent,
+              child: Image.asset('assets/press_start_button_green.png'),
+          ),
+        ],
+      )
+  );
+}
+
 ElevatedButton getElevatedButtonWithPreparedLabel(final BuildContext context,
     final String text, final VoidCallback callback) {
   return ElevatedButton(
