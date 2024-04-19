@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/state_model.dart';
 
@@ -26,7 +26,7 @@ class _ChoosePerspective extends State<ChoosePerspective> {
             const Text(
               'Please choose from which perspective\nyou want to take decisions',
               style: TextStyle(
-                  fontSize: textSizeMedium,
+                  fontSize: textSizeLarge,
                   color: preparedWhiteColor),
               textAlign: TextAlign.center,
             ),
@@ -36,12 +36,13 @@ class _ChoosePerspective extends State<ChoosePerspective> {
                   Column(
                     children: [
                       const SizedBox(
-                          width: 400,
+                          width: 450,
                           height: 200,
                           child: Center(
                               child: Text('Policy Maker',
                                   style: TextStyle(
                                       fontSize: textSizeLarge,
+                                      fontWeight: FontWeight.w900,
                                       color: preparedWhiteColor,
                                       decoration: TextDecoration.none),
                                   textAlign: TextAlign.center)
@@ -53,12 +54,13 @@ class _ChoosePerspective extends State<ChoosePerspective> {
                   Column(
                     children: [
                       const SizedBox(
-                          width: 400,
+                          width: 450,
                           height: 200,
                           child: Center(
                               child: Text('Research Ethics Committee Member',
                                   style: TextStyle(
                                       fontSize: textSizeLarge,
+                                      fontWeight: FontWeight.w900,
                                       color: preparedWhiteColor,
                                       decoration: TextDecoration.none),
                                   textAlign: TextAlign.center)

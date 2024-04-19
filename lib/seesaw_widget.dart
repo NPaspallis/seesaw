@@ -251,7 +251,7 @@ class Seesaw extends CustomPainter {
 }
 
 // const maxTilt = math.pi/4; // largest leaning
-const defaultMaxTilt = math.pi / 256; // min leaning
+const defaultMaxTilt = math.pi / 192; // min leaning
 
 class BalancingSeesaw extends StatefulWidget {
   final double maxTilt;

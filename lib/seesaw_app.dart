@@ -1,12 +1,12 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:seesaw/charles_weijer_video.dart';
 import 'package:seesaw/evaluation.dart';
+import 'package:seesaw/make_decision_before_video.dart';
 import 'package:seesaw/perspective_committee_member.dart';
-import 'package:seesaw/seesaw.dart';
+import 'package:seesaw/seesaw_widget.dart';
+import 'package:seesaw/show_stats_after_video.dart';
+import 'package:seesaw/show_stats_before_video.dart';
 import 'package:seesaw/state_model.dart';
 import 'package:seesaw/thank_you.dart';
 import 'package:seesaw/welcome.dart';
@@ -14,8 +14,9 @@ import 'package:seesaw/welcome.dart';
 import 'buttons.dart';
 import 'choose_hcs_refresher.dart';
 import 'choose_perspective.dart';
-import 'hcs_refresher.dart';
+import 'hcs_refresher_video.dart';
 import 'main.dart';
+import 'make_decision_after_video.dart';
 
 class SeesawApp extends StatefulWidget {
   const SeesawApp({super.key});
@@ -37,20 +38,6 @@ class _SeesawAppState extends State<SeesawApp> {
     _seesawState = SeesawState.welcome;
   }
 
-  // void choosePolicyMaker() {
-  //   debugPrint('chose: choosePolicyMaker');
-  //   final StateModel stateModel =
-  //       Provider.of<StateModel>(context, listen: false);
-  //   stateModel.setSeesawState(SeesawState.perspectivePolicyMaker);
-  // }
-  //
-  // void chooseCommitteeMember() {
-  //   debugPrint('chose: chooseCommitteeMember');
-  //   final StateModel stateModel =
-  //       Provider.of<StateModel>(context, listen: false);
-  //   stateModel.setSeesawState(SeesawState.perspectiveCommitteeMember);
-  // }
-  //
   void _resetInteraction(BuildContext context) {
     // show the dialog
     showDialog<String>(
@@ -94,7 +81,6 @@ class _SeesawAppState extends State<SeesawApp> {
       case SeesawState.welcome:
         return Welcome(_scrollController);
       case SeesawState.choosePerspective:
-        // return getChoosePerspectiveWidget();
         return const ChoosePerspective();
       case SeesawState.perspectivePolicyMaker:
         return const Text('error: todo'); //todo
@@ -102,8 +88,18 @@ class _SeesawAppState extends State<SeesawApp> {
         return const PerspectiveCommitteeMember();
       case SeesawState.chooseHcsRefresher:
         return const HcsChooseRefresher();
-      case SeesawState.chooseHcsRefresherGo:
-        return const HcsRefresher();
+      case SeesawState.doHcsRefresher:
+        return const HcsRefresherVideo();
+      case SeesawState.makeDecisionBeforeCharlesWeijerVideo:
+        return const MakeDecisionBeforeVideo();
+      case SeesawState.showStatsBeforeCharlesWeijerVideo:
+        return const ShowStatsBeforeVideo();
+      case SeesawState.charlesWeijerVideo:
+        return const CharlesWeijerVideo();
+      case SeesawState.makeDecisionAfterCharlesWeijerVideo:
+        return const MakeDecisionAfterVideo();
+      case SeesawState.showStatsAfterCharlesWeijerVideo:
+        return const ShowStatsAfterVideo();
       case SeesawState.evaluation:
         return const EvaluationPage();
       case SeesawState.thankYou:
@@ -132,8 +128,10 @@ class _SeesawAppState extends State<SeesawApp> {
         return 'Perspective | Policy maker';
       case SeesawState.chooseHcsRefresher:
         return 'Human Challenge Studies | Refresher?';
-      case SeesawState.chooseHcsRefresherGo:
+      case SeesawState.doHcsRefresher:
         return 'Human Challenge Studies | Refresher';
+      case SeesawState.charlesWeijerVideo:
+        return '';//todo
       case SeesawState.evaluation:
         return 'Evaluation';
       case SeesawState.thankYou:
@@ -209,63 +207,6 @@ class _SeesawAppState extends State<SeesawApp> {
                   decoration: TextDecoration.none)),
         )));
   }
-
-  // Widget getChoosePerspectiveWidget() {
-  //   return SizedBox(
-  //       height: MediaQuery.of(context).size.height * 2 / 3,
-  //       child: Column(
-  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //         crossAxisAlignment: CrossAxisAlignment.stretch,
-  //         children: [
-  //           const Text(
-  //             'Please choose from which perspective\nyou want to take decisions',
-  //             style: TextStyle(
-  //                 fontSize: textSizeMedium,
-  //                 color: preparedWhiteColor),
-  //             textAlign: TextAlign.center,
-  //           ),
-  //           Row(
-  //             mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //             children: [
-  //               Column(
-  //                 children: [
-  //                   const SizedBox(
-  //                     width: 400,
-  //                     height: 200,
-  //                     child: Center(
-  //                       child: Text('Policy Maker',
-  //                           style: TextStyle(
-  //                               fontSize: textSizeLarge,
-  //                               color: preparedWhiteColor,
-  //                               decoration: TextDecoration.none),
-  //                           textAlign: TextAlign.center)
-  //                     )),
-  //                     getElevatedButton(context, 'SELECT', choosePolicyMaker)
-  //                 ],
-  //               ),
-  //
-  //               Column(
-  //                 children: [
-  //                   const SizedBox(
-  //                     width: 400,
-  //                     height: 200,
-  //                     child: Center(
-  //                       child: Text('Research Ethics Committee Member',
-  //                           style: TextStyle(
-  //                               fontSize: textSizeLarge,
-  //                               color: preparedWhiteColor,
-  //                               decoration: TextDecoration.none),
-  //                           textAlign: TextAlign.center)
-  //                     )),
-  //                     getElevatedButton(context, 'SELECT', chooseCommitteeMember)
-  //                 ],
-  //               ),
-  //             ]
-  //           )
-  //         ],
-  //       ));
-  // }
-
 
   @override
   void activate() {

@@ -2,24 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
+import 'package:seesaw/main.dart';
 import 'package:seesaw/state_model.dart';
 import 'package:video_player/video_player.dart';
 
 import 'package:http/http.dart' as http;
 
-class HcsRefresher extends StatefulWidget {
-  const HcsRefresher({super.key});
+class CharlesWeijerVideo extends StatefulWidget {
+  const CharlesWeijerVideo({super.key});
 
   @override
-  State createState() => _HcsRefresherState();
+  State createState() => _CharlesWeijerVideoState();
 }
 
 const videoUrl =
-    'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/hcs_video.mp4';
+    'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.mp4';
 const subtitlesUrl =
-    'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/hcs_video.srt';
+    'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.srt';
 
-class _HcsRefresherState extends State<HcsRefresher> {
+class _CharlesWeijerVideoState extends State<CharlesWeijerVideo> {
   late VideoPlayerController _controller;
 
   Future<ClosedCaptionFile> _loadCaptionsFromUrl(String url) async {
@@ -38,7 +39,7 @@ class _HcsRefresherState extends State<HcsRefresher> {
     super.initState();
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(videoUrl),
-      // closedCaptionFile: _loadCaptionsFromUrl(subtitlesUrl),
+      // closedCaptionFile: _loadCaptionsFromUrl(subtitlesUrl), // todo fix loading subtitles
     );
 
     _controller.addListener(() {
@@ -82,6 +83,8 @@ class _HcsRefresherState extends State<HcsRefresher> {
               )
             ),
             const SizedBox(height: 10),
+            const Text('What does a world-leading expert think? Meet Prof. Charles Weijer.', style: TextStyle(fontSize: textSizeSmall, color: preparedWhiteColor)),
+            const SizedBox(height: 10),
             getOutlinedButton(context, 'SKIP', proceed)
           ],
         )
@@ -90,8 +93,6 @@ class _HcsRefresherState extends State<HcsRefresher> {
   }
 
   void proceed() {
-    final StateModel stateModel =
-        Provider.of<StateModel>(context, listen: false);
-    stateModel.setSeesawState(SeesawState.evaluation); //todo
+    Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
   }
 }

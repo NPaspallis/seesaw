@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:seesaw/tilt_direction.dart';
 
 enum SeesawState {
   welcome,
@@ -7,7 +6,12 @@ enum SeesawState {
   perspectivePolicyMaker,
   perspectiveCommitteeMember,
   chooseHcsRefresher,
-  chooseHcsRefresherGo,
+  doHcsRefresher,
+  makeDecisionBeforeCharlesWeijerVideo,
+  showStatsBeforeCharlesWeijerVideo,
+  charlesWeijerVideo,
+  makeDecisionAfterCharlesWeijerVideo,
+  showStatsAfterCharlesWeijerVideo,
   evaluation,
   thankYou
 }
@@ -21,5 +25,12 @@ class StateModel extends ChangeNotifier {
   void setSeesawState(SeesawState seesawState) {
     _seesawState = seesawState;
     notifyListeners();
+  }
+
+  void progressToNextSeesawState() {
+    var allValues = SeesawState.values;
+    int nextSeesawStateIndex = (_seesawState.index + 1) % allValues.length;
+    SeesawState nextSeesawState = allValues[nextSeesawStateIndex];
+    setSeesawState(nextSeesawState);
   }
 }

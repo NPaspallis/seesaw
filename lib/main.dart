@@ -38,7 +38,7 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (context) => StateModel(),
-      child: const SeesawApp(),
+      child: const SeesawApp(), // todo add layer which collects all interactions and resets the app when there is no activity for a preset number of minutes, e.g. 5
     ),
   );
 }

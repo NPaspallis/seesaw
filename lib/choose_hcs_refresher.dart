@@ -19,13 +19,15 @@ class _HcsChooseRefresherState extends State<HcsChooseRefresher> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 2 / 3,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const Padding(
                 padding: EdgeInsets.all(50),
                 child: Text('Human Challenge Studies',
                     style: TextStyle(
                         fontSize: textSizeLarge,
-                        color: preparedSecondaryColor,
+                        fontWeight: FontWeight.w900,
+                        color: preparedWhiteColor,
                         decoration: TextDecoration.none))),
             Row(
                 mainAxisSize: MainAxisSize.max,
@@ -50,15 +52,12 @@ class _HcsChooseRefresherState extends State<HcsChooseRefresher> {
                             decoration: TextDecoration.none), textAlign: TextAlign.center),
                   ),
                 ]),
-            const SizedBox(height: 50),
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 getOutlinedButton(context, 'SKIP REFRESHER', skipRefresher),
-                // getElevatedButtonWithPreparedLabel(context, 'Press HERE', skipRefresher),
                 getElevatedButton(context, 'DO REFRESHER', doRefresher)
-                // getElevatedButtonWithPreparedLabel(context, 'Press HERE', doRefresher),
               ],
             ),
           ],
@@ -67,12 +66,11 @@ class _HcsChooseRefresherState extends State<HcsChooseRefresher> {
 
   void skipRefresher() {
     debugPrint('skipRefresher');
+    Provider.of<StateModel>(context, listen: false).setSeesawState(SeesawState.makeDecisionBeforeCharlesWeijerVideo);
   }
 
   void doRefresher() {
     debugPrint('doRefresher');
-    final StateModel stateModel =
-        Provider.of<StateModel>(context, listen: false);
-    stateModel.setSeesawState(SeesawState.chooseHcsRefresherGo);
+    Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
   }
 }

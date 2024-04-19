@@ -33,7 +33,7 @@ class _PerspectiveCommitteeMemberState
                 child: Text(
                   'Go back in time to early 2020.\nAre you ready to take a decision about COVID-19?',
                   style: TextStyle(
-                      fontSize: textSizeMedium,
+                      fontSize: textSizeLarge,
                       color: preparedWhiteColor,
                       decoration: TextDecoration.none),
                   textAlign: TextAlign.end,
@@ -41,8 +41,7 @@ class _PerspectiveCommitteeMemberState
               ),
               Padding(
                 padding: const EdgeInsets.all(80),
-                child: getElevatedButtonWithPreparedLabel(
-                    context, 'Press here', proceed),
+                child: getElevatedButton(context, 'PRESS HERE', proceed)
               )
             ],
           ),
