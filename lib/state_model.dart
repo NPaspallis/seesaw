@@ -7,6 +7,7 @@ enum SeesawState {
   perspectiveCommitteeMember,
   // chooseHcsRefresher,
   doHcsRefresher,
+  chooseHcsVideos,
   makeDecisionBeforeCharlesWeijerVideo,
   showStatsBeforeCharlesWeijerVideo,
   charlesWeijerVideo,

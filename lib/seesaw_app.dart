@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/charles_weijer_video.dart';
+import 'package:seesaw/choose_hcs_videos.dart';
 import 'package:seesaw/evaluation.dart';
 import 'package:seesaw/make_decision_before_video.dart';
 import 'package:seesaw/perspective_committee_member.dart';
@@ -90,6 +91,8 @@ class _SeesawAppState extends State<SeesawApp> {
       //   return const HcsChooseRefresher();
       case SeesawState.doHcsRefresher:
         return const HcsRefresherVideo();
+      case SeesawState.chooseHcsVideos:
+        return const ChooseHcsVideos();
       case SeesawState.makeDecisionBeforeCharlesWeijerVideo:
         return const MakeDecisionBeforeVideo();
       case SeesawState.showStatsBeforeCharlesWeijerVideo:
@@ -130,6 +133,8 @@ class _SeesawAppState extends State<SeesawApp> {
       //   return 'Human Challenge Studies | Refresher?';
       case SeesawState.doHcsRefresher:
         return 'Human Challenge Studies | Refresher';
+      case SeesawState.chooseHcsVideos:
+        return 'Human Challenge Studies | Perspectives';
       case SeesawState.charlesWeijerVideo:
         return '';//todo
       case SeesawState.evaluation:

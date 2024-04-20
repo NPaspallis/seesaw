@@ -101,7 +101,7 @@ OutlinedButton getOutlinedButton(final BuildContext context,
             style: const TextStyle(
                 fontSize: textSizeSmall,
                 fontWeight: FontWeight.w500,
-                color: Colors.white))),
+                color: preparedWhiteColor))),
   );
 }
 
@@ -120,5 +120,5 @@ ElevatedButton getElevatedButton(final BuildContext context,
               style: const TextStyle(
                   fontSize: textSizeSmall,
                   fontWeight: FontWeight.w900,
-                  color: Colors.white))));
+                  color: preparedWhiteColor))));
 }
