@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
+import 'package:seesaw/main.dart';
 import 'package:seesaw/state_model.dart';
 import 'package:video_player/video_player.dart';
 
@@ -82,7 +83,16 @@ class _HcsRefresherVideoState extends State<HcsRefresherVideo> {
               )
             ),
             const SizedBox(height: 10),
-            getOutlinedButton(context, 'SKIP', proceed)
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('If you are familiar with Human Challenge Studies you can skip the video',
+                    style: TextStyle(color: preparedWhiteColor, fontSize: textSizeSmall)),
+                const SizedBox(width: 10),
+                getOutlinedButton(context, 'SKIP', proceed)
+              ],
+            )
           ],
         )
       ),

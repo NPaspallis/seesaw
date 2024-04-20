@@ -50,8 +50,7 @@ class _PerspectiveCommitteeMemberState
   }
 
   void proceed() {
-    debugPrint('Proceed to choose '); //todo
-    final StateModel stateModel = Provider.of<StateModel>(context, listen: false);
-    stateModel.setSeesawState(SeesawState.chooseHcsRefresher);
+    debugPrint('Proceed to HCS refresher');
+    Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
   }
 }

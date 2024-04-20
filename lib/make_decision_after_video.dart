@@ -23,7 +23,7 @@ class _MakeDecisionAfterVideoState extends State<MakeDecisionAfterVideo> {
           children: [
             const Padding(
                 padding: EdgeInsets.all(50),
-                child: Text('After having heard Prof. Charles Weijer’s assessment, which decision would you take now.',
+                child: Text('After having heard Prof. Charles Weijer’s assessment,\nwhich decision would you take now.',
                     style: TextStyle(
                         fontSize: textSizeLarge,
                         color: preparedWhiteColor,
@@ -32,7 +32,7 @@ class _MakeDecisionAfterVideoState extends State<MakeDecisionAfterVideo> {
                 padding: EdgeInsets.all(50),
                 child: Text('Will you allow a human challenge trial with COVID-19?',
                     style: TextStyle(
-                        fontSize: textSizeLarge,
+                        fontSize: textSizeLarger,
                         fontWeight: FontWeight.w900,
                         color: preparedWhiteColor,
                         decoration: TextDecoration.none))),
@@ -40,8 +40,8 @@ class _MakeDecisionAfterVideoState extends State<MakeDecisionAfterVideo> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                getOutlinedButton(context, 'YES', chooseYes),
-                getElevatedButton(context, 'NO', chooseNo)
+                getElevatedButton(context, 'YES', chooseYes),
+                getOutlinedButton(context, 'NO', chooseNo)
               ],
             ),
           ],

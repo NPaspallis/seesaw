@@ -83,9 +83,15 @@ class _CharlesWeijerVideoState extends State<CharlesWeijerVideo> {
               )
             ),
             const SizedBox(height: 10),
-            const Text('What does a world-leading expert think? Meet Prof. Charles Weijer.', style: TextStyle(fontSize: textSizeSmall, color: preparedWhiteColor)),
-            const SizedBox(height: 10),
-            getOutlinedButton(context, 'SKIP', proceed)
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('What does a world-leading expert think? Meet Prof. Charles Weijer.', style: TextStyle(fontSize: textSizeSmall, color: preparedWhiteColor)),
+                const SizedBox(width: 10),
+                getOutlinedButton(context, 'SKIP', proceed)
+              ],
+            )
           ],
         )
       ),

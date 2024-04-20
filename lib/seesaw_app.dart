@@ -86,8 +86,8 @@ class _SeesawAppState extends State<SeesawApp> {
         return const Text('error: todo'); //todo
       case SeesawState.perspectiveCommitteeMember:
         return const PerspectiveCommitteeMember();
-      case SeesawState.chooseHcsRefresher:
-        return const HcsChooseRefresher();
+      // case SeesawState.chooseHcsRefresher:
+      //   return const HcsChooseRefresher();
       case SeesawState.doHcsRefresher:
         return const HcsRefresherVideo();
       case SeesawState.makeDecisionBeforeCharlesWeijerVideo:
@@ -126,8 +126,8 @@ class _SeesawAppState extends State<SeesawApp> {
         return 'Perspective | Research ethics committee member';
       case SeesawState.perspectivePolicyMaker:
         return 'Perspective | Policy maker';
-      case SeesawState.chooseHcsRefresher:
-        return 'Human Challenge Studies | Refresher?';
+      // case SeesawState.chooseHcsRefresher:
+      //   return 'Human Challenge Studies | Refresher?';
       case SeesawState.doHcsRefresher:
         return 'Human Challenge Studies | Refresher';
       case SeesawState.charlesWeijerVideo:
@@ -233,6 +233,7 @@ class _SeesawAppState extends State<SeesawApp> {
 
     return MaterialApp(
         title: 'Seesaw App',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: preparedPrimaryColor),
           primaryColor: preparedPrimaryColor,

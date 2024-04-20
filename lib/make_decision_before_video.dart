@@ -32,7 +32,7 @@ class _MakeDecisionBeforeVideoState extends State<MakeDecisionBeforeVideo> {
                 padding: EdgeInsets.all(50),
                 child: Text('Will you allow a human challenge trial with COVID-19?',
                     style: TextStyle(
-                        fontSize: textSizeLarge,
+                        fontSize: textSizeLarger,
                         fontWeight: FontWeight.w900,
                         color: preparedWhiteColor,
                         decoration: TextDecoration.none))),
@@ -40,8 +40,8 @@ class _MakeDecisionBeforeVideoState extends State<MakeDecisionBeforeVideo> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                getOutlinedButton(context, 'YES', chooseYes),
-                getElevatedButton(context, 'NO', chooseNo)
+                getElevatedButton(context, 'YES', chooseYes),
+                getOutlinedButton(context, 'NO', chooseNo)
               ],
             ),
           ],
