@@ -27,6 +27,12 @@ const subtitlesUrls = [
   'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.srt',
 ];
 
+const _videoDescriptions = [
+  'Description for first video',
+  'Description for second video',
+  'Description for third video',
+];
+
 enum VideoState { showNone, showVideo0, showVideo1, showVideo2 }
 
 class _ChooseHcsVideos extends State<ChooseHcsVideos> {
@@ -44,7 +50,7 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
   var colors = [preparedOrangeColor, preparedBrightRed, preparedCyanColor];
   var watched = [false, false, false];
 
-  late VideoPlayerController _controller;
+  late final List<VideoPlayerController> _controllers = List.empty(growable: true);
 
   @override
   void initState() {
@@ -59,27 +65,29 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
     _tp2 = random.nextDouble() * ballPaddingSide;
     colors.shuffle(random);
 
-    // handle video controller
-    // _controller = VideoPlayerController.networkUrl(
-    //   Uri.parse(videoUrls[0]),//todo
-    //   // closedCaptionFile: _loadCaptionsFromUrl(subtitlesUrl), // todo fix loading subtitles
-    // );
+    // handle video controllers
+    for(int i = 0; i < videoUrls.length; i++) {
+      _controllers.add(VideoPlayerController.networkUrl(
+        Uri.parse(videoUrls[i]),
+        // closedCaptionFile: _loadCaptionsFromUrl(subtitlesUrls[i]), // todo fix loading subtitles
+      ));
 
-    _controller.addListener(() {
-      if (_controller.value.isCompleted && _controller.value.position == _controller.value.duration) {
-        debugPrint('video ended');
-        proceed();
-      } else {
+      _controllers[i].addListener(() {
+        if (_controllers[i].value.isCompleted && _controllers[i].value.position == _controllers[i].value.duration) {
+          debugPrint('video ended');
+          watched[i] = true;
+          _videoState = VideoState.showNone;
+        }
         setState(() {});
-      }
-    });
-
-    _controller.initialize().then((value) => _controller.play());
+      });
+    }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
@@ -115,37 +123,7 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
                   ],
                 ),
                 // video layer
-                Visibility(
-                  visible: _videoState != VideoState.showNone,
-                  child: Column(
-                    children: [
-                      Flexible(
-                          child: AspectRatio(
-                            aspectRatio: _controller.value.aspectRatio,
-                            child: Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: <Widget>[
-                                VideoPlayer(_controller),
-                                ClosedCaption(text: _controller.value.caption.text),
-                                VideoProgressIndicator(_controller, allowScrubbing: true),
-                              ],
-                            ),
-                          )
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('What does a world-leading expert think? Meet Prof. Charles Weijer.', style: TextStyle(fontSize: textSizeSmall, color: preparedWhiteColor)),
-                          const SizedBox(width: 10),
-                          getOutlinedButton(context, 'SKIP', proceed)
-                        ],
-                      )
-
-                    ],
-                  )
-                )
+                _videoState != VideoState.showNone ? _getVideoLayer() : Container()
               ],
             )
     );
@@ -184,6 +162,57 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
     );
   }
 
+  Column _getVideoLayer() {
+    final int index = _getVideoStateIndex();
+    return Column(
+      children: [
+        Flexible(
+            child: AspectRatio(
+              aspectRatio: _controllers[index].value.aspectRatio,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: <Widget>[
+                  VideoPlayer(_controllers[index]),
+                  ClosedCaption(text: _controllers[index].value.caption.text),
+                  VideoProgressIndicator(_controllers[index], allowScrubbing: true),
+                ],
+              ),
+            )
+        ),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(_videoDescriptions[index], style: const TextStyle(fontSize: textSizeSmall, color: preparedWhiteColor)),
+            const SizedBox(width: 10),
+            getOutlinedButton(context, 'BACK', back)
+          ],
+        )
+
+      ],
+    );
+  }
+
+  int _getVideoStateIndex() {
+    switch(_videoState) {
+      case VideoState.showVideo0:
+        return 0;
+      case VideoState.showVideo1:
+        return 1;
+      case VideoState.showVideo2:
+        return 2;
+      default:
+        throw Exception('Invalid VideoState when requesting video controller: $_videoState');
+    }
+  }
+
+  void back() {
+    setState(() {
+      _videoState = VideoState.showNone;
+    });
+  }
+
   void proceed() {
     //todo
     setState(() {
@@ -201,26 +230,24 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
   void watchVideo0() {
     //todo
     setState(() {
-      _controller = VideoPlayerController.networkUrl(
-        Uri.parse(videoUrls[0]),
-        // closedCaptionFile: _loadCaptionsFromUrl(subtitlesUrl), // todo fix loading subtitles
-      );
       _videoState = VideoState.showVideo0;
-      watched[0] = true;
+      _controllers[0].initialize().then((value) => _controllers[0].play());
     });
   }
 
   void watchVideo1() {
     //todo
     setState(() {
-      watched[1] = true;
+      _videoState = VideoState.showVideo1;
+      _controllers[1].initialize().then((value) => _controllers[1].play());
     });
   }
 
   void watchVideo2() {
     //todo
     setState(() {
-      watched[2] = true;
+      _videoState = VideoState.showVideo2;
+      _controllers[2].initialize().then((value) => _controllers[2].play());
     });
   }
 }
