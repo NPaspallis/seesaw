@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'main.dart';
@@ -18,7 +19,7 @@ const int stepInMilliseconds = 20;
 
 class _TimedBackgroundState extends State<TimedBackground> {
 
-  final int delayInMilliseconds = 1 * 1000; // 5 seconds TODO
+  final int delayInMilliseconds = (kDebugMode ? 1 : 10) * 1000; // 5 seconds
 
   late Timer timer;
   int _elapsedTimeMilliseconds = 0;

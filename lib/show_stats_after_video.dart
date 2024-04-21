@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,10 +21,20 @@ const maxHeightSwitchLine = 50.0;
 
 class _ShowStatsAfterVideoState extends State<ShowStatsAfterVideo> {
 
-  double _switchedFromYesToNo = 25;
-  double _switchedFromNoToYes = 25;
-  double _responsesYesAfter = 50;
-  double _responsesNoAfter = 50;
+  double _switchedFromYesToNo = 1;
+  double _switchedFromNoToYes = 1;
+  double _responsesYesAfter = 1;
+  double _responsesNoAfter = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    // todo replace below code with actual value reading from Firebase
+    _responsesYesAfter = Random().nextInt(100) as double;
+    _responsesNoAfter = 100 - _responsesYesAfter;
+    _switchedFromNoToYes = Random().nextInt(_responsesYesAfter.round()) as double;
+    _switchedFromYesToNo = Random().nextInt(_responsesNoAfter.round()) as double;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +197,7 @@ class _ShowStatsAfterVideoState extends State<ShowStatsAfterVideo> {
                 },
               ),
             ),
-            getElevatedButton(context, "CARRY ON", carryOn)
+            getOutlinedButton(context, "CARRY ON", carryOn)
           ],
         ));
   }

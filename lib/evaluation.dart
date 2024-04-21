@@ -33,7 +33,7 @@ class _EvaluationPageState extends State<EvaluationPage> {
             padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width / 8, 50, MediaQuery.of(context).size.width / 8, 50),
             child: SingleChildScrollView(
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     getPrompt(),
@@ -71,19 +71,21 @@ class _EvaluationPageState extends State<EvaluationPage> {
     return Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
                 lines[index],
                 style: const TextStyle(fontSize: textSizeMedium, color: preparedWhiteColor)),
             const SizedBox(height: 20),
             Row(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('fully disagree', style: TextStyle(fontSize: textSizeSmallest)),
+                const Text('fully disagree', style: TextStyle(fontSize: textSizeSmaller, fontWeight: FontWeight.bold)),
                 const SizedBox(width: 10),
                 getRatingBar(index),
                 const SizedBox(width: 10),
-                const Text('fully agree', style: TextStyle(fontSize: textSizeSmallest)),
+                const Text('fully agree', style: TextStyle(fontSize: textSizeSmaller, fontWeight: FontWeight.bold)),
               ],
             ),
           ],

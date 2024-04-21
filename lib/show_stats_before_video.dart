@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,8 +19,16 @@ const lineHeight = 0.78;
 
 class _ShowStatsBeforeVideoState extends State<ShowStatsBeforeVideo> {
 
-  double _responsesYes = 50;
-  double _responsesNo = 50;
+  double _responsesYes = 1;
+  double _responsesNo = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    // todo replace below code with actual value reading from Firebase
+    _responsesYes = Random().nextInt(100) as double;
+    _responsesNo = 100 - _responsesYes;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +116,7 @@ class _ShowStatsBeforeVideoState extends State<ShowStatsBeforeVideo> {
                 },
               ),
             ),
-            getElevatedButton(context, "CARRY ON", carryOn)
+            getOutlinedButton(context, "CARRY ON", carryOn)
           ],
         ));
   }

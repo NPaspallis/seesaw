@@ -40,8 +40,8 @@ class _MakeDecisionAfterVideoState extends State<MakeDecisionAfterVideo> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                getElevatedButton(context, 'YES', chooseYes),
-                getOutlinedButton(context, 'NO', chooseNo)
+                getElevatedButton(context, 'YES', chooseYes, preparedCyanColor),
+                getElevatedButton(context, 'NO', chooseNo, preparedOrangeColor)
               ],
             ),
           ],

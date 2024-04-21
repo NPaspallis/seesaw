@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
@@ -117,8 +118,8 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
                     ),
                     const SizedBox(height: 10),
                     Visibility(
-                        visible: watched[0] && watched[1] && watched[2],
-                        child: getElevatedButton(context, 'CARRY ON', proceed)
+                        visible: kDebugMode || (watched[0] && watched[1] && watched[2]),
+                        child: getOutlinedButton(context, 'CARRY ON', proceed)
                     )
                   ],
                 ),
@@ -152,8 +153,8 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
                 Text(text, style: const TextStyle(fontSize: textSizeMedium, fontWeight: FontWeight.w900, color: preparedWhiteColor), textAlign: TextAlign.center),
                 const SizedBox(height: 10),
                 watched ?
-                const Text('WATCHED 🗹', style: TextStyle(fontSize: textSizeSmall, fontWeight: FontWeight.w500, color: preparedSecondaryColor)) :
-                getOutlinedButton(context, 'WATCH', callback)
+                Text('WATCHED 🗹', style: TextStyle(fontSize: textSizeSmall, fontWeight: FontWeight.w500, color: color)) :
+                getElevatedButton(context, 'WATCH', callback, color)
               ],
             )
           )

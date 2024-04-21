@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'main.dart';
@@ -86,13 +85,12 @@ ElevatedButton getElevatedButtonWithPreparedLabel(final BuildContext context,
 }
 
 OutlinedButton getOutlinedButton(final BuildContext context,
-    final String text, final VoidCallback callback) {
+    final String text, final VoidCallback callback, [final Color color = preparedSecondaryColor]) {
   return OutlinedButton(
     onPressed: () => callback(),
     style: OutlinedButton.styleFrom(
-        side: const BorderSide(
-          color:
-          preparedSecondaryColor, //Set border color
+        side: BorderSide(
+          color: color, //Set border color
           width: 2, //Set border width
         )),
     child: Padding(
@@ -106,13 +104,12 @@ OutlinedButton getOutlinedButton(final BuildContext context,
 }
 
 ElevatedButton getElevatedButton(final BuildContext context,
-    final String text, final VoidCallback callback) {
+    final String text, final VoidCallback callback, [final Color color = preparedSecondaryColor]) {
   return ElevatedButton(
       onPressed: () => callback(),
-      style: const ButtonStyle(
+      style: ButtonStyle(
         backgroundColor:
-        MaterialStatePropertyAll<Color>(
-            preparedSecondaryColor),
+        MaterialStatePropertyAll<Color>(color),
       ),
       child: Padding(
           padding: const EdgeInsets.all(10),

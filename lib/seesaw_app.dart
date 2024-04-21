@@ -124,19 +124,25 @@ class _SeesawAppState extends State<SeesawApp> {
   String _getNavigationLabel(final SeesawState seesawState) {
     switch (seesawState) {
       case SeesawState.choosePerspective:
-        return 'Choose perspective';
+        return 'Choose Perspective ...';
       case SeesawState.perspectiveCommitteeMember:
-        return 'Perspective | Research ethics committee member';
+        return 'Research ethics committee member Perspective';
       case SeesawState.perspectivePolicyMaker:
-        return 'Perspective | Policy maker';
-      // case SeesawState.chooseHcsRefresher:
-      //   return 'Human Challenge Studies | Refresher?';
+        return 'Policy maker Perspective';
       case SeesawState.doHcsRefresher:
-        return 'Human Challenge Studies | Refresher';
+        return 'Research ethics committee member Perspective | Human Challenge Studies Refresher';
       case SeesawState.chooseHcsVideos:
-        return 'Human Challenge Studies | Perspectives';
+        return 'Research ethics committee member Perspective | Videos of Different Perspectives';
+      case SeesawState.makeDecisionBeforeCharlesWeijerVideo:
+        return 'Research ethics committee member Perspective | What is your Decision?';
+      case SeesawState.showStatsBeforeCharlesWeijerVideo:
+        return 'Research ethics committee member Perspective | See what others have Decided';
       case SeesawState.charlesWeijerVideo:
-        return '';//todo
+        return 'Research ethics committee member Perspective | Expert\'s View';
+      case SeesawState.makeDecisionAfterCharlesWeijerVideo:
+        return 'Research ethics committee member Perspective | What is your Decision after this Video?';
+      case SeesawState.showStatsAfterCharlesWeijerVideo:
+        return 'Research ethics committee member Perspective | See how others have Decided';
       case SeesawState.evaluation:
         return 'Evaluation';
       case SeesawState.thankYou:
