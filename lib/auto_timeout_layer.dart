@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'main.dart';
-
 class AutoTimeoutLayer extends StatefulWidget {
 
-  const AutoTimeoutLayer({super.key});
+  final Widget child;
+  final VoidCallback callback;
+
+  const AutoTimeoutLayer({required this.child, required this.callback, super.key});
 
   @override
   State<StatefulWidget> createState() => _AutoTimeoutLayerState();
@@ -37,61 +37,32 @@ class _AutoTimeoutLayerState extends State<AutoTimeoutLayer> {
   }
 
   void _handleTick([_]) {
-    //todo
     Duration duration = DateTime.timestamp().difference(_lastInteraction);
-    debugPrint('...tick... $duration');
+    // debugPrint('...tick... $duration');
     if(duration > const Duration(seconds: timeoutInSeconds)) {
       _handleTrigger();
     }
   }
 
-  void _resetTimer([_]) {
-    debugPrint('reset timer');
-    _lastInteraction = DateTime.timestamp();
-  }
-
   void _handleTrigger() {
     debugPrint('TRIGGERED!');
-    _autoReset(context);
-  }
-
-  void _autoReset(BuildContext context) {
-    // show the dialog
-    showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          content: const Text(
-              'It seems that nobody is interacting with me...\nResetting in 30 seconds.',
-              style: TextStyle(fontSize: textSizeSmall)),
-          actions: [
-            TextButton(
-                onPressed: _cancel,
-                child: const Padding(
-                    padding: EdgeInsets.all(12),
-                    child: Text('CANCEL',
-                        style: TextStyle(fontSize: textSizeSmall, fontWeight: FontWeight.bold, color: preparedSecondaryColor)))
-            ),
-          ],
-          elevation: 24.0,
-        ));
-  }
-
-  void _cancel() {
     _resetTimer();
-    Navigator.pop(context);
+    widget.callback();
+  }
+
+  void _resetTimer([_]) {
+    _lastInteraction = DateTime.timestamp();
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('Gesture detector covering an area of ${MediaQuery.of(context).size.width} x ${MediaQuery.of(context).size.height}');
     return GestureDetector(
       onTap: _resetTimer,
       onPanDown: _resetTimer,
-      onScaleStart: _resetTimer,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height
-      ),
+      onHorizontalDragEnd: _resetTimer,
+      onVerticalDragEnd: _resetTimer,
+      behavior: HitTestBehavior.translucent,
+      child: widget.child,
     );
   }
 }

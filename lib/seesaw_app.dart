@@ -253,39 +253,38 @@ class _SeesawAppState extends State<SeesawApp> {
           useMaterial3: true,
         ),
         home: Scaffold(
-            body: ScrollConfiguration(
-                    behavior:
-                    ScrollConfiguration.of(context).copyWith(scrollbars: false),
-                    child: SingleChildScrollView(
-                        controller: _scrollController,
-                        physics: const NeverScrollableScrollPhysics(),
-                        child: Stack(
-                          children: [
-                            const AutoTimeoutLayer(),
-                            Container(
-                                color: preparedPrimaryColor,
-                                child: Consumer<StateModel>(
-                                    builder: (context, state, child) {
-                                      return Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            _getNavigationWidget(state.seesawState),
-                                            Visibility(
-                                                visible:
-                                                _seesawState != SeesawState.welcome,
-                                                child: _getTopContainer()), // 1/6
-                                            _getMainContainer(state), // 2/3
-                                            _getBalancingSeesaw(), // 1/3
-                                            Visibility(
-                                                visible:
-                                                _seesawState == SeesawState.welcome,
-                                                child: _getBottomWidget()) // 1/6
-                                          ]);
-                                    }))
-                          ],
-                        )
-                    )
-                )
-            ));
+            resizeToAvoidBottomInset: true,
+            body: AutoTimeoutLayer(
+              callback: _doResetInteraction,
+              child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                      controller: _scrollController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      child: Container(
+                          color: preparedPrimaryColor,
+                          child: Consumer<StateModel>(
+                              builder: (context, state, child) {
+                                return Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      _getNavigationWidget(state.seesawState),
+                                      Visibility(
+                                          visible:
+                                          _seesawState != SeesawState.welcome,
+                                          child: _getTopContainer()), // 1/6
+                                      _getMainContainer(state), // 2/3
+                                      _getBalancingSeesaw(), // 1/3
+                                      Visibility(
+                                          visible:
+                                          _seesawState == SeesawState.welcome,
+                                          child: _getBottomWidget()) // 1/6
+                                    ]);
+                              })),
+                      )
+                  )
+              )
+            )
+          );
   }
 }
