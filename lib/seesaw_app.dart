@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:seesaw/auto_timeout_layer.dart';
 import 'package:seesaw/charles_weijer_video.dart';
 import 'package:seesaw/choose_hcs_videos.dart';
 import 'package:seesaw/evaluation.dart';
@@ -13,7 +14,6 @@ import 'package:seesaw/thank_you.dart';
 import 'package:seesaw/welcome.dart';
 
 import 'buttons.dart';
-import 'choose_hcs_refresher.dart';
 import 'choose_perspective.dart';
 import 'hcs_refresher_video.dart';
 import 'main.dart';
@@ -254,30 +254,38 @@ class _SeesawAppState extends State<SeesawApp> {
         ),
         home: Scaffold(
             body: ScrollConfiguration(
-                behavior:
+                    behavior:
                     ScrollConfiguration.of(context).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                    controller: _scrollController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    child: Container(
-                        color: preparedPrimaryColor,
-                        child: Consumer<StateModel>(
-                            builder: (context, state, child) {
-                          return Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                _getNavigationWidget(state.seesawState),
-                                Visibility(
-                                    visible:
-                                        _seesawState != SeesawState.welcome,
-                                    child: _getTopContainer()), // 1/6
-                                _getMainContainer(state), // 2/3
-                                _getBalancingSeesaw(), // 1/3
-                                Visibility(
-                                    visible:
-                                        _seesawState == SeesawState.welcome,
-                                    child: _getBottomWidget()) // 1/6
-                              ]);
-                        }))))));
+                    child: SingleChildScrollView(
+                        controller: _scrollController,
+                        physics: const NeverScrollableScrollPhysics(),
+                        child: Stack(
+                          children: [
+                            const AutoTimeoutLayer(),
+                            Container(
+                                color: preparedPrimaryColor,
+                                child: Consumer<StateModel>(
+                                    builder: (context, state, child) {
+                                      return Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            _getNavigationWidget(state.seesawState),
+                                            Visibility(
+                                                visible:
+                                                _seesawState != SeesawState.welcome,
+                                                child: _getTopContainer()), // 1/6
+                                            _getMainContainer(state), // 2/3
+                                            _getBalancingSeesaw(), // 1/3
+                                            Visibility(
+                                                visible:
+                                                _seesawState == SeesawState.welcome,
+                                                child: _getBottomWidget()) // 1/6
+                                          ]);
+                                    }))
+                          ],
+                        )
+                    )
+                )
+            ));
   }
 }
