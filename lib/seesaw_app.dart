@@ -26,6 +26,8 @@ class SeesawApp extends StatefulWidget {
   State<StatefulWidget> createState() => _SeesawAppState();
 }
 
+const version = '24.04.25.1';
+
 class _SeesawAppState extends State<SeesawApp> {
   final ScrollController _scrollController = ScrollController();
 
@@ -207,16 +209,25 @@ class _SeesawAppState extends State<SeesawApp> {
   Widget _getBottomWidget() {
     return SizedBox(
         height: MediaQuery.of(context).size.height / 3,
-        child: const Center(
-            child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Text(
-              'An interactive experience demonstrating ethical tradeoffs in times of crisis',
-              style: TextStyle(
-                  fontSize: textSizeLarge,
-                  color: preparedWhiteColor,
-                  decoration: TextDecoration.none)),
-        )));
+        child: const Stack(
+            children: [
+              Center(
+                  child: Text(
+                      'An interactive experience demonstrating ethical tradeoffs in times of crisis',
+                      style: TextStyle(
+                          fontSize: textSizeLarge,
+                          color: preparedWhiteColor,
+                          decoration: TextDecoration.none))),
+              Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text('Version: $version'),
+                  )
+              )
+            ]
+        )
+    );
   }
 
   @override
