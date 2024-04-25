@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/auto_timeout_layer.dart';
 import 'package:seesaw/charles_weijer_video.dart';
+import 'package:seesaw/choose_evaluation.dart';
 import 'package:seesaw/choose_hcs_videos.dart';
 import 'package:seesaw/evaluation.dart';
 import 'package:seesaw/make_decision_before_video.dart';
@@ -27,7 +28,7 @@ class SeesawApp extends StatefulWidget {
   State<StatefulWidget> createState() => _SeesawAppState();
 }
 
-const version = '24.04.25.2';
+const version = '24.04.25.3';
 
 class _SeesawAppState extends State<SeesawApp> {
   final ScrollController _scrollController = ScrollController();
@@ -90,8 +91,6 @@ class _SeesawAppState extends State<SeesawApp> {
         return const Text('error: todo'); //todo
       case SeesawState.perspectiveCommitteeMember:
         return const PerspectiveCommitteeMember();
-      // case SeesawState.chooseHcsRefresher:
-      //   return const HcsChooseRefresher();
       case SeesawState.doHcsRefresher:
         return const HcsRefresherVideo();
       case SeesawState.chooseHcsVideos:
@@ -108,6 +107,8 @@ class _SeesawAppState extends State<SeesawApp> {
         return const MakeDecisionAfterVideo();
       case SeesawState.showStatsAfterCharlesWeijerVideo:
         return const ShowStatsAfterVideo();
+      case SeesawState.chooseEvaluation:
+        return const ChooseEvaluation();
       case SeesawState.evaluation:
         return const EvaluationPage();
       case SeesawState.thankYou:

@@ -14,6 +14,7 @@ enum SeesawState {
   charlesWeijerVideo,
   makeDecisionAfterCharlesWeijerVideo,
   showStatsAfterCharlesWeijerVideo,
+  chooseEvaluation,
   evaluation,
   thankYou
 }

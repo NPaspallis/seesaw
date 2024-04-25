@@ -22,13 +22,13 @@ class _ChooseEvaluationState extends State<ChooseEvaluation> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const Padding(
-                padding: EdgeInsets.all(50),
+                padding: EdgeInsets.symmetric(horizontal: 280),
                 child: Text('Are you happy to answer some questions about your experience of using the See Saw?',
                     style: TextStyle(
                         fontSize: textSizeLarge,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.bold,
                         color: preparedWhiteColor,
-                        decoration: TextDecoration.none))),
+                        decoration: TextDecoration.none), textAlign: TextAlign.center,)),
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
