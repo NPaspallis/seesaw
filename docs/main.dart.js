@@ -66910,7 +66910,7 @@ i=n.Q
 i===$&&A.a()
 p=t.p
 i=A.e0(A.b([s,q,n.xY(k,350,j,i,"A doctor explaining the risks of HCS with COVID-19",r[2],n.ga8W())],p),B.I,B.ae,B.w)
-k=r[0]&&r[1]&&r[2]
+k=r[0]||r[1]||r[2]
 k=A.cY(A.b([B.Oi,i,B.bJ,A.wH(A.qg(a,"CARRY ON",n.gl9()),k)],p),B.I,B.ae,B.w)
 if(n.d!==B.f2){o=n.WF()
 j=n.gdR()[o].a.goE()

@@ -124,6 +124,7 @@ class _EvaluationPageState extends State<EvaluationPage> {
           context, 'You must choose a rating for each item before submitting');
     } else {
       showSnack(context, 'Your choices were submitted');
+      // todo submit to Firebase
       openThankYouPage(context);
     }
   }
