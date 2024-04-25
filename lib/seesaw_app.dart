@@ -9,6 +9,7 @@ import 'package:seesaw/perspective_committee_member.dart';
 import 'package:seesaw/seesaw_widget.dart';
 import 'package:seesaw/show_stats_after_video.dart';
 import 'package:seesaw/show_stats_before_video.dart';
+import 'package:seesaw/sort_pros_cons.dart';
 import 'package:seesaw/state_model.dart';
 import 'package:seesaw/thank_you.dart';
 import 'package:seesaw/welcome.dart';
@@ -95,6 +96,8 @@ class _SeesawAppState extends State<SeesawApp> {
         return const HcsRefresherVideo();
       case SeesawState.chooseHcsVideos:
         return const ChooseHcsVideos();
+      case SeesawState.sortProsCons:
+        return const SortProsCons();
       case SeesawState.makeDecisionBeforeCharlesWeijerVideo:
         return const MakeDecisionBeforeVideo();
       case SeesawState.showStatsBeforeCharlesWeijerVideo:

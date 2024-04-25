@@ -8,6 +8,7 @@ enum SeesawState {
   // chooseHcsRefresher,
   doHcsRefresher,
   chooseHcsVideos,
+  sortProsCons,
   makeDecisionBeforeCharlesWeijerVideo,
   showStatsBeforeCharlesWeijerVideo,
   charlesWeijerVideo,
