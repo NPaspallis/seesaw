@@ -170,13 +170,13 @@ class _ShowStatsAfterVideoState extends State<ShowStatsAfterVideo> {
               child: Slider(
                 value: _switchedFromNoToYes,
                 min: 0,
-                max: 50,
-                divisions: 25,
+                max: 100,
+                divisions: 50,
                 label: '${_switchedFromNoToYes.round()} switched to YES / ${_switchedFromYesToNo.round()} switched to NO',
                 onChanged: (double value) {
                   setState(() {
                     _switchedFromNoToYes = value;
-                    _switchedFromYesToNo = 50 - _switchedFromNoToYes;
+                    _switchedFromYesToNo = 100 - _switchedFromNoToYes;
                   });
                 },
               ),
