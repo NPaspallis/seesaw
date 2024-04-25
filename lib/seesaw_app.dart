@@ -26,7 +26,7 @@ class SeesawApp extends StatefulWidget {
   State<StatefulWidget> createState() => _SeesawAppState();
 }
 
-const version = '24.04.25.1';
+const version = '24.04.25.2';
 
 class _SeesawAppState extends State<SeesawApp> {
   final ScrollController _scrollController = ScrollController();

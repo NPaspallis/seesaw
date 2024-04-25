@@ -117,10 +117,7 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
                         ]
                     ),
                     const SizedBox(height: 10),
-                    Visibility(
-                        visible: kDebugMode || watched[0] || watched[1] || watched[2],
-                        child: getOutlinedButton(context, 'CARRY ON', proceed)
-                    )
+                    getOutlinedButton(context, 'CARRY ON', proceed)
                   ],
                 ),
                 // video layer

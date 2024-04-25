@@ -15,7 +15,7 @@ class AutoTimeoutLayer extends StatefulWidget {
 }
 
 const int defaultTimeoutInSeconds = 300; // 5 minutes
-const int defaultTimeoutInSecondsInDebugMode = 30; // // in debug mode simply wait for 1/2 minutes
+const int defaultTimeoutInSecondsInDebugMode = 60; // // in debug mode simply wait for 1 minute
 const int timeoutInSeconds = kDebugMode ? defaultTimeoutInSecondsInDebugMode : defaultTimeoutInSeconds;
 
 class _AutoTimeoutLayerState extends State<AutoTimeoutLayer> {
