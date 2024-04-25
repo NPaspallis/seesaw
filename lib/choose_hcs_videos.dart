@@ -48,7 +48,7 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
   late double _tp1;
   late double _lp2;
   late double _tp2;
-  var colors = [preparedOrangeColor, preparedBrightRed, preparedCyanColor];
+  var colors = [preparedOrangeColor, preparedBrightRedColor, preparedCyanColor];
   var watched = [false, false, false];
 
   late final List<VideoPlayerController> _controllers = List.empty(growable: true);
