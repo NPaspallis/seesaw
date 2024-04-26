@@ -5,7 +5,6 @@ enum SeesawState {
   choosePerspective,
   perspectivePolicyMaker,
   perspectiveCommitteeMember,
-  // chooseHcsRefresher,
   doHcsRefresher,
   chooseHcsVideos,
   sortProsCons,

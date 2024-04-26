@@ -73,11 +73,11 @@ class DraggingListItem extends StatelessWidget {
   const DraggingListItem({
     super.key,
     required this.dragKey,
-    required this.bucketItem
+    required this.bucketItemWithColor
   });
 
   final GlobalKey dragKey;
-  final BucketItemWithColor bucketItem;
+  final BucketItemWithColor bucketItemWithColor;
 
   @override
   Widget build(BuildContext context) {
@@ -87,15 +87,16 @@ class DraggingListItem extends StatelessWidget {
             key: dragKey,
             // child: Text(bucketItem.label) // todo
           child: Container(
+              width: 400,
               padding: const EdgeInsets.symmetric(horizontal: 5),
               decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   border: Border.all(
-                    color: bucketItem.color,
+                    color: bucketItemWithColor.color,
                     width: 2.0,
                   ),
               ),
-              child: Text(bucketItem.label, style: TextStyle(fontWeight: FontWeight.bold, fontSize: textSizeSmallest, color: bucketItem.color))
+              child: Text(bucketItemWithColor.label, style: TextStyle(fontWeight: FontWeight.bold, fontSize: textSizeSmaller, color: bucketItemWithColor.color))
           )
             // child: BucketItemWidget(bucketItem: bucketItem),
         )
@@ -134,6 +135,7 @@ class _SortProsConsState extends State<SortProsCons> {
     for(int i = 0; i < bucketItems.length; i++) {
       bucketNone.add(BucketItemWithColor(bucketItems[i], bucketItemColors[i]));
     }
+    bucketNone.shuffle();
   }
 
   @override
@@ -175,22 +177,27 @@ class _SortProsConsState extends State<SortProsCons> {
       data: bucketItem,
       delay: const Duration(milliseconds: 300),
       dragAnchorStrategy: pointerDragAnchorStrategy,
-      feedback: DraggingListItem(
-        dragKey: _draggableKey,
-        bucketItem: bucketItem,
-      ),
+      feedback: DraggingListItem(dragKey: _draggableKey, bucketItemWithColor: bucketItem),
+      childWhenDragging: BucketItemWidget(bucketItem: bucketItem),
       child: BucketItemWidget(bucketItem: bucketItem),
     );
   }
 
   Widget _getItemsColumn() {
-    final List<Widget> bucketItemWidgets = [];
+    final List<Widget> bucketItemWidgets = [
+      const Padding(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: Text('Press and hold on each item, then drag it to the correct bucket.',
+            style: TextStyle(fontSize: textSizeSmall, color: preparedWhiteColor))
+      )
+    ];
     for(int i = 0; i < bucketNone.length; i++) {
       bucketItemWidgets.add(_buildBucketItemDraggableView(bucketNone[i]));
     }
     return SizedBox(
         width: MediaQuery.of(context).size.width / 3,
-        child: Wrap(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: bucketItemWidgets
         )
     );
