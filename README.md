@@ -8,7 +8,7 @@ The app is ideally displayed in `1920 x 1080` resolution.
 
 ## Build for Web
 
-* Update the `version` in file `/lib/seesaw_app.dart`
+* Update the `version` in file `/lib/seesaw_app.dart` and in `pubspec.yaml`
 * Run `flutter build web --base-href /seesaw/`
 
 ## Deploy on Web (github.io)

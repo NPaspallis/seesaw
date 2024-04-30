@@ -41,10 +41,10 @@ class _ThankYouState extends State<ThankYou> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [ // logos
-                Image.asset('logos/eu_co_funded_en_400.png', width: MediaQuery.of(context).size.width / 4.5),
-                Image.asset('logos/amsterdam_umc_400.png', width: MediaQuery.of(context).size.width / 4.5),
-                Image.asset('logos/prepared_400.png', width: MediaQuery.of(context).size.width / 4.5),
-                Image.asset('logos/eogs_200.png', width: MediaQuery.of(context).size.width / 9),
+                Image.asset('assets/eu_co_funded_en_400.png', width: MediaQuery.of(context).size.width / 4.5),
+                Image.asset('assets/amsterdam_umc_400.png', width: MediaQuery.of(context).size.width / 4.5),
+                Image.asset('assets/prepared_400.png', width: MediaQuery.of(context).size.width / 4.5),
+                Image.asset('assets/eogs_200.png', width: MediaQuery.of(context).size.width / 9),
               ],
             ),
             const Padding(
