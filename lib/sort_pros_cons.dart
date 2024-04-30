@@ -157,6 +157,7 @@ class _SortProsConsState extends State<SortProsCons> {
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _getBucket(Bucket.pros, 'PROS', preparedSecondaryColor),
                 _getItemsColumn(),
@@ -188,7 +189,7 @@ class _SortProsConsState extends State<SortProsCons> {
       const Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
           child: Text('Press and hold on each item, then drag it to the correct bucket.',
-            style: TextStyle(fontSize: textSizeSmall, color: preparedWhiteColor))
+            style: TextStyle(fontSize: textSizeMedium, color: preparedWhiteColor))
       )
     ];
     for(int i = 0; i < bucketNone.length; i++) {

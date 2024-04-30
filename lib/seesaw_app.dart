@@ -28,7 +28,7 @@ class SeesawApp extends StatefulWidget {
   State<StatefulWidget> createState() => _SeesawAppState();
 }
 
-const version = '24.04.26+1';
+const version = '24.04.30+1';
 
 class _SeesawAppState extends State<SeesawApp> {
   final ScrollController _scrollController = ScrollController();
@@ -41,6 +41,15 @@ class _SeesawAppState extends State<SeesawApp> {
     super.initState();
     _balancingSeesaw = const BalancingSeesaw();
     _seesawState = SeesawState.welcome;
+  }
+
+  @override
+  void activate() {
+    super.activate();
+    _scrollController.animateTo(
+        _scrollController.position.minScrollExtent,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease);
   }
 
   void _resetInteraction(BuildContext context) {
@@ -88,7 +97,7 @@ class _SeesawAppState extends State<SeesawApp> {
       case SeesawState.choosePerspective:
         return const ChoosePerspective();
       case SeesawState.perspectivePolicyMaker:
-        return const Text('error: todo'); //todo
+        return ThankYou(_scrollController); //const Text('error: todo'); //todo
       case SeesawState.perspectiveCommitteeMember:
         return const PerspectiveCommitteeMember();
       case SeesawState.doHcsRefresher:
@@ -130,23 +139,25 @@ class _SeesawAppState extends State<SeesawApp> {
   String _getNavigationLabel(final SeesawState seesawState) {
     switch (seesawState) {
       case SeesawState.choosePerspective:
-        return 'Choose Perspective ...';
+        return 'Choose perspective ...';
       case SeesawState.perspectiveCommitteeMember:
-        return 'Research ethics committee member Perspective';
+        return 'Research ethics committee member perspective';
       case SeesawState.perspectivePolicyMaker:
         return 'Policy maker Perspective';
       case SeesawState.doHcsRefresher:
-        return 'Research ethics committee member Perspective | Human Challenge Studies Refresher';
+        return 'Research ethics committee member perspective | Human Challenge Studies refresher';
       case SeesawState.chooseHcsVideos:
-        return 'Research ethics committee member Perspective | Videos of Different Perspectives';
+        return 'Research ethics committee member Perspective | Videos of different perspectives';
+      case SeesawState.sortProsCons:
+        return 'Research ethics committee member Perspective | Identify pros and cons of Human Challenge Studies';
       case SeesawState.makeDecisionBeforeCharlesWeijerVideo:
-        return 'Research ethics committee member Perspective | What is your Decision?';
+        return 'Research ethics committee member Perspective | What is your decision?';
       case SeesawState.showStatsBeforeCharlesWeijerVideo:
-        return 'Research ethics committee member Perspective | See what others have Decided';
+        return 'Research ethics committee member Perspective | See what others have decided';
       case SeesawState.charlesWeijerVideo:
         return 'Research ethics committee member Perspective | Expert\'s View';
       case SeesawState.makeDecisionAfterCharlesWeijerVideo:
-        return 'Research ethics committee member Perspective | What is your Decision after this Video?';
+        return 'Research ethics committee member Perspective | What is your decision after this Video?';
       case SeesawState.showStatsAfterCharlesWeijerVideo:
         return 'Research ethics committee member Perspective | See how others have Decided';
       case SeesawState.evaluation:
@@ -195,21 +206,6 @@ class _SeesawAppState extends State<SeesawApp> {
         ));
   }
 
-  Container _getTopContainer() {
-    return Container(
-        height: MediaQuery.of(context).size.height / 6,
-        color: Colors.red,
-        alignment: Alignment.center,
-        child: const Text(
-          'An interactive experience demonstrating ethical tradeoffs in times of crisis',
-          style: TextStyle(
-              fontSize: 32,
-              color: preparedWhiteColor,
-              decoration: TextDecoration.none),
-          textAlign: TextAlign.center,
-        ));
-  }
-
   Widget _getBottomWidget() {
     return SizedBox(
         height: MediaQuery.of(context).size.height / 3,
@@ -232,15 +228,6 @@ class _SeesawAppState extends State<SeesawApp> {
             ]
         )
     );
-  }
-
-  @override
-  void activate() {
-    super.activate();
-    _scrollController.animateTo(
-        _scrollController.position.minScrollExtent,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.ease);
   }
 
   @override
@@ -280,19 +267,18 @@ class _SeesawAppState extends State<SeesawApp> {
                           color: preparedPrimaryColor,
                           child: Consumer<StateModel>(
                               builder: (context, state, child) {
+                                debugPrint('drawing main screen with state: ${state.seesawState}');
                                 return Column(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      _getNavigationWidget(state.seesawState),
                                       Visibility(
-                                          visible:
-                                          _seesawState != SeesawState.welcome,
-                                          child: _getTopContainer()), // 1/6
+                                          visible: state.seesawState != SeesawState.thankYou,
+                                          child: _getNavigationWidget(state.seesawState)),
                                       _getMainContainer(state), // 2/3
                                       _getBalancingSeesaw(), // 1/3
                                       Visibility(
                                           visible:
-                                          _seesawState == SeesawState.welcome,
+                                          state.seesawState == SeesawState.welcome,
                                           child: _getBottomWidget()) // 1/6
                                     ]);
                               })),

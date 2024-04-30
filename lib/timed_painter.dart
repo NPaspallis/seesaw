@@ -8,8 +8,11 @@ import 'main.dart';
 class TimedBackground extends StatefulWidget {
 
   final VoidCallback callback;
+  final Color backgroundColor;
+  final Color shadingColor;
+  final int screenRatio;
 
-  const TimedBackground(this.callback, {super.key});
+  const TimedBackground(this.callback, {super.key, this.backgroundColor = preparedPrimaryColor, this.shadingColor = preparedShadeColor, this.screenRatio = 1});
 
   @override
   State<TimedBackground> createState() => _TimedBackgroundState();
@@ -19,7 +22,7 @@ const int stepInMilliseconds = 20;
 
 class _TimedBackgroundState extends State<TimedBackground> {
 
-  final int delayInMilliseconds = (kDebugMode ? 1 : 10) * 1000; // 5 seconds
+  final int delayInMilliseconds = (kDebugMode ? 10 : 30) * 1000; // 30 seconds
 
   late Timer timer;
   int _elapsedTimeMilliseconds = 0;
@@ -38,18 +41,24 @@ class _TimedBackgroundState extends State<TimedBackground> {
   }
 
   @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          color: preparedPrimaryColor,
+          height: MediaQuery.of(context).size.height / widget.screenRatio,
+          color: widget.backgroundColor
         ),
         Container(
           width: MediaQuery.of(context).size.width * _elapsedTimeMilliseconds / delayInMilliseconds,
-          height: MediaQuery.of(context).size.height,
-          color: preparedShadeColor,
+          height: MediaQuery.of(context).size.height / widget.screenRatio,
+          color: widget.shadingColor
         ),
       ],
     );
