@@ -28,23 +28,32 @@ class _ThankYouState extends State<ThankYou> {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Expanded(
-              child: Center(
-                child: Text(
-                    'Thank you for participating to this interactive experience.',
-                    style: TextStyle(fontSize: textSizeLarger, color: preparedPrimaryColor, fontWeight: FontWeight.w900, decoration: TextDecoration.none),
-                    textAlign: TextAlign.center),
-              ),
+            const Center(
+              child: Text(
+                  'Thank you for participating to this interactive experience.',
+                  style: TextStyle(fontSize: textSizeLarger, color: preparedPrimaryColor, fontWeight: FontWeight.w900, decoration: TextDecoration.none),
+                  textAlign: TextAlign.center),
             ),
+            const SizedBox(height: 128),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [ // portraits
+                _getPortraitWithName('assets/doris.png', 'Doris Schroeder'),
+                _getPortraitWithName('assets/natalie.png', 'Natalie Evans'),
+              ],
+            ),
+            const SizedBox(height: 128),
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [ // logos
-                Image.asset('assets/eu_co_funded_en_400.png', width: MediaQuery.of(context).size.width / 4.5),
-                Image.asset('assets/amsterdam_umc_400.png', width: MediaQuery.of(context).size.width / 4.5),
-                Image.asset('assets/prepared_400.png', width: MediaQuery.of(context).size.width / 4.5),
-                Image.asset('assets/eogs_200.png', width: MediaQuery.of(context).size.width / 9),
+                Image.asset('assets/eu_co_funded_en_400.png'),
+                Image.asset('assets/amsterdam_umc_400.png'),
+                Image.asset('assets/prepared_400.png'),
+                Image.asset('assets/eogs_200.png'),
               ],
             ),
             const Padding(
@@ -54,6 +63,24 @@ class _ThankYouState extends State<ThankYou> {
             TimedBackground(() => reset(), backgroundColor: preparedPrimaryColor, shadingColor: preparedSecondaryColor, screenRatio: 32),
           ],
         )
+    );
+  }
+
+  Widget _getPortraitWithName(final String imageAsset, final String name) {
+    return Column(
+      children: [
+        Container(
+          width: 200,
+          height: 200,
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: AssetImage(imageAsset),
+              )
+          ),
+        ),
+        Text(name, style: const TextStyle(fontSize: textSizeSmall, fontWeight: FontWeight.w500, color: preparedPrimaryColor), textAlign: TextAlign.center)
+      ],
     );
   }
 
