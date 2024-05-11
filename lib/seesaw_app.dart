@@ -211,13 +211,17 @@ class _SeesawAppState extends State<SeesawApp> {
         height: MediaQuery.of(context).size.height / 3,
         child: const Stack(
             children: [
-              Center(
-                  child: Text(
-                      'An interactive experience demonstrating ethical tradeoffs in times of crisis',
-                      style: TextStyle(
-                          fontSize: textSizeLarge,
-                          color: preparedWhiteColor,
-                          decoration: TextDecoration.none))),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Center(
+                    child: Text(
+                        'An interactive experience demonstrating ethical tradeoffs in times of crisis',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: textSizeLarge,
+                            color: preparedWhiteColor,
+                            decoration: TextDecoration.none))),
+              ),
               Align(
                   alignment: Alignment.bottomRight,
                   child: Padding(

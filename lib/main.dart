@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:seesaw/firebase_options.dart';
 import 'package:seesaw/seesaw_app.dart';
 import 'package:seesaw/state_model.dart';
 
@@ -44,7 +47,13 @@ const double textSizeSmaller = 20;
 const double textSizeSmallerer = 18;
 const double textSizeSmallest = 16;
 
-void main() {
+Future<void> main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: firebaseOptions
+  );
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => StateModel(),

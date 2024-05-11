@@ -161,7 +161,7 @@ class _SortProsConsState extends State<SortProsCons> {
               children: [
                 _getBucket(Bucket.pros, 'PROS', preparedSecondaryColor),
                 _getItemsColumn(),
-                _getBucket(Bucket.cons, 'CONS', preparedBlackColor),
+                _getBucket(Bucket.cons, 'CONS', Colors.red.shade300),
               ],
             ),
             bucketNone.isNotEmpty ?
