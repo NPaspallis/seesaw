@@ -20,7 +20,7 @@ enum SeesawState {
 
 class StateModel extends ChangeNotifier {
 
-  SeesawState _seesawState = SeesawState.welcome;
+  SeesawState _seesawState = SeesawState.sortProsCons;
 
   SeesawState get seesawState => _seesawState;
 

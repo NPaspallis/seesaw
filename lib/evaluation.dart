@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
+import 'package:seesaw/feedback_entry.dart';
+import 'package:seesaw/participant_entry.dart';
 import 'package:seesaw/state_model.dart';
 
 import 'main.dart';
@@ -81,11 +84,11 @@ class _EvaluationPageState extends State<EvaluationPage> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('fully disagree', style: TextStyle(fontSize: textSizeSmaller, fontWeight: FontWeight.bold)),
-                const SizedBox(width: 10),
+                const Text('Fully disagree', style: TextStyle(fontSize: textSizeSmaller, fontWeight: FontWeight.bold, color: Colors.white)),
+                const SizedBox(width: 20),
                 getRatingBar(index),
-                const SizedBox(width: 10),
-                const Text('fully agree', style: TextStyle(fontSize: textSizeSmaller, fontWeight: FontWeight.bold)),
+                const SizedBox(width: 20),
+                const Text('Fully agree', style: TextStyle(fontSize: textSizeSmaller, fontWeight: FontWeight.bold, color: Colors.white)),
               ],
             ),
           ],
@@ -99,11 +102,14 @@ class _EvaluationPageState extends State<EvaluationPage> {
       initialRating: 0,
       direction: Axis.horizontal,
       allowHalfRating: false,
+      maxRating: 7,
+      minRating: 0,
       itemCount: 7,
+      glowColor: Colors.yellow,
       ratingWidget: RatingWidget(
-          full: const Icon(Icons.star),
-          half: const Icon(Icons.star_half),
-          empty: const Icon(Icons.star_border)),
+          full: const Icon(Icons.star, color: Colors.yellow,),
+          half: const Icon(Icons.star_half, color: Colors.yellow,),
+          empty: const Icon(Icons.star_border, color: Colors.yellow,)),
       itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
       onRatingUpdate: (rating) {
         ratings[index] = rating;
@@ -124,8 +130,52 @@ class _EvaluationPageState extends State<EvaluationPage> {
           context, 'You must choose a rating for each item before submitting');
     } else {
       showSnack(context, 'Your choices were submitted');
-      // todo submit to Firebase
-      openThankYouPage(context);
+
+      //Process feedback
+      ParticipantEntry.currentEntry!.feedbackEntry = FeedbackEntry(
+          ratings[0] as int,
+          ratings[1] as int,
+          ratings[2] as int,
+          ratings[3] as int
+      );
+
+      //Update existing entry on Firestore:
+      FirebaseFirestore.instance.collection(ParticipantEntry.name)
+        .doc(ParticipantEntry.currentEntry!.participantID)
+        .update(ParticipantEntry.currentEntry!.toJson()).then(
+        (value) => openThankYouPage(context),
+      )
+      .onError((error, stackTrace) {
+        debugPrint(error.toString());
+        showDialog(context: context, builder: (context) {
+          return AlertDialog(
+            backgroundColor: Colors.red,
+            title: const Text("Error"),
+            content: const Text("There was an error submitting your feedback", style: TextStyle(color: Colors.white)),
+            icon: const Icon(Icons.error, color: Colors.white,),
+            actions: [
+
+              //Skip button
+              OutlinedButton(
+                onPressed: () {
+                  openThankYouPage(context);
+                },
+                child: const Text("Skip")
+              ),
+
+              //Try again button
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    submit(context);
+                  },
+                  child: const Text("Try again")
+              )
+            ],
+          );
+        },);
+      });
+
     }
   }
 

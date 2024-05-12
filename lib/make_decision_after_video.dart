@@ -1,7 +1,11 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
 import 'package:seesaw/main.dart';
+import 'package:seesaw/participant_entry.dart';
 import 'package:seesaw/state_model.dart';
 
 class MakeDecisionAfterVideo extends StatefulWidget {
@@ -50,13 +54,23 @@ class _MakeDecisionAfterVideoState extends State<MakeDecisionAfterVideo> {
 
   void chooseYes() {
     debugPrint('after-yes');
-    //todo update firebase
+    ParticipantEntry.currentEntry?.pollEntry?.finalDecision = true;
+    writeEntryToDB();
     Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
   }
 
   void chooseNo() {
     debugPrint('after-no');
-    //todo update firebase
+    ParticipantEntry.currentEntry?.pollEntry?.finalDecision = false;
+    writeEntryToDB();
     Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
+  }
+
+  void writeEntryToDB() {
+    debugPrint(ParticipantEntry.currentEntry?.toJson().toString());
+    FirebaseFirestore.instance
+        .collection(ParticipantEntry.name)
+        .doc(ParticipantEntry.currentEntry!.participantID)
+        .set(ParticipantEntry.currentEntry!.toJson());
   }
 }

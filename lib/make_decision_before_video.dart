@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
 import 'package:seesaw/main.dart';
+import 'package:seesaw/participant_entry.dart';
+import 'package:seesaw/poll_entry.dart';
 import 'package:seesaw/state_model.dart';
 
 class MakeDecisionBeforeVideo extends StatefulWidget {
@@ -50,13 +53,26 @@ class _MakeDecisionBeforeVideoState extends State<MakeDecisionBeforeVideo> {
 
   void chooseYes() {
     debugPrint('before-yes');
-    //todo update firebase
+    ParticipantEntry.currentEntry = ParticipantEntry(
+      pollEntry: PollEntry(
+        initialDecision: true
+      )
+    );
+
+    debugPrint(ParticipantEntry.currentEntry.toString());
     Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
   }
 
   void chooseNo() {
     debugPrint('before-no');
-    //todo update firebase
+
+    ParticipantEntry.currentEntry = ParticipantEntry(
+        pollEntry: PollEntry(
+            initialDecision: false
+        )
+    );
+
+    debugPrint(ParticipantEntry.currentEntry.toString());
     Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
   }
 }
