@@ -17,15 +17,15 @@ class ChooseHcsVideos extends StatefulWidget {
 }
 
 const videoUrls = [
-  'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.mp4',
-  'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.mp4',
-  'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.mp4',
+  'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/clip1_healthy_volunteers.mp4',
+  'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/clip2_chappell_singer_hcs.mp4',
+  'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.mp4',//todo
 ];
 
-const subtitlesUrls = [
-  'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.srt',
-  'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.srt',
-  'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.srt',
+const subtitlesUrls = [ // todo delete as videos seem to embed subtitles
+  'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.srt',//todo
+  'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.srt',//todo
+  'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.srt',//todo
 ];
 
 const _videoDescriptions = [
@@ -111,9 +111,9 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
                     ),
                     Row(
                         children: [
-                          _getClickableBall(colors[0], _side, _lp0, _tp0, "A person's experience of being part of a COVID-19 HCS", watched[0], watchVideo0),
-                          _getClickableBall(colors[1], _side, _lp1, _tp1, "Read from Peter Singer’s article on COVID-19 HCS", watched[1], watchVideo1),
-                          _getClickableBall(colors[2], _side, _lp2, _tp2, "A doctor explaining the risks of HCS with COVID-19", watched[2], watchVideo2)
+                          _getClickableBall(colors[0], _side, _lp0, _tp0, "Healthy volunteers' experience of HCSs", watched[0], watchVideo0),
+                          _getClickableBall(colors[1], _side, _lp1, _tp1, "Chappell and Singer on HCSs", watched[1], watchVideo1),
+                          _getClickableBall(colors[2], _side, _lp2, _tp2, "Ethical controversies about HCSs", watched[2], watchVideo2)
                         ]
                     ),
                     const SizedBox(height: 10),
