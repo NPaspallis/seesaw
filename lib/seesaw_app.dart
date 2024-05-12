@@ -7,6 +7,7 @@ import 'package:seesaw/choose_hcs_videos.dart';
 import 'package:seesaw/evaluation.dart';
 import 'package:seesaw/make_decision_before_video.dart';
 import 'package:seesaw/perspective_committee_member.dart';
+import 'package:seesaw/secret_stats_screen.dart';
 import 'package:seesaw/seesaw_widget.dart';
 import 'package:seesaw/show_stats_after_video.dart';
 import 'package:seesaw/show_stats_before_video.dart';
@@ -122,6 +123,8 @@ class _SeesawAppState extends State<SeesawApp> {
         return const EvaluationPage();
       case SeesawState.thankYou:
         return ThankYou(_scrollController);
+      case SeesawState.secretStatsScreen:
+        return const SecretStatsScreen();
       default:
         return Text('error: unknown state: ${state.seesawState}',
             style: const TextStyle(color: Colors.red));
@@ -209,9 +212,9 @@ class _SeesawAppState extends State<SeesawApp> {
   Widget _getBottomWidget() {
     return SizedBox(
         height: MediaQuery.of(context).size.height / 3,
-        child: const Stack(
+        child: Stack(
             children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Center(
                     child: Text(
@@ -222,12 +225,25 @@ class _SeesawAppState extends State<SeesawApp> {
                             color: preparedWhiteColor,
                             decoration: TextDecoration.none))),
               ),
-              Align(
+              const Align(
                   alignment: Alignment.bottomRight,
                   child: Padding(
                     padding: EdgeInsets.all(10),
                     child: Text('Version: $version'),
                   )
+              ),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: TextButton(
+                    onPressed: () {
+                      Provider.of<StateModel>(context, listen: false)
+                          .setSeesawState(SeesawState.secretStatsScreen);
+                    },
+                    child: const Icon(Icons.admin_panel_settings_outlined),
+                  ),
+                )
               )
             ]
         )

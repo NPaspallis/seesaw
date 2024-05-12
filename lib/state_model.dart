@@ -15,7 +15,8 @@ enum SeesawState {
   showStatsAfterCharlesWeijerVideo,
   chooseEvaluation,
   evaluation,
-  thankYou
+  thankYou,
+  secretStatsScreen
 }
 
 class StateModel extends ChangeNotifier {
