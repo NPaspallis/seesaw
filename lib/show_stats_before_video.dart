@@ -178,7 +178,12 @@ class _ShowStatsBeforeVideoState extends State<ShowStatsBeforeVideo> {
                 ));
           }
           else {
-            return const CircularProgressIndicator();
+            return SizedBox(
+              height: MediaQuery.of(context).size.height * 2 / 3,
+              child: const Center(
+                  child: CircularProgressIndicator(color: Colors.white,),
+              ),
+            );
           }
         }
       },

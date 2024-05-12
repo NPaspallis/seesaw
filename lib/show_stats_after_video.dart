@@ -261,7 +261,7 @@ class _ShowStatsAfterVideoState extends State<ShowStatsAfterVideo> {
                       ),
                     ),
                     Visibility(
-                      visible: kDebugMode,
+                      visible: false, //was previously kDebugMode
                       child: Slider(
                         value: _responsesYesAfter as double,
                         min: 0,
@@ -281,7 +281,12 @@ class _ShowStatsAfterVideoState extends State<ShowStatsAfterVideo> {
                 ));
           }
           else {
-            return const CircularProgressIndicator();
+            return SizedBox(
+              height: MediaQuery.of(context).size.height * 2 / 3,
+              child: const Center(
+                child: CircularProgressIndicator(color: Colors.white,),
+              ),
+            );
           }
         }
       },
