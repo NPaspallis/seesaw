@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +56,7 @@ Future<void> main() async {
   runApp(
     ChangeNotifierProvider(
       create: (context) => StateModel(),
-      child: const SeesawApp(), // todo add layer which collects all interactions and resets the app when there is no activity for a preset number of minutes, e.g. 5
+      child: const SeesawApp(),
     ),
   );
 }

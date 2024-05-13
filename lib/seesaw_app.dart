@@ -22,16 +22,39 @@ import 'hcs_refresher_video.dart';
 import 'main.dart';
 import 'make_decision_after_video.dart';
 
-class SeesawApp extends StatefulWidget {
+class SeesawApp extends StatelessWidget {
   const SeesawApp({super.key});
 
   @override
-  State<StatefulWidget> createState() => _SeesawAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Seesaw App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: preparedPrimaryColor),
+          primaryColor: preparedPrimaryColor,
+          splashColor: preparedSecondaryColor,
+          // fontFamily: 'Open Sans',
+          useMaterial3: true,
+        ),
+        routes: {
+          "/": (context) => const HomeScreen(),
+          "/stats":  (context) => const SecretStatsScreen(),
+        },
+    );
+  }
 }
 
-const version = '24.05.12+1';
+const version = '24.05.13+1';
 
-class _SeesawAppState extends State<SeesawApp> {
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
 
   late BalancingSeesaw _balancingSeesaw;
@@ -123,8 +146,6 @@ class _SeesawAppState extends State<SeesawApp> {
         return const EvaluationPage();
       case SeesawState.thankYou:
         return ThankYou(_scrollController);
-      case SeesawState.secretStatsScreen:
-        return const SecretStatsScreen();
       default:
         return Text('error: unknown state: ${state.seesawState}',
             style: const TextStyle(color: Colors.red));
@@ -141,12 +162,12 @@ class _SeesawAppState extends State<SeesawApp> {
 
   String _getNavigationLabel(final SeesawState seesawState) {
     switch (seesawState) {
-      case SeesawState.choosePerspective:
-        return 'Choose perspective ...';
-      case SeesawState.perspectiveCommitteeMember:
-        return 'Research ethics committee member perspective';
+      // case SeesawState.choosePerspective:
+      //   return 'Choose perspective ...';
       case SeesawState.perspectivePolicyMaker:
         return 'Policy maker Perspective';
+      case SeesawState.perspectiveCommitteeMember:
+        return 'Research ethics committee member perspective';
       case SeesawState.doHcsRefresher:
         return 'Research ethics committee member perspective | Human Challenge Studies refresher';
       case SeesawState.chooseHcsVideos:
@@ -212,9 +233,9 @@ class _SeesawAppState extends State<SeesawApp> {
   Widget _getBottomWidget() {
     return SizedBox(
         height: MediaQuery.of(context).size.height / 3,
-        child: Stack(
+        child: const Stack(
             children: [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Center(
                     child: Text(
@@ -225,26 +246,13 @@ class _SeesawAppState extends State<SeesawApp> {
                             color: preparedWhiteColor,
                             decoration: TextDecoration.none))),
               ),
-              const Align(
+              Align(
                   alignment: Alignment.bottomRight,
                   child: Padding(
                     padding: EdgeInsets.all(10),
                     child: Text('Version: $version'),
                   )
               ),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: TextButton(
-                    onPressed: () {
-                      Provider.of<StateModel>(context, listen: false)
-                          .setSeesawState(SeesawState.secretStatsScreen);
-                    },
-                    child: const Icon(Icons.admin_panel_settings_outlined),
-                  ),
-                )
-              )
             ]
         )
     );
@@ -264,48 +272,37 @@ class _SeesawAppState extends State<SeesawApp> {
       }
     });
 
-    return MaterialApp(
-        title: 'Seesaw App',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: preparedPrimaryColor),
-          primaryColor: preparedPrimaryColor,
-          splashColor: preparedSecondaryColor,
-          // fontFamily: 'Open Sans',
-          useMaterial3: true,
-        ),
-        home: Scaffold(
-            resizeToAvoidBottomInset: true,
-            body: AutoTimeoutLayer(
-              callback: _doResetInteraction,
-              child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                      controller: _scrollController,
-                      physics: const NeverScrollableScrollPhysics(),
-                      child: Container(
-                          color: preparedPrimaryColor,
-                          child: Consumer<StateModel>(
-                              builder: (context, state, child) {
-                                debugPrint('drawing main screen with state: ${state.seesawState}');
-                                return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Visibility(
-                                          visible: state.seesawState != SeesawState.thankYou,
-                                          child: _getNavigationWidget(state.seesawState)),
-                                      _getMainContainer(state), // 2/3
-                                      _getBalancingSeesaw(), // 1/3
-                                      Visibility(
-                                          visible:
-                                          state.seesawState == SeesawState.welcome,
-                                          child: _getBottomWidget()) // 1/6
-                                    ]);
-                              })),
-                      )
-                  )
-              )
+    return Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: AutoTimeoutLayer(
+            callback: _doResetInteraction,
+            child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: Container(
+                      color: preparedPrimaryColor,
+                      child: Consumer<StateModel>(
+                          builder: (context, state, child) {
+                            debugPrint('drawing main screen with state: ${state.seesawState}');
+                            return Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Visibility(
+                                      visible: state.seesawState != SeesawState.thankYou,
+                                      child: _getNavigationWidget(state.seesawState)),
+                                  _getMainContainer(state), // 2/3
+                                  _getBalancingSeesaw(), // 1/3
+                                  Visibility(
+                                      visible:
+                                      state.seesawState == SeesawState.welcome,
+                                      child: _getBottomWidget()) // 1/6
+                                ]);
+                          })),
+                )
             )
-          );
+        )
+    );
   }
 }

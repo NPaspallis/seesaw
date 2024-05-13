@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
@@ -19,19 +18,13 @@ class ChooseHcsVideos extends StatefulWidget {
 const videoUrls = [
   'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/clip1_healthy_volunteers.mp4',
   'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/clip2_chappell_singer_hcs.mp4',
-  'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.mp4',//todo
-];
-
-const subtitlesUrls = [ // todo delete as videos seem to embed subtitles
-  'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.srt',//todo
-  'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.srt',//todo
-  'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.srt',//todo
+  'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/clip3_ethical_controversies.mp4',
 ];
 
 const _videoDescriptions = [
-  'Description for first video',
-  'Description for second video',
-  'Description for third video',
+  'Healthy volunteers\' experience of HCSs',
+  'Chappell and Singer on HCSs", watched',
+  'Ethical controversies about HCSs',
 ];
 
 enum VideoState { showNone, showVideo0, showVideo1, showVideo2 }
@@ -111,9 +104,9 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
                     ),
                     Row(
                         children: [
-                          _getClickableBall(colors[0], _side, _lp0, _tp0, "Healthy volunteers' experience of HCSs", watched[0], watchVideo0),
-                          _getClickableBall(colors[1], _side, _lp1, _tp1, "Chappell and Singer on HCSs", watched[1], watchVideo1),
-                          _getClickableBall(colors[2], _side, _lp2, _tp2, "Ethical controversies about HCSs", watched[2], watchVideo2)
+                          _getClickableBall(colors[0], _side, _lp0, _tp0, _videoDescriptions[0], watched[0], watchVideo0),
+                          _getClickableBall(colors[1], _side, _lp1, _tp1, _videoDescriptions[1], watched[1], watchVideo1),
+                          _getClickableBall(colors[2], _side, _lp2, _tp2, _videoDescriptions[2], watched[2], watchVideo2)
                         ]
                     ),
                     const SizedBox(height: 10),
@@ -128,36 +121,37 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
   }
 
   Widget _getClickableBall(Color color, double side, double lp, double tp, String text, bool watched, VoidCallback callback) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 3,
-      height: MediaQuery.of(context).size.height / 2,
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(lp, tp, side/3 - lp, side/3 - tp),
-        child: Container(
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: color,
-                width: 10.0,
+    return
+      SizedBox(
+        width: MediaQuery.of(context).size.width / 3,
+        height: MediaQuery.of(context).size.height / 2,
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(lp, tp, side/3 - lp, side/3 - tp),
+          child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: color,
+                  width: 10.0,
+                ),
               ),
+              alignment: Alignment.center,
+              child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: side/8, horizontal: side/5),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(text, style: const TextStyle(fontSize: textSizeMedium, fontWeight: FontWeight.w900, color: preparedWhiteColor), textAlign: TextAlign.center),
+                      const SizedBox(height: 10),
+                      watched ?
+                      Text('WATCHED 🗹', style: TextStyle(fontSize: textSizeSmall, fontWeight: FontWeight.w500, color: color)) :
+                      getElevatedButton(context, 'WATCH', callback, color)
+                    ],
+                  )
+              )
           ),
-          alignment: Alignment.center,
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: side/8, horizontal: side/5),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(text, style: const TextStyle(fontSize: textSizeMedium, fontWeight: FontWeight.w900, color: preparedWhiteColor), textAlign: TextAlign.center),
-                const SizedBox(height: 10),
-                watched ?
-                Text('WATCHED 🗹', style: TextStyle(fontSize: textSizeSmall, fontWeight: FontWeight.w500, color: color)) :
-                getElevatedButton(context, 'WATCH', callback, color)
-              ],
-            )
-          )
         ),
-      ),
-    );
+      );
   }
 
   Column _getVideoLayer() {

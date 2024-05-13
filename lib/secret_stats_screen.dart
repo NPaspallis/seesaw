@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
 import 'package:seesaw/participant_entry.dart';
-import 'package:seesaw/state_model.dart';
+
+import 'main.dart';
 
 class SecretStatsScreen extends StatefulWidget {
 
@@ -119,25 +118,36 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 2/3,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () {
-                Provider.of<StateModel>(context, listen: false)
-                    .setSeesawState(SeesawState.welcome);
-              },
-            ),
-          ),
-          body: authenticated ? getMainFragment() : getAuthFragment(),
+    return MaterialApp(
+        title: 'Seesaw App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: preparedPrimaryColor),
+          primaryColor: preparedPrimaryColor,
+          splashColor: preparedSecondaryColor,
+          // fontFamily: 'Open Sans',
+          useMaterial3: true,
+        ),
+        home: Scaffold(
+            body: Container(
+              color: preparedPrimaryColor,
+              height: MediaQuery.of(context).size.height,
+              child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Scaffold(
+                    backgroundColor: Colors.transparent,
+                    appBar: AppBar(
+                      backgroundColor: Colors.transparent,
+                      leading: IconButton(
+                        icon: const Icon(Icons.arrow_back, color: Colors.white),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ),
+                    body: authenticated ? getMainFragment() : getAuthFragment(),
+                  )
+              ),
+            )
         )
-      ),
     );
   }
 
@@ -248,38 +258,42 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
 
                     Row(
                       children: [
-                        Card(
-                          color: Colors.teal.shade900,
-                          child: Padding(
-                            padding: const EdgeInsets.all(15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Responses before Charles Weijer video", style: headingTextStyle),
-                                const Gap(20),
-                                Text("Yes: $_yesBeforeVideo", style: statisticTextStyle,),
-                                Text("No: $_noBeforeVideo", style: statisticTextStyle,),
-                              ],
+                        Expanded(
+                          flex: 1,
+                          child: Card(
+                            color: Colors.teal.shade900,
+                            child: Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Responses before Charles Weijer video", style: headingTextStyle),
+                                  const Gap(20),
+                                  Text("Yes: $_yesBeforeVideo", style: statisticTextStyle,),
+                                  Text("No: $_noBeforeVideo", style: statisticTextStyle,),
+                                ],
+                              ),
                             ),
-                          ),
+                          )
                         ),
 
-                        const Gap(25),
-
-                        Card(
-                          color: Colors.teal.shade900,
-                          child: Padding(
-                            padding: const EdgeInsets.all(15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Responses after Charles Weijer video", style: headingTextStyle),
-                                const Gap(20),
-                                Text("Yes: $_yesAfterVideo -- ($_noToYesDiff No changed to Yes)" , style: statisticTextStyle,),
-                                Text("No: $_noAfterVideo -- ($_yesToNoDiff Yes changed to No)" , style: statisticTextStyle,),
-                              ],
+                        Expanded(
+                          flex: 1,
+                          child: Card(
+                            color: Colors.teal.shade900,
+                            child: Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Responses after Charles Weijer video", style: headingTextStyle),
+                                  const Gap(20),
+                                  Text("Yes: $_yesAfterVideo -- ($_noToYesDiff No changed to Yes)" , style: statisticTextStyle,),
+                                  Text("No: $_noAfterVideo -- ($_yesToNoDiff Yes changed to No)" , style: statisticTextStyle,),
+                                ],
+                              ),
                             ),
-                          ),
+                          )
                         )
                       ],
                     ),
@@ -296,7 +310,6 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
 
                     //Understanding rating
                     SizedBox(
-                      width: MediaQuery.of(context).size.width / 2,
                       child: Card(
                         color: Colors.teal.shade900,
                         child: Padding(
@@ -320,7 +333,6 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
 
                     //New insights rating
                     SizedBox(
-                      width: MediaQuery.of(context).size.width / 2,
                       child: Card(
                         color: Colors.teal.shade900,
                         child: Padding(
@@ -343,7 +355,6 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
 
                     //Changed opinion rating
                     SizedBox(
-                      width: MediaQuery.of(context).size.width / 2,
                       child: Card(
                         color: Colors.teal.shade900,
                         child: Padding(
@@ -366,7 +377,6 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
 
                     //Would recommend rating
                     SizedBox(
-                      width: MediaQuery.of(context).size.width / 2,
                       child: Card(
                         color: Colors.teal.shade900,
                         child: Padding(
@@ -386,7 +396,6 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -395,7 +404,6 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
         }
       },
     );
-
   }
 
   authenticate() {
@@ -415,5 +423,4 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
       );
     }
   }
-
 }

@@ -16,7 +16,6 @@ enum SeesawState {
   chooseEvaluation,
   evaluation,
   thankYou,
-  secretStatsScreen
 }
 
 class StateModel extends ChangeNotifier {

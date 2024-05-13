@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:seesaw/feedback_entry.dart';
 import 'package:seesaw/poll_entry.dart';
 import 'package:uuid/uuid.dart';
@@ -53,5 +52,4 @@ class ParticipantEntry {
   String toString() {
     return 'ParticipantEntry{participantID: $participantID, pollEntry: $pollEntry, feedbackEntry: $feedbackEntry}';
   }
-
 }
