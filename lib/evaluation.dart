@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
-import 'package:seesaw/feedback_entry.dart';
-import 'package:seesaw/participant_entry.dart';
 import 'package:seesaw/state_model.dart';
 
+import 'db.dart';
 import 'main.dart';
 
 const Color dividerColor = preparedDarkShadeColor;
@@ -132,50 +131,47 @@ class _EvaluationPageState extends State<EvaluationPage> {
       showSnack(context, 'Your choices were submitted');
 
       //Process feedback
-      ParticipantEntry.currentEntry!.feedbackEntry = FeedbackEntry(
-          ratings[0] as int,
-          ratings[1] as int,
-          ratings[2] as int,
-          ratings[3] as int
-      );
+      var db = RECCaseStudyDB.instance;
 
-      //Update existing entry on Firestore:
-      FirebaseFirestore.instance.collection(ParticipantEntry.name)
-        .doc(ParticipantEntry.currentEntry!.participantID)
-        .update(ParticipantEntry.currentEntry!.toJson()).then(
-        (value) => openThankYouPage(context),
-      )
-      .onError((error, stackTrace) {
-        debugPrint(error.toString());
-        showDialog(context: context, builder: (context) {
-          return AlertDialog(
-            backgroundColor: Colors.red,
-            title: const Text("Error"),
-            content: const Text("There was an error submitting your feedback", style: TextStyle(color: Colors.white)),
-            icon: const Icon(Icons.error, color: Colors.white,),
-            actions: [
+      List<Future> futures = [];
 
-              //Skip button
-              OutlinedButton(
-                onPressed: () {
-                  openThankYouPage(context);
-                },
-                child: const Text("Skip")
-              ),
+      futures.add(db.incrementFeedbackCounter(RECCaseStudyDB.betterUnderstanding, ratings[0] as int));
+      futures.add(db.incrementFeedbackCounter(RECCaseStudyDB.changedOpinion, ratings[1] as int));
+      futures.add(db.incrementFeedbackCounter(RECCaseStudyDB.newInsights, ratings[2] as int));
+      futures.add(db.incrementFeedbackCounter(RECCaseStudyDB.wouldRecommend, ratings[3] as int));
 
-              //Try again button
-              OutlinedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    submit(context);
-                  },
-                  child: const Text("Try again")
-              )
-            ],
-          );
-        },);
-      });
+      Future.wait(futures)
+          .then((value) => openThankYouPage(context),)
+          .onError((error, stackTrace) {
+            debugPrint(error.toString());
+            showDialog(context: context, builder: (context) {
+              return AlertDialog(
+                backgroundColor: Colors.red,
+                title: const Text("Error"),
+                content: const Text("There was an error submitting your feedback", style: TextStyle(color: Colors.white)),
+                icon: const Icon(Icons.error, color: Colors.white,),
+                actions: [
 
+                  //Skip button
+                  OutlinedButton(
+                    onPressed: () {
+                      openThankYouPage(context);
+                    },
+                    child: const Text("Skip")
+                  ),
+
+                  //Try again button
+                  OutlinedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        submit(context);
+                      },
+                      child: const Text("Try again")
+                  )
+                ],
+              );
+            },);
+         });
     }
   }
 

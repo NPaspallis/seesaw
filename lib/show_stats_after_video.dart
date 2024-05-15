@@ -1,13 +1,12 @@
-import 'dart:math';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
 import 'package:seesaw/main.dart';
-import 'package:seesaw/participant_entry.dart';
 import 'package:seesaw/state_model.dart';
+
+import 'db.dart';
+import 'poll_data.dart';
 
 class ShowStatsAfterVideo extends StatefulWidget {
   const ShowStatsAfterVideo({super.key});
@@ -32,49 +31,14 @@ class _ShowStatsAfterVideoState extends State<ShowStatsAfterVideo> {
 
   void getDataFromFirebase() async {
 
-    double switchedFromYesToNo = 0;
-    double switchedFromNoToYes = 0;
-    double responsesYesAfter = 0;
-    double responsesNoAfter = 0;
+    var db = RECCaseStudyDB.instance;
+    final PollData pollData = await db.getDecisionCounters();
 
-    var snapshot = await FirebaseFirestore.instance
-        .collection(ParticipantEntry.name)
-        .get();
-
-    for (DocumentSnapshot doc in snapshot.docs) {
-      DocumentSnapshot<Map<String, dynamic>> snapshot = doc as DocumentSnapshot<Map<String, dynamic>>;
-      ParticipantEntry entry = ParticipantEntry.fromDocumentSnapshot(snapshot);
-
-      if (entry.pollEntry != null) {
-
-        if (entry.pollEntry!.finalDecision != null) {
-          //Compute final decision
-          if (entry.pollEntry!.finalDecision!) {
-            responsesYesAfter++;
-          }
-          else {
-            responsesNoAfter++;
-          }
-
-          //Compute change from yes to no:
-          if (entry.pollEntry!.initialDecision! == true && entry.pollEntry!.finalDecision! == false) {
-            switchedFromYesToNo++;
-          }
-
-          //Compute change from no to yes:
-          if (entry.pollEntry!.initialDecision! == false && entry.pollEntry!.finalDecision! == true) {
-            switchedFromNoToYes++;
-          }
-        }
-
-      }
-    }
     setState(() {
-      // todo replace below code with actual value reading from Firebase
-      _responsesYesAfter = responsesYesAfter;
-      _responsesNoAfter = responsesNoAfter;
-      _switchedFromNoToYes = switchedFromNoToYes;
-      _switchedFromYesToNo = switchedFromYesToNo;
+      _responsesYesAfter = pollData.finalYes as double;
+      _responsesNoAfter = pollData.finalNo as double;
+      _switchedFromNoToYes = pollData.switchedToYes as double;
+      _switchedFromYesToNo = pollData.switchedToNo as double;
     });
   }
 

@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
 import 'package:seesaw/main.dart';
-import 'package:seesaw/participant_entry.dart';
+import 'package:seesaw/make_decision_before_video.dart';
 import 'package:seesaw/state_model.dart';
+
+import 'db.dart';
 
 class MakeDecisionAfterVideo extends StatefulWidget {
   const MakeDecisionAfterVideo({super.key});
@@ -54,23 +56,25 @@ class _MakeDecisionAfterVideoState extends State<MakeDecisionAfterVideo> {
 
   void chooseYes() {
     debugPrint('after-yes');
-    ParticipantEntry.currentEntry?.pollEntry?.finalDecision = true;
-    writeEntryToDB();
-    Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
+    var db = RECCaseStudyDB.instance;
+    List<Future> futures = [db.incrementFinalYesDecision()];
+    if (MakeDecisionBeforeVideo.initialDecision == false) {
+      futures.add(db.incrementSwitchedToYes());
+    }
+    Future.wait(futures).then((value) =>
+        Provider.of<StateModel>(context, listen: false).progressToNextSeesawState(),
+    );
   }
 
   void chooseNo() {
     debugPrint('after-no');
-    ParticipantEntry.currentEntry?.pollEntry?.finalDecision = false;
-    writeEntryToDB();
-    Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
-  }
-
-  void writeEntryToDB() {
-    debugPrint(ParticipantEntry.currentEntry?.toJson().toString());
-    FirebaseFirestore.instance
-        .collection(ParticipantEntry.name)
-        .doc(ParticipantEntry.currentEntry!.participantID)
-        .set(ParticipantEntry.currentEntry!.toJson());
+    var db = RECCaseStudyDB.instance;
+    List<Future> futures = [db.incrementFinalNoDecision()];
+    if (MakeDecisionBeforeVideo.initialDecision == true) {
+      futures.add(db.incrementSwitchedToNo());
+    }
+    Future.wait(futures).then((value) =>
+        Provider.of<StateModel>(context, listen: false).progressToNextSeesawState(),
+    );
   }
 }

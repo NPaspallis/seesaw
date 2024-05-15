@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
 import 'package:seesaw/main.dart';
-import 'package:seesaw/participant_entry.dart';
-import 'package:seesaw/poll_entry.dart';
 import 'package:seesaw/state_model.dart';
+
+import 'db.dart';
 
 class MakeDecisionBeforeVideo extends StatefulWidget {
   const MakeDecisionBeforeVideo({super.key});
+
+  static bool initialDecision = false;
 
   @override
   State createState() => _MakeDecisionBeforeVideoState();
@@ -52,26 +54,19 @@ class _MakeDecisionBeforeVideoState extends State<MakeDecisionBeforeVideo> {
 
   void chooseYes() {
     debugPrint('before-yes');
-    ParticipantEntry.currentEntry = ParticipantEntry(
-      pollEntry: PollEntry(
-        initialDecision: true
-      )
+    MakeDecisionBeforeVideo.initialDecision = true;
+    var db = RECCaseStudyDB.instance;
+    db.incrementInitialYesDecision().then((value) =>
+        Provider.of<StateModel>(context, listen: false).progressToNextSeesawState(),
     );
-
-    debugPrint(ParticipantEntry.currentEntry.toString());
-    Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
   }
 
   void chooseNo() {
     debugPrint('before-no');
-
-    ParticipantEntry.currentEntry = ParticipantEntry(
-        pollEntry: PollEntry(
-            initialDecision: false
-        )
+    MakeDecisionBeforeVideo.initialDecision = false;
+    var db = RECCaseStudyDB.instance;
+    db.incrementInitialNoDecision().then((value) =>
+        Provider.of<StateModel>(context, listen: false).progressToNextSeesawState(),
     );
-
-    debugPrint(ParticipantEntry.currentEntry.toString());
-    Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
   }
 }

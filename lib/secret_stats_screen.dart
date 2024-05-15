@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:seesaw/participant_entry.dart';
 
+import 'db.dart';
+import 'poll_data.dart';
 import 'main.dart';
 
 class SecretStatsScreen extends StatefulWidget {
@@ -18,12 +19,11 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
   bool authenticated = false;
   final TextEditingController _passwordController = TextEditingController();
 
-  int _yesBeforeVideo = 0;
-  int _noBeforeVideo = 0;
-  int _yesAfterVideo = 0;
-  int _noAfterVideo = 0;
-  int _yesToNoDiff = 0;
-  int _noToYesDiff = 0;
+  PollData? pollData;
+  List<int> betterUnderstanding = List.filled(8, 0);
+  List<int> changedOpinion = List.filled(8, 0);
+  List<int> newInsights = List.filled(8, 0);
+  List<int> wouldRecommend = List.filled(8, 0);
 
   double _betterUnderstandingAverage = 0;
   double _newInsightsAverage = 0;
@@ -40,79 +40,51 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
 
   getResponses() async {
 
-    _noBeforeVideo = 0;
-    _yesBeforeVideo = 0;
-    _yesAfterVideo = 0;
-    _noAfterVideo = 0;
-    _noToYesDiff = 0;
-    _yesToNoDiff = 0;
+    var db = RECCaseStudyDB.instance;
 
-    var snapshot = await FirebaseFirestore.instance
-        .collection(ParticipantEntry.name)
-        .get();
+    //Get poll & feedback values:
+    pollData = await db.getDecisionCounters();
+    betterUnderstanding = await db.getFeedbackCounters(RECCaseStudyDB.betterUnderstanding);
+    changedOpinion = await db.getFeedbackCounters(RECCaseStudyDB.changedOpinion);
+    newInsights = await db.getFeedbackCounters(RECCaseStudyDB.newInsights);
+    wouldRecommend = await db.getFeedbackCounters(RECCaseStudyDB.wouldRecommend);
 
     int betterUnderstandingSum = 0;
     int newInsightsSum = 0;
     int changedOpinionSum = 0;
     int wouldRecommendSum = 0;
 
-    int _sumOfEntriesWithFeedback = 0;
+    int betterUnderstandingEntries = 0;
+    int newInsightsEntries = 0;
+    int changedOpinionEntries = 0;
+    int wouldRecommendEntries = 0;
 
-    for (DocumentSnapshot doc in snapshot.docs) {
-      DocumentSnapshot<Map<String, dynamic>> snapshot = doc as DocumentSnapshot<Map<String, dynamic>>;
-      ParticipantEntry entry = ParticipantEntry.fromDocumentSnapshot(snapshot);
+    //Find num of entries and sum of stars for each feedback question:
+    for (int selection = 0; selection < betterUnderstanding.length; selection++) {
+      betterUnderstandingSum += betterUnderstanding[selection] * selection;
+      betterUnderstandingEntries += betterUnderstanding[selection];
+    }
 
-      if (entry.pollEntry != null) {
+    for (int selection = 0; selection < changedOpinion.length; selection++) {
+      changedOpinionSum += changedOpinion[selection] * selection;
+      changedOpinionEntries += changedOpinion[selection];
+    }
 
-        //Compute initial decision
-        if (entry.pollEntry!.initialDecision!) {
-          _yesBeforeVideo++;
-        }
-        else {
-          _noBeforeVideo++;
-        }
+    for (int selection = 0; selection < newInsights.length; selection++) {
+      newInsightsSum += newInsights[selection] * selection;
+      newInsightsEntries += newInsights[selection];
+    }
 
-        if (entry.pollEntry!.finalDecision != null) {
-          //Compute final decision
-          if (entry.pollEntry!.finalDecision!) {
-            _yesAfterVideo++;
-          }
-          else {
-            _noAfterVideo++;
-          }
-
-          //Compute change from yes to no:
-          if (entry.pollEntry!.initialDecision! == true && entry.pollEntry!.finalDecision! == false) {
-            _yesToNoDiff++;
-          }
-
-          //Compute change from no to yes:
-          if (entry.pollEntry!.initialDecision! == false && entry.pollEntry!.finalDecision! == true) {
-            _noToYesDiff++;
-          }
-        }
-
-      }
-
-      //Compound feedback values:
-      if (entry.feedbackEntry != null) {
-        _sumOfEntriesWithFeedback++;
-        betterUnderstandingSum += entry.feedbackEntry!.betterUnderstanding;
-        newInsightsSum += entry.feedbackEntry!.newInsights;
-        changedOpinionSum += entry.feedbackEntry!.changedOpinion;
-        wouldRecommendSum += entry.feedbackEntry!.wouldRecommend;
-      }
-
-      debugPrint("Sum of entries with feedback:");
-      debugPrint(_sumOfEntriesWithFeedback.toString());
-
+    for (int selection = 0; selection < wouldRecommend.length; selection++) {
+      wouldRecommendSum += wouldRecommend[selection] * selection;
+      wouldRecommendEntries += wouldRecommend[selection];
     }
 
     //Calculate feedback entry averages
-    _betterUnderstandingAverage = betterUnderstandingSum / _sumOfEntriesWithFeedback;
-    _newInsightsAverage = newInsightsSum / _sumOfEntriesWithFeedback;
-    _changedOpinionAverage = changedOpinionSum / _sumOfEntriesWithFeedback;
-    _wouldRecommendAverage = wouldRecommendSum / _sumOfEntriesWithFeedback;
+    _betterUnderstandingAverage = betterUnderstandingSum / betterUnderstandingEntries;
+    _changedOpinionAverage = changedOpinionSum / changedOpinionEntries;
+    _newInsightsAverage = newInsightsSum / newInsightsEntries;
+    _wouldRecommendAverage = wouldRecommendSum / wouldRecommendEntries;
 
   }
 
@@ -269,8 +241,8 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
                                 children: [
                                   Text("Responses before Charles Weijer video", style: headingTextStyle),
                                   const Gap(20),
-                                  Text("Yes: $_yesBeforeVideo", style: statisticTextStyle,),
-                                  Text("No: $_noBeforeVideo", style: statisticTextStyle,),
+                                  Text("Yes: ${pollData!.initialYes}", style: statisticTextStyle,),
+                                  Text("No: ${pollData!.initialNo}", style: statisticTextStyle,),
                                 ],
                               ),
                             ),
@@ -288,8 +260,8 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
                                 children: [
                                   Text("Responses after Charles Weijer video", style: headingTextStyle),
                                   const Gap(20),
-                                  Text("Yes: $_yesAfterVideo -- ($_noToYesDiff No changed to Yes)" , style: statisticTextStyle,),
-                                  Text("No: $_noAfterVideo -- ($_yesToNoDiff Yes changed to No)" , style: statisticTextStyle,),
+                                  Text("Yes: ${pollData!.finalYes} -- (${pollData!.switchedToYes} No changed to Yes)" , style: statisticTextStyle,),
+                                  Text("No: ${pollData!.finalNo} -- (${pollData!.switchedToNo} Yes changed to No)" , style: statisticTextStyle,),
                                 ],
                               ),
                             ),
@@ -324,6 +296,15 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
 
                               const Divider(),
 
+                              Text("0 stars:  ${betterUnderstanding[0]}", style: statisticTextStyle,),
+                              Text("1 star:  ${betterUnderstanding[1]}", style: statisticTextStyle,),
+                              Text("2 stars:  ${betterUnderstanding[2]}", style: statisticTextStyle,),
+                              Text("3 stars:  ${betterUnderstanding[3]}", style: statisticTextStyle,),
+                              Text("4 stars:  ${betterUnderstanding[4]}", style: statisticTextStyle,),
+                              Text("5 stars:  ${betterUnderstanding[5]}", style: statisticTextStyle,),
+                              Text("6 stars:  ${betterUnderstanding[6]}", style: statisticTextStyle,),
+                              Text("7 stars:  ${betterUnderstanding[7]}", style: statisticTextStyle,),
+
                               Text("️ ► Average rating: ${_betterUnderstandingAverage.toStringAsFixed(2)}/7", style: statisticTextStyle,)
                             ],
                           ),
@@ -345,6 +326,15 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
                               ),
 
                               const Divider(),
+
+                              Text("0 stars:  ${newInsights[0]}", style: statisticTextStyle,),
+                              Text("1 star:  ${newInsights[1]}", style: statisticTextStyle,),
+                              Text("2 stars:  ${newInsights[2]}", style: statisticTextStyle,),
+                              Text("3 stars:  ${newInsights[3]}", style: statisticTextStyle,),
+                              Text("4 stars:  ${newInsights[4]}", style: statisticTextStyle,),
+                              Text("5 stars:  ${newInsights[5]}", style: statisticTextStyle,),
+                              Text("6 stars:  ${newInsights[6]}", style: statisticTextStyle,),
+                              Text("7 stars:  ${newInsights[7]}", style: statisticTextStyle,),
 
                               Text("️ ► Average rating: ${_newInsightsAverage.toStringAsFixed(2)}/7", style: statisticTextStyle,)
                             ],
@@ -368,6 +358,15 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
 
                               const Divider(),
 
+                              Text("0 stars:  ${changedOpinion[0]}", style: statisticTextStyle,),
+                              Text("1 star:  ${changedOpinion[1]}", style: statisticTextStyle,),
+                              Text("2 stars:  ${changedOpinion[2]}", style: statisticTextStyle,),
+                              Text("3 stars:  ${changedOpinion[3]}", style: statisticTextStyle,),
+                              Text("4 stars:  ${changedOpinion[4]}", style: statisticTextStyle,),
+                              Text("5 stars:  ${changedOpinion[5]}", style: statisticTextStyle,),
+                              Text("6 stars:  ${changedOpinion[6]}", style: statisticTextStyle,),
+                              Text("7 stars:  ${changedOpinion[7]}", style: statisticTextStyle,),
+
                               Text("️ ► Average rating: ${_changedOpinionAverage.toStringAsFixed(2)}/7", style: statisticTextStyle,)
                             ],
                           ),
@@ -389,6 +388,15 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
                               ),
 
                               const Divider(),
+
+                              Text("0 stars:  ${wouldRecommend[0]}", style: statisticTextStyle,),
+                              Text("1 star:  ${wouldRecommend[1]}", style: statisticTextStyle,),
+                              Text("2 stars:  ${wouldRecommend[2]}", style: statisticTextStyle,),
+                              Text("3 stars:  ${wouldRecommend[3]}", style: statisticTextStyle,),
+                              Text("4 stars:  ${wouldRecommend[4]}", style: statisticTextStyle,),
+                              Text("5 stars:  ${wouldRecommend[5]}", style: statisticTextStyle,),
+                              Text("6 stars:  ${wouldRecommend[6]}", style: statisticTextStyle,),
+                              Text("7 stars:  ${wouldRecommend[7]}", style: statisticTextStyle,),
 
                               Text("️ ► Average rating: ${_wouldRecommendAverage.toStringAsFixed(2)}/7", style: statisticTextStyle,)
                             ],

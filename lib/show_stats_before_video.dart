@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
 import 'package:seesaw/main.dart';
-import 'package:seesaw/participant_entry.dart';
 import 'package:seesaw/state_model.dart';
+
+import 'db.dart';
+import 'poll_data.dart';
 
 class ShowStatsBeforeVideo extends StatefulWidget {
   const ShowStatsBeforeVideo({super.key});
@@ -25,26 +27,12 @@ class _ShowStatsBeforeVideoState extends State<ShowStatsBeforeVideo> {
   double _responsesNo = 0;
 
   void getDataFromFirebase() async {
-    int countYes = 0;
-    int countNo = 0;
-    var snapshot = await FirebaseFirestore.instance
-        .collection(ParticipantEntry.name)
-        .get();
-
-    for (DocumentSnapshot doc in snapshot.docs) {
-      DocumentSnapshot<Map<String, dynamic>> snapshot = doc as DocumentSnapshot<Map<String, dynamic>>;
-      ParticipantEntry entry = ParticipantEntry.fromDocumentSnapshot(snapshot);
-      if (entry.pollEntry!.initialDecision!) {
-        countYes++;
-      }
-      else {
-        countNo++;
-      }
-    }
+    var db = RECCaseStudyDB.instance;
+    final PollData pollData = await db.getDecisionCounters();
 
     setState(() {
-      _responsesYes = countYes as double;
-      _responsesNo = countNo as double;
+      _responsesYes = pollData.initialYes as double;
+      _responsesNo = pollData.initialNo as double;
     });
   }
 
