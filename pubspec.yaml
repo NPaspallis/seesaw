@@ -51,6 +51,7 @@ dependencies:
   uuid: ^4.4.0
   build_runner: ^2.4.9
   gap: ^3.0.1
+  fullscreen_window: ^1.0.4
 
 dev_dependencies:
   flutter_test:

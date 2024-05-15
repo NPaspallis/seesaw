@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fullscreen_window/fullscreen_window.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/state_model.dart';
 
@@ -63,6 +64,7 @@ class _WelcomeState extends State<Welcome> {
   }
 
   void pressedStart() {
+    FullScreenWindow.setFullScreen(true);
     debugPrint('choosePerspective');
     final StateModel stateModel =
         Provider.of<StateModel>(context, listen: false);
