@@ -238,13 +238,16 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Center(
-                    child: Text(
-                        'An interactive experience demonstrating ethical tradeoffs in times of crisis',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: textSizeLarge,
-                            color: preparedWhiteColor,
-                            decoration: TextDecoration.none))),
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Text(
+                          'An interactive experience demonstrating ethical tradeoffs in times of crisis',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: textSizeLarge,
+                              color: preparedWhiteColor,
+                              decoration: TextDecoration.none)),
+                    )),
               ),
               Align(
                   alignment: Alignment.bottomRight,
