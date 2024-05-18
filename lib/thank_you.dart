@@ -41,6 +41,7 @@ class _ThankYouState extends State<ThankYou> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [ // portraits
                 _getPortraitWithName('assets/doris.png', 'Doris Schroeder'),
+                _getPortraitWithName('assets/dave.png', 'David Robinson'),
                 _getPortraitWithName('assets/natalie.png', 'Natalie Evans'),
               ],
             ),
