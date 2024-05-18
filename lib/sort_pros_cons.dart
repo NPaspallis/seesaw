@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/state_model.dart';
 
@@ -149,11 +150,14 @@ class _SortProsConsState extends State<SortProsCons> {
           children: [
             const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 160),
-                child: Text('Before you make a decision, please use this exercise to drag and drop six statements into pro or con boxes. Please remember, it is the year 2020.',
-                    style: TextStyle(
-                        fontSize: textSizeLarge,
-                        color: preparedWhiteColor,
-                        decoration: TextDecoration.none), textAlign: TextAlign.center)),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text('Before you make a decision, please use this exercise to drag and drop six statements into pro or con boxes. Please remember, it is the year 2020.',
+                      style: TextStyle(
+                          fontSize: textSizeLarge,
+                          color: preparedWhiteColor,
+                          decoration: TextDecoration.none), textAlign: TextAlign.center),
+                )),
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -188,23 +192,44 @@ class _SortProsConsState extends State<SortProsCons> {
     final List<Widget> bucketItemWidgets = [
       const Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
-          child: Text('Press and hold on each item, then drag it to the correct bucket.',
-            style: TextStyle(fontSize: textSizeMedium, color: preparedWhiteColor))
+          child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text('Press and hold on each item, then drag it to the correct bucket.',
+              style: TextStyle(fontSize: textSizeMedium, color: preparedWhiteColor)),
+          )
       )
     ];
     for(int i = 0; i < bucketNone.length; i++) {
       bucketItemWidgets.add(_buildBucketItemDraggableView(bucketNone[i]));
     }
+
+    final ScrollController itemsScrollController = ScrollController();
+
     return SizedBox(
         width: MediaQuery.of(context).size.width / 3,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: bucketItemWidgets
+        height: MediaQuery.of(context).size.height / 2,
+        child: RawScrollbar(
+          thumbColor: Colors.white,
+          thumbVisibility: true,
+          controller: itemsScrollController,
+          child: SingleChildScrollView(
+            controller: itemsScrollController,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: bucketItemWidgets
+              ),
+            ),
+          ),
         )
     );
   }
 
   Widget _getBucket(Bucket bucket, String title, Color color) {
+
+    ScrollController scrollController = ScrollController();
+
     return SizedBox(
       width: MediaQuery.of(context).size.width / 3,
       height: MediaQuery.of(context).size.height / 2,
@@ -217,19 +242,29 @@ class _SortProsConsState extends State<SortProsCons> {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
+                  color: color,
                   border: Border.all(
-                    color: color,
+                    color: Colors.white,
                     width: 5.0,
                   ),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0))
               ),
               alignment: Alignment.topCenter,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(title, style: TextStyle(fontSize: textSizeMedium, fontWeight: FontWeight.w900, color: color), textAlign: TextAlign.center),
-                  ...bucketWidgets
-                ],
+              child: RawScrollbar(
+                controller: scrollController,
+                thumbVisibility: true,
+                thumbColor: Colors.white,
+                child: SingleChildScrollView(
+                  controller: scrollController,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(title, style: const TextStyle(fontSize: textSizeMedium, fontWeight: FontWeight.w900, color: Colors.white), textAlign: TextAlign.center),
+                      const Gap(20),
+                      ...bucketWidgets
+                    ],
+                  ),
+                ),
               )
             ),
           );

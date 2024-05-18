@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
 import 'package:seesaw/state_model.dart';
@@ -8,13 +9,13 @@ import 'package:seesaw/state_model.dart';
 import 'db.dart';
 import 'main.dart';
 
-const Color dividerColor = preparedDarkShadeColor;
+const Color dividerColor = Colors.white60;
 
 const lines = <String>[
-  'The pandemic seesaw provided me with a better understanding of pandemic decision making.',
-  'The pandemic seesaw gave me new insights into other’s perspectives related to pandemic decision making',
+  'The pandemic Seesaw provided me with a better understanding of pandemic decision making.',
+  'The pandemic Seesaw gave me new insights into other’s perspectives related to pandemic decision making',
   'I have changed my opinion about some aspect of pandemic decision making (this is not totally captured in the process - someone might still make the same final decision but some aspect of their opinion might still have changed)',
-  'I would recommend the pandemic seesaw to others'
+  'I would recommend the pandemic Seesaw to others.'
 ];
 
 class EvaluationPage extends StatefulWidget {
@@ -27,46 +28,58 @@ class EvaluationPage extends StatefulWidget {
 class _EvaluationPageState extends State<EvaluationPage> {
   @override
   Widget build(BuildContext context) {
+
+    final ScrollController questionsScrollController = ScrollController();
+
     return Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height * 2 / 3,
         color: preparedPrimaryColor,
         child: Padding(
             padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width / 8, 50, MediaQuery.of(context).size.width / 8, 50),
-            child: SingleChildScrollView(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    getPrompt(),
-                    const Divider(thickness: 1, color: dividerColor),
-                    getRatingLine(0),
-                    const Divider(thickness: 1, color: dividerColor),
-                    getRatingLine(1),
-                    const Divider(thickness: 1, color: dividerColor),
-                    getRatingLine(2),
-                    const Divider(thickness: 1, color: dividerColor),
-                    getRatingLine(3),
-                    Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              getOutlinedButton(
-                                  context, 'SKIP', () => skip(context)),
-                              const SizedBox(width: 20),
-                              getElevatedButton(
-                                  context, 'SUBMIT', () => submit(context)),
-                            ]))
-                  ])))
+            child: RawScrollbar(
+              thumbColor: Colors.white60,
+              thumbVisibility: true,
+              controller: questionsScrollController,
+              child: SingleChildScrollView(
+                controller: questionsScrollController,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      getPrompt(),
+                      const Gap(20),
+                      const Divider(thickness: 1, color: dividerColor),
+                      getRatingLine(0),
+                      const Divider(thickness: 1, color: dividerColor),
+                      getRatingLine(1),
+                      const Divider(thickness: 1, color: dividerColor),
+                      getRatingLine(2),
+                      const Divider(thickness: 1, color: dividerColor),
+                      getRatingLine(3),
+                      Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                getOutlinedButton(
+                                    context, 'SKIP', () => skip(context)),
+                                const SizedBox(width: 20),
+                                getElevatedButton(
+                                    context, 'SUBMIT', () => submit(context)),
+                              ]))
+                    ])),
+            ))
             );
   }
 
   Widget getPrompt() {
     return const Text(
         'Please provide your feedback on the following questions, by choosing 1-7 stars for each answer.',
-        style: TextStyle(fontSize: textSizeMedium  , color: preparedSecondaryColor));
+        style: TextStyle(fontSize: textSizeMedium  , color: preparedOrangeColor, fontWeight: FontWeight.bold,),
+      textAlign: TextAlign.justify,
+    );
   }
 
   Widget getRatingLine(final int index) {
@@ -77,7 +90,7 @@ class _EvaluationPageState extends State<EvaluationPage> {
           children: [
             Text(
                 lines[index],
-                style: const TextStyle(fontSize: textSizeMedium, color: preparedWhiteColor)),
+                style: const TextStyle(fontSize: textSizeSmall, color: preparedWhiteColor)),
             const SizedBox(height: 20),
             Row(
               mainAxisSize: MainAxisSize.max,
