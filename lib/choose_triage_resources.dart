@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
@@ -28,8 +29,8 @@ const resourceTypes = [
 
 const resourceUrls = [
   'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/Covid%2019%20_%20Triage%20in%20an%20Italian%20ICU%20During%20the%20Pandemic.mp4',
-  'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/ethics_of_icu.png', // 'https://academic.oup.com/bmb/article/138/1/5/6289889'
-  'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/ethical_advice.png', // 'https://academic.oup.com/phe/article/13/2/157/5900805'
+  'assets/ethics_of_icu.png', //'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/ethics_of_icu.png', // 'https://academic.oup.com/bmb/article/138/1/5/6289889'
+  'assets/ethical_advice.png', //'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/ethical_advice.png', // 'https://academic.oup.com/phe/article/13/2/157/5900805'
   '',
   '',
 ];
@@ -197,7 +198,7 @@ class _ChooseTriageResources extends State<ChooseTriageResources> {
     } else if(resourceType == ResourceType.resourceArticle) {
       return watched ?
       Text('VIEWED 🗹', style: TextStyle(fontSize: textSizeSmall, fontWeight: FontWeight.w500, color: color)) :
-      getElevatedButton(context, 'VIEW', callback, color);
+      getElevatedButton(context, 'VIEW ARTICLE', callback, color);
     } else {
       return Container();
     }
@@ -230,7 +231,7 @@ class _ChooseTriageResources extends State<ChooseTriageResources> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(getTextWithNoLineBreaks(resourceDescriptions[index]), style: const TextStyle(color: preparedWhiteColor)),
+                Text(getTextWithNoLineBreaks(resourceDescriptions[index]), style: const TextStyle(color: preparedWhiteColor, fontSize: textSizeSmall, fontWeight: FontWeight.bold)),
                 const SizedBox(width: 10),
                 getOutlinedButton(context, 'BACK', back)
               ],
@@ -260,7 +261,8 @@ class _ChooseTriageResources extends State<ChooseTriageResources> {
         child: Column(
           children: [
             Expanded(
-                child: Image.network(resourceUrls[index])
+                // child: Image.network(resourceUrls[index])
+                child: Image.asset(resourceUrls[index])
             ),
             Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 20),
@@ -268,7 +270,7 @@ class _ChooseTriageResources extends State<ChooseTriageResources> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(getTextWithNoLineBreaks(resourceDescriptions[index]), style: const TextStyle(color: preparedWhiteColor)),
+                    Text(getTextWithNoLineBreaks(resourceDescriptions[index]), style: const TextStyle(color: preparedWhiteColor, fontSize: textSizeSmall, fontWeight: FontWeight.bold)),
                     const SizedBox(width: 10),
                     getOutlinedButton(context, 'BACK', back)
                   ],

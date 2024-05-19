@@ -3,13 +3,15 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"assets/AssetManifest.bin": "8a74378efcb2460506156c6cbb92ddf3",
-"assets/AssetManifest.bin.json": "412dac09370b10e8e096185404172ef8",
-"assets/AssetManifest.json": "7333a201648a03ef79bab5a2d20ba26f",
+const RESOURCES = {"assets/AssetManifest.bin": "00118b06193c45ec648f33651c5f18f7",
+"assets/AssetManifest.bin.json": "a53ac82e998e71f42f0026f15f71bd37",
+"assets/AssetManifest.json": "b2123cdae021c619dfdb37310105ad02",
 "assets/assets/amsterdam_umc_400.png": "42de7f851e6606f34c14a44bdfaf90d7",
 "assets/assets/dave.png": "4baaa360efc0ef2b992ad0b78ab893d7",
 "assets/assets/doris.png": "839de1d88e10d545167e7e0e788d3603",
 "assets/assets/eogs_200.png": "39c81806cb81dada60ac6512d48fb8c8",
+"assets/assets/ethical_advice.png": "e7419b063e30d9a640c9e868886a0b5a",
+"assets/assets/ethics_of_icu.png": "16485f2ae7d6cafa6ffc6563bef74d61",
 "assets/assets/eu_co_funded_en_400.png": "18f5ac7d6c415762d68639dee6c23357",
 "assets/assets/green_button_blank.png": "cbeb7a948c703846c09dda0cbe656f72",
 "assets/assets/natalie.png": "d6e5a5dbbba07218a1bc4e88acaa65bd",
@@ -38,9 +40,9 @@ const RESOURCES = {"assets/AssetManifest.bin": "8a74378efcb2460506156c6cbb92ddf3
 "icons/icon-512.png": "aa9b8c1eb7cc7cc814a06d464b696477",
 "icons/icon-maskable-192.png": "33872651bcd168dfca0bb88842ea83f4",
 "icons/icon-maskable-512.png": "aa9b8c1eb7cc7cc814a06d464b696477",
-"index.html": "0b2c4bb5f8b1ac637118953e01aa4829",
-"/": "0b2c4bb5f8b1ac637118953e01aa4829",
-"main.dart.js": "fad9af1ce34be9886bc1e52cb00b6c04",
+"index.html": "dcddba367cd5b88d207f2d4c28338973",
+"/": "dcddba367cd5b88d207f2d4c28338973",
+"main.dart.js": "d43f8fb871b116630c14d0595be28309",
 "manifest.json": "35139b5bafe9003775b7319dd0753ddd",
 "version.json": "f7e49b23b448679e0b3fe5f3d8aabbee"};
 // The application shell files that are downloaded before a service worker can
