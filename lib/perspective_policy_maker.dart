@@ -5,15 +5,15 @@ import 'package:seesaw/state_model.dart';
 
 import 'buttons.dart';
 
-class PerspectiveCommitteeMember extends StatefulWidget {
-  const PerspectiveCommitteeMember({super.key});
+class PerspectivePolicyMaker extends StatefulWidget {
+  const PerspectivePolicyMaker({super.key});
 
   @override
-  State createState() => _PerspectiveCommitteeMemberState();
+  State createState() => _PerspectivePolicyMakerState();
 }
 
-class _PerspectiveCommitteeMemberState
-    extends State<PerspectiveCommitteeMember> {
+class _PerspectivePolicyMakerState
+    extends State<PerspectivePolicyMaker> {
   @override
   void initState() {
     super.initState();

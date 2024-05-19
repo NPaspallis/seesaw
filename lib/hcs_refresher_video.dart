@@ -63,13 +63,15 @@ class _HcsRefresherVideoState extends State<HcsRefresherVideo> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 2 / 3,
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height * 23/24,
       child: Container(
+        color: Colors.black38,
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Flexible(
+            Expanded(
               child: AspectRatio(
                 aspectRatio: _controller.value.aspectRatio,
                 child: Stack(
@@ -83,15 +85,18 @@ class _HcsRefresherVideoState extends State<HcsRefresherVideo> {
               )
             ),
             const SizedBox(height: 10),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('If you are familiar with Human Challenge Studies you can skip the video',
-                    style: TextStyle(color: preparedWhiteColor, fontSize: textSizeSmall)),
-                const SizedBox(width: 10),
-                getOutlinedButton(context, 'SKIP', proceed)
-              ],
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('If you are familiar with Human Challenge Studies you can skip the video',
+                      style: TextStyle(color: preparedWhiteColor, fontSize: textSizeSmall)),
+                  const SizedBox(width: 10),
+                  getOutlinedButton(context, 'SKIP', proceed)
+                ],
+              )
             )
           ],
         )

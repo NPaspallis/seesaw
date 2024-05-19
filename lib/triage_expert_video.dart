@@ -8,38 +8,24 @@ import 'package:video_player/video_player.dart';
 
 import 'package:http/http.dart' as http;
 
-class CharlesWeijerVideo extends StatefulWidget {
-  const CharlesWeijerVideo({super.key});
+class TriageExpertVideo extends StatefulWidget {
+  const TriageExpertVideo({super.key});
 
   @override
-  State createState() => _CharlesWeijerVideoState();
+  State createState() => _TriageExpertVideoState();
 }
 
 const videoUrl =
-    'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.mp4';
-const subtitlesUrl =
-    'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.srt';
+    'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/Covid%2019%20_%20Triage%20in%20an%20Italian%20ICU%20During%20the%20Pandemic.mp4';
 
-class _CharlesWeijerVideoState extends State<CharlesWeijerVideo> {
+class _TriageExpertVideoState extends State<TriageExpertVideo> {
   late VideoPlayerController _controller;
-
-  Future<ClosedCaptionFile> _loadCaptionsFromUrl(String url) async {
-    try {
-      final Response data = await http.get(Uri.http(url));
-      final srtContent = data.toString();
-      return SubRipCaptionFile(srtContent);
-    } catch (e) {
-      debugPrint('Failed to get subtitles for url: $url');
-      rethrow;
-    }
-  }
 
   @override
   void initState() {
     super.initState();
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(videoUrl),
-      // closedCaptionFile: _loadCaptionsFromUrl(subtitlesUrl), // todo fix loading subtitles
     );
 
     _controller.addListener(() {
@@ -89,7 +75,7 @@ class _CharlesWeijerVideoState extends State<CharlesWeijerVideo> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('What does a world-leading expert think? Meet Prof. Charles Weijer.', style: TextStyle(fontSize: textSizeSmall, color: preparedWhiteColor)),
+                const Text('What does an expert think? Meet Dr. Marco Vergano.', style: TextStyle(fontSize: textSizeSmall, color: preparedWhiteColor)),
                 const SizedBox(width: 10),
                 getOutlinedButton(context, 'SKIP', proceed)
               ],

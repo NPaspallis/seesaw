@@ -8,38 +8,24 @@ import 'package:video_player/video_player.dart';
 
 import 'package:http/http.dart' as http;
 
-class CharlesWeijerVideo extends StatefulWidget {
-  const CharlesWeijerVideo({super.key});
+class TriageRefresherVideo extends StatefulWidget {
+  const TriageRefresherVideo({super.key});
 
   @override
-  State createState() => _CharlesWeijerVideoState();
+  State createState() => _TriageRefresherVideoState();
 }
 
 const videoUrl =
-    'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.mp4';
-const subtitlesUrl =
-    'https://storage.googleapis.com/prepared-project.appspot.com/stories/human_challenge_studies/videos/charles-weijer-1.srt';
+    'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/What%20is%20Crisis%20Triage_.mp4';
 
-class _CharlesWeijerVideoState extends State<CharlesWeijerVideo> {
+class _TriageRefresherVideoState extends State<TriageRefresherVideo> {
   late VideoPlayerController _controller;
-
-  Future<ClosedCaptionFile> _loadCaptionsFromUrl(String url) async {
-    try {
-      final Response data = await http.get(Uri.http(url));
-      final srtContent = data.toString();
-      return SubRipCaptionFile(srtContent);
-    } catch (e) {
-      debugPrint('Failed to get subtitles for url: $url');
-      rethrow;
-    }
-  }
 
   @override
   void initState() {
     super.initState();
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(videoUrl),
-      // closedCaptionFile: _loadCaptionsFromUrl(subtitlesUrl), // todo fix loading subtitles
     );
 
     _controller.addListener(() {
@@ -71,7 +57,7 @@ class _CharlesWeijerVideoState extends State<CharlesWeijerVideo> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Flexible(
+            Expanded(
               child: AspectRatio(
                 aspectRatio: _controller.value.aspectRatio,
                 child: Stack(
@@ -85,14 +71,18 @@ class _CharlesWeijerVideoState extends State<CharlesWeijerVideo> {
               )
             ),
             const SizedBox(height: 10),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('What does a world-leading expert think? Meet Prof. Charles Weijer.', style: TextStyle(fontSize: textSizeSmall, color: preparedWhiteColor)),
-                const SizedBox(width: 10),
-                getOutlinedButton(context, 'SKIP', proceed)
-              ],
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('If you are familiar with Crisis Triage you can skip the video',
+                      style: TextStyle(color: preparedWhiteColor, fontSize: textSizeSmall)),
+                  const SizedBox(width: 10),
+                  getOutlinedButton(context, 'SKIP', proceed)
+                ],
+              )
             )
           ],
         )

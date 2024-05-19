@@ -27,21 +27,24 @@ class _MakeDecisionAfterVideoState extends State<MakeDecisionAfterVideo> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const Padding(
-                padding: EdgeInsets.all(50),
+            const FittedBox(
+                fit: BoxFit.fitWidth,
                 child: Text('After having heard Prof. Charles Weijer’s assessment,\nwhich decision would you take now.',
                     style: TextStyle(
                         fontSize: textSizeLarge,
                         color: preparedWhiteColor,
-                        decoration: TextDecoration.none))),
-            const Padding(
-                padding: EdgeInsets.all(50),
+                        decoration: TextDecoration.none))
+            ),
+            const FittedBox(
+                fit: BoxFit.fitWidth,
                 child: Text('Will you allow a human challenge trial with COVID-19?',
                     style: TextStyle(
                         fontSize: textSizeLarger,
                         fontWeight: FontWeight.w900,
                         color: preparedWhiteColor,
-                        decoration: TextDecoration.none))),
+                        decoration: TextDecoration.none))
+            ),
+
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -55,7 +58,7 @@ class _MakeDecisionAfterVideoState extends State<MakeDecisionAfterVideo> {
   }
 
   void chooseYes() {
-    debugPrint('after-yes');
+    debugPrint('hcs-after-yes');
     var db = RECCaseStudyDB.instance;
     List<Future> futures = [db.incrementFinalYesDecision()];
     if (MakeDecisionBeforeVideo.initialDecision == false) {
@@ -67,7 +70,7 @@ class _MakeDecisionAfterVideoState extends State<MakeDecisionAfterVideo> {
   }
 
   void chooseNo() {
-    debugPrint('after-no');
+    debugPrint('hcs-after-no');
     var db = RECCaseStudyDB.instance;
     List<Future> futures = [db.incrementFinalNoDecision()];
     if (MakeDecisionBeforeVideo.initialDecision == true) {

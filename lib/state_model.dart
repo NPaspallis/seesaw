@@ -4,6 +4,14 @@ enum SeesawState {
   welcome,
   choosePerspective,
   perspectivePolicyMaker,
+  doTriageRefresher,
+  chooseTriageResources,
+  makeTriageDecisionBefore,
+  showTriageStatsBeforeVideo,
+  triageExpertVideo,
+  makeTriageDecisionAfter,
+  showTriageStatsAfterVideo,
+
   perspectiveCommitteeMember,
   doHcsRefresher,
   chooseHcsVideos,
@@ -13,8 +21,8 @@ enum SeesawState {
   charlesWeijerVideo,
   makeDecisionAfterCharlesWeijerVideo,
   showStatsAfterCharlesWeijerVideo,
-  chooseEvaluation,
-  evaluation,
+  // chooseEvaluation,
+  // evaluation,
   thankYou,
 }
 

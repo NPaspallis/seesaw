@@ -189,16 +189,29 @@ class _SortProsConsState extends State<SortProsCons> {
   }
 
   Widget _getItemsColumn() {
-    final List<Widget> bucketItemWidgets = [
-      const Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
+// <<<<<<< Updated upstream
+//     final List<Widget> bucketItemWidgets = [
+//       const Padding(
+//           padding: EdgeInsets.symmetric(vertical: 10),
+//           child: FittedBox(
+//             fit: BoxFit.fitWidth,
+//             child: Text('Press and hold on each item, then drag it to the correct bucket.',
+//               style: TextStyle(fontSize: textSizeMedium, color: preparedWhiteColor)),
+//           )
+//       )
+//     ];
+// =======
+    final List<Widget> bucketItemWidgets = [];
+    if(bucketNone.isNotEmpty) {
+      bucketItemWidgets.add(const Padding(
+          padding: EdgeInsets.all(10),
           child: FittedBox(
-            fit: BoxFit.fitWidth,
             child: Text('Press and hold on each item, then drag it to the correct bucket.',
-              style: TextStyle(fontSize: textSizeMedium, color: preparedWhiteColor)),
+                style: TextStyle(fontSize: textSizeLarge, fontStyle: FontStyle.italic, color: preparedWhiteColor)),
           )
-      )
-    ];
+      ));
+    }
+// >>>>>>> Stashed changes
     for(int i = 0; i < bucketNone.length; i++) {
       bucketItemWidgets.add(_buildBucketItemDraggableView(bucketNone[i]));
     }
@@ -207,21 +220,26 @@ class _SortProsConsState extends State<SortProsCons> {
 
     return SizedBox(
         width: MediaQuery.of(context).size.width / 3,
-        height: MediaQuery.of(context).size.height / 2,
-        child: RawScrollbar(
-          thumbColor: Colors.white,
-          thumbVisibility: true,
-          controller: itemsScrollController,
-          child: SingleChildScrollView(
-            controller: itemsScrollController,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: bucketItemWidgets
-              ),
-            ),
-          ),
+// <<<<<<< Updated upstream
+//         height: MediaQuery.of(context).size.height / 2,
+//         child: RawScrollbar(
+//           thumbColor: Colors.white,
+//           thumbVisibility: true,
+//           controller: itemsScrollController,
+//           child: SingleChildScrollView(
+//             controller: itemsScrollController,
+//             child: Padding(
+//               padding: const EdgeInsets.symmetric(horizontal: 20.0),
+//               child: Column(
+//                   mainAxisAlignment: MainAxisAlignment.start,
+//                   children: bucketItemWidgets
+//               ),
+//             ),
+//           ),
+// =======
+        child: Column(
+            children: bucketItemWidgets
+// >>>>>>> Stashed changes
         )
     );
   }

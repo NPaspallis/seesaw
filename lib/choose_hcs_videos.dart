@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,41 +24,42 @@ const videoUrls = [
 ];
 
 const _videoDescriptions = [
-  'Healthy volunteers\' experience of HCSs',
-  'Chappell and Singer on HCSs", watched',
-  'Ethical controversies about HCSs',
+  'Healthy\nvolunteers\'\nexperience\nof HCSs',
+  'Chappell and\nSinger on HCSs',
+  'Ethical\ncontroversies\nabout HCSs',
 ];
 
 enum VideoState { showNone, showVideo0, showVideo1, showVideo2 }
+
+const numOfVideos = 3;
 
 class _ChooseHcsVideos extends State<ChooseHcsVideos> {
 
   VideoState _videoState = VideoState.showNone;
 
   final Random random = Random();
-  final double _side = 350;
-  late double _lp0;
-  late double _tp0;
-  late double _lp1;
-  late double _tp1;
-  late double _lp2;
-  late double _tp2;
   var colors = [preparedOrangeColor, preparedRedColor, preparedCyanColor];
   var watched = [false, false, false];
 
   late final List<VideoPlayerController> _controllers = List.empty(growable: true);
 
+  late double _side;
+  late double _ballPaddingSide;
+  late List<double> _lp;
+  late List<double> _tp;
+
   @override
   void initState() {
     super.initState();
 
-    final double ballPaddingSide = _side / 3;
-    _lp0 = random.nextDouble() * ballPaddingSide;
-    _tp0 = random.nextDouble() * ballPaddingSide;
-    _lp1 = random.nextDouble() * ballPaddingSide;
-    _tp1 = random.nextDouble() * ballPaddingSide;
-    _lp2 = random.nextDouble() * ballPaddingSide;
-    _tp2 = random.nextDouble() * ballPaddingSide;
+    // First get the FlutterView.
+    final FlutterView flutterView = WidgetsBinding.instance.platformDispatcher.views.first;
+    final Size size = flutterView.physicalSize / flutterView.devicePixelRatio;
+    _side = size.width / 3;
+    _ballPaddingSide = _side / 10;
+    _lp = List<double>.generate(numOfVideos, (i) => random.nextDouble() * _ballPaddingSide);
+    _tp = List<double>.generate(numOfVideos, (i) => random.nextDouble() * _ballPaddingSide);
+
     colors.shuffle(random);
 
     // handle video controllers
@@ -88,46 +90,44 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: MediaQuery.of(context).size.height * 2 / 3,
-        child:
-            Stack(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Human Challenge Studies Seesaw',
-                      style: TextStyle(
-                          fontSize: textSizeLarge,
-                          color: preparedWhiteColor),
-                      textAlign: TextAlign.center,
-                    ),
-                    Row(
-                        children: [
-                          _getClickableBall(colors[0], _side, _lp0, _tp0, _videoDescriptions[0], watched[0], watchVideo0),
-                          _getClickableBall(colors[1], _side, _lp1, _tp1, _videoDescriptions[1], watched[1], watchVideo1),
-                          _getClickableBall(colors[2], _side, _lp2, _tp2, _videoDescriptions[2], watched[2], watchVideo2)
-                        ]
-                    ),
-                    const SizedBox(height: 10),
-                    getOutlinedButton(context, 'CARRY ON', proceed)
-                  ],
-                ),
-                // video layer
-                _videoState != VideoState.showNone ? _getVideoLayer() : Container()
-              ],
-            )
+    return Stack(
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+                height: MediaQuery.of(context).size.height / 12,
+                child: const FittedBox(
+                  fit: BoxFit.fitHeight,
+                  child: Text(
+                    'Human Challenge Studies Seesaw',
+                    style: TextStyle(color: preparedWhiteColor),
+                    textAlign: TextAlign.center,
+                  ),
+                )
+            ),
+            Row(
+                children: [
+                  _getClickableBall(colors[0], _side, _lp[0], _tp[0], _videoDescriptions[0], watched[0], watchVideo0),
+                  _getClickableBall(colors[1], _side, _lp[1], _tp[1], _videoDescriptions[1], watched[1], watchVideo1),
+                  _getClickableBall(colors[2], _side, _lp[2], _tp[2], _videoDescriptions[2], watched[2], watchVideo2)
+                ]
+            ),
+            getOutlinedButton(context, 'CARRY ON', proceed)
+          ],
+        ),
+        // video layer
+        _videoState != VideoState.showNone ? _getVideoLayer() : Container()
+      ],
     );
   }
 
   Widget _getClickableBall(Color color, double side, double lp, double tp, String text, bool watched, VoidCallback callback) {
-    return
-      SizedBox(
+    return SizedBox(
         width: MediaQuery.of(context).size.width / 3,
-        height: MediaQuery.of(context).size.height / 2,
+        height: MediaQuery.of(context).size.height / 2.1,
         child: Padding(
-          padding: EdgeInsets.fromLTRB(lp, tp, side/3 - lp, side/3 - tp),
+          padding: EdgeInsets.fromLTRB(lp, tp, side/5 - lp, side/5 - tp),
           child: Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -137,8 +137,10 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
                 ),
               ),
               alignment: Alignment.center,
-              child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: side/8, horizontal: side/5),
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: Padding(
+                  padding: EdgeInsets.all(side/5),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -151,42 +153,49 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
                       Text('WATCHED 🗹', style: TextStyle(fontSize: textSizeSmall, fontWeight: FontWeight.w500, color: color)) :
                       getElevatedButton(context, 'WATCH', callback, color)
                     ],
-                  )
+                  ),
+                )
               )
           ),
         ),
       );
   }
 
-  Column _getVideoLayer() {
+  Widget _getVideoLayer() {
     final int index = _getVideoStateIndex();
-    return Column(
-      children: [
-        Flexible(
-            child: AspectRatio(
-              aspectRatio: _controllers[index].value.aspectRatio,
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: <Widget>[
-                  VideoPlayer(_controllers[index]),
-                  ClosedCaption(text: _controllers[index].value.caption.text),
-                  VideoProgressIndicator(_controllers[index], allowScrubbing: true),
-                ],
-              ),
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height * 23/24,
+      color: Colors.black38,
+      child: Column(
+        children: [
+          Expanded(
+              child: AspectRatio(
+                aspectRatio: _controllers[index].value.aspectRatio,
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: <Widget>[
+                    VideoPlayer(_controllers[index]),
+                    ClosedCaption(text: _controllers[index].value.caption.text),
+                    VideoProgressIndicator(_controllers[index], allowScrubbing: true),
+                  ],
+                ),
+              )
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 20),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(getTextWithNoLineBreaks(_videoDescriptions[index]), style: const TextStyle(color: preparedWhiteColor)),
+                const SizedBox(width: 10),
+                getOutlinedButton(context, 'BACK', back)
+              ],
             )
-        ),
-        const SizedBox(height: 10),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(_videoDescriptions[index], style: const TextStyle(fontSize: textSizeSmall, color: preparedWhiteColor)),
-            const SizedBox(width: 10),
-            getOutlinedButton(context, 'BACK', back)
-          ],
-        )
-
-      ],
+          )
+        ],
+      )
     );
   }
 
@@ -205,26 +214,30 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
 
   void back() {
     setState(() {
+      // pause all videos
+      for (var controller in _controllers) {
+        controller.pause();
+      }
       _videoState = VideoState.showNone;
     });
   }
 
   void proceed() {
-    //todo
-    setState(() {
-      final double ballPaddingSide = _side / 3;
-      _lp0 = random.nextDouble() * ballPaddingSide;
-      _tp0 = random.nextDouble() * ballPaddingSide;
-      _lp1 = random.nextDouble() * ballPaddingSide;
-      _tp1 = random.nextDouble() * ballPaddingSide;
-      _lp2 = random.nextDouble() * ballPaddingSide;
-      _tp2 = random.nextDouble() * ballPaddingSide;
-    });
+    // //todo
+    // setState(() {
+    //   final double ballPaddingSide = _side / 3;
+    //   _lp0 = random.nextDouble() * ballPaddingSide;
+    //   _tp0 = random.nextDouble() * ballPaddingSide;
+    //   _lp1 = random.nextDouble() * ballPaddingSide;
+    //   _tp1 = random.nextDouble() * ballPaddingSide;
+    //   _lp2 = random.nextDouble() * ballPaddingSide;
+    //   _tp2 = random.nextDouble() * ballPaddingSide;
+    // });
     Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
   }
 
   void watchVideo0() {
-    //todo
+    debugPrint('watchVideo0');
     setState(() {
       _videoState = VideoState.showVideo0;
       _controllers[0].initialize().then((value) => _controllers[0].play());
@@ -232,7 +245,7 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
   }
 
   void watchVideo1() {
-    //todo
+    debugPrint('watchVideo1');
     setState(() {
       _videoState = VideoState.showVideo1;
       _controllers[1].initialize().then((value) => _controllers[1].play());
@@ -240,10 +253,12 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
   }
 
   void watchVideo2() {
-    //todo
+    debugPrint('watchVideo2');
     setState(() {
       _videoState = VideoState.showVideo2;
       _controllers[2].initialize().then((value) => _controllers[2].play());
     });
   }
+
+  String getTextWithNoLineBreaks(String s) => s.replaceAll("\n", " ");
 }

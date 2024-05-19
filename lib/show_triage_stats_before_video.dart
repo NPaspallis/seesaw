@@ -9,11 +9,11 @@ import 'package:seesaw/state_model.dart';
 import 'db.dart';
 import 'poll_data.dart';
 
-class ShowStatsBeforeVideo extends StatefulWidget {
-  const ShowStatsBeforeVideo({super.key});
+class ShowTriageStatsBeforeVideo extends StatefulWidget {
+  const ShowTriageStatsBeforeVideo({super.key});
 
   @override
-  State createState() => _ShowStatsBeforeVideoState();
+  State createState() => _ShowTriageStatsBeforeVideoState();
 }
 
 const animationDuration = Duration(seconds: 1);
@@ -21,14 +21,14 @@ const minFontSize = 20;
 const maxFontSize = 520;
 const lineHeight = 0.78;
 
-class _ShowStatsBeforeVideoState extends State<ShowStatsBeforeVideo> {
+class _ShowTriageStatsBeforeVideoState extends State<ShowTriageStatsBeforeVideo> {
 
   double _responsesYes = 0;
   double _responsesNo = 0;
 
   void getDataFromFirebase() async {
     var db = RECCaseStudyDB.instance;
-    final PollData pollData = await db.getDecisionCounters();
+    final PollData pollData = await db.getDecisionCounters(); // todo
 
     setState(() {
       _responsesYes = pollData.initialYes as double;

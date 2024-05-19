@@ -8,11 +8,11 @@ import 'package:seesaw/state_model.dart';
 import 'db.dart';
 import 'poll_data.dart';
 
-class ShowStatsAfterVideo extends StatefulWidget {
-  const ShowStatsAfterVideo({super.key});
+class ShowTriageStatsAfterVideo extends StatefulWidget {
+  const ShowTriageStatsAfterVideo({super.key});
 
   @override
-  State createState() => _ShowStatsAfterVideoState();
+  State createState() => _ShowTriageStatsAfterVideoState();
 }
 
 const animationDuration = Duration(seconds: 1);
@@ -22,7 +22,7 @@ const minHeightSwitchLine = 18.0;
 const maxHeightSwitchLine = 50.0;
 const lineHeight = 0.78;
 
-class _ShowStatsAfterVideoState extends State<ShowStatsAfterVideo> {
+class _ShowTriageStatsAfterVideoState extends State<ShowTriageStatsAfterVideo> {
 
   double _switchedFromYesToNo = 0;
   double _switchedFromNoToYes = 0;
@@ -31,7 +31,7 @@ class _ShowStatsAfterVideoState extends State<ShowStatsAfterVideo> {
 
   void getDataFromFirebase() async {
 
-    var db = RECCaseStudyDB.instance;
+    var db = RECCaseStudyDB.instance; // todo
     final PollData pollData = await db.getDecisionCounters();
 
     setState(() {
@@ -193,38 +193,6 @@ class _ShowStatsAfterVideoState extends State<ShowStatsAfterVideo> {
                   ],
                 )
             ),
-            // Visibility(
-            //   visible: kDebugMode,
-            //   child: Slider(
-            //     value: _switchedFromNoToYes,
-            //     min: 0,
-            //     max: 1000,
-            //     divisions: 50,
-            //     label: '${_switchedFromNoToYes.round()} switched to YES / ${_switchedFromYesToNo.round()} switched to NO',
-            //     onChanged: (double value) {
-            //       setState(() {
-            //         _switchedFromNoToYes = value;
-            //         _switchedFromYesToNo = 1000 - _switchedFromNoToYes;
-            //       });
-            //     },
-            //   ),
-            // ),
-            // Visibility(
-            //   visible: kDebugMode,
-            //   child: Slider(
-            //     value: _responsesYesAfter,
-            //     min: 0,
-            //     max: 1000,
-            //     divisions: 25,
-            //     label: '${_responsesYesAfter.round()} YES / ${_responsesNoAfter.round()} NO',
-            //     onChanged: (double value) {
-            //       setState(() {
-            //         _responsesYesAfter = value;
-            //         _responsesNoAfter = 1000 - _responsesYesAfter;
-            //       });
-            //     },
-            //   ),
-            // ),
             getOutlinedButton(context, "CARRY ON", carryOn)
           ],
         ));

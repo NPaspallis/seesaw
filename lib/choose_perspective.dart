@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/state_model.dart';
@@ -18,55 +19,87 @@ class _ChoosePerspective extends State<ChoosePerspective> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+        width: MediaQuery.of(context).size.width * 2 / 3,
         height: MediaQuery.of(context).size.height * 2 / 3,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              'Please choose from which perspective\nyou want to take decisions',
-              style: TextStyle(
-                  fontSize: textSizeLarge,
-                  color: preparedWhiteColor),
-              textAlign: TextAlign.center,
+            const FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                'Please choose from which perspective\nyou want to take decisions',
+                style: TextStyle(
+                    color: preparedWhiteColor),
+                textAlign: TextAlign.center,
+              ),
             ),
             Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    children: [
-                      const SizedBox(
-                          width: 450,
-                          height: 200,
-                          child: Center(
-                              child: Text('Policy Maker',
-                                  style: TextStyle(
-                                      fontSize: textSizeLarge,
-                                      fontWeight: FontWeight.w900,
-                                      color: preparedWhiteColor,
-                                      decoration: TextDecoration.none),
-                                  textAlign: TextAlign.center)
-                          )),
-                      getElevatedButton(context, 'SELECT', choosePolicyMaker)
-                    ],
+
+                  InkWell(
+                    onTap: choosePolicyMaker,
+                    child: Container(
+                      padding: const EdgeInsets.all(30),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 2.0,
+                          ),
+                          borderRadius: const BorderRadius.all(Radius.circular(10.0))
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width / 4,
+                              height: 200,
+                              child: const Center(
+                                  child: Text('Policy Maker',
+                                      style: TextStyle(
+                                          fontSize: textSizeLarge,
+                                          fontWeight: FontWeight.w900,
+                                          color: preparedWhiteColor,
+                                          decoration: TextDecoration.none),
+                                      textAlign: TextAlign.center)
+                              )),
+                          getElevatedButton(context, 'SELECT', choosePolicyMaker)
+                        ],
+                      ),
+                    ),
                   ),
 
-                  Column(
-                    children: [
-                      const SizedBox(
-                          width: 450,
-                          height: 200,
-                          child: Center(
-                              child: Text('Research Ethics Committee Member',
-                                  style: TextStyle(
-                                      fontSize: textSizeLarge,
-                                      fontWeight: FontWeight.w900,
-                                      color: preparedWhiteColor,
-                                      decoration: TextDecoration.none),
-                                  textAlign: TextAlign.center)
-                          )),
-                      getElevatedButton(context, 'SELECT', chooseCommitteeMember)
-                    ],
+                  InkWell(
+                    onTap: chooseCommitteeMember,
+                    child: Container(
+                      padding: const EdgeInsets.all(30),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 2.0,
+                          ),
+                          borderRadius: const BorderRadius.all(Radius.circular(10.0))
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width / 4,
+                              height: 200,
+                              child: const Center(
+                                  child: Text('Research Ethics\nCommittee Member',
+                                      style: TextStyle(
+                                          fontSize: textSizeLarge,
+                                          fontWeight: FontWeight.w900,
+                                          color: preparedWhiteColor,
+                                          decoration: TextDecoration.none),
+                                      textAlign: TextAlign.center)
+                              )),
+                          getElevatedButton(context, 'SELECT', chooseCommitteeMember)
+                        ],
+                      ),
+                    ),
                   ),
                 ]
             )

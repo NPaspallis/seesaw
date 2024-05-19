@@ -94,12 +94,14 @@ OutlinedButton getOutlinedButton(final BuildContext context,
           width: 2, //Set border width
         )),
     child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(8),
         child: Text(text,
             style: const TextStyle(
                 fontSize: textSizeSmall,
                 fontWeight: FontWeight.w500,
-                color: preparedWhiteColor))),
+                color: preparedWhiteColor),
+        )
+    ),
   );
 }
 
@@ -107,15 +109,18 @@ ElevatedButton getElevatedButton(final BuildContext context,
     final String text, final VoidCallback callback, [final Color color = preparedSecondaryColor]) {
   return ElevatedButton(
       onPressed: () => callback(),
-      style: ButtonStyle(
-        backgroundColor:
-        MaterialStatePropertyAll<Color>(color),
-      ),
+      style: ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(color)),
       child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Text(text,
+          padding: const EdgeInsets.all(8),
+          child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text(text,
               style: const TextStyle(
                   fontSize: textSizeSmall,
                   fontWeight: FontWeight.w900,
-                  color: preparedWhiteColor))));
+                  color: preparedWhiteColor)
+            )
+          )
+      )
+  );
 }

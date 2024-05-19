@@ -4,16 +4,24 @@ import 'package:seesaw/auto_timeout_layer.dart';
 import 'package:seesaw/charles_weijer_video.dart';
 import 'package:seesaw/choose_evaluation.dart';
 import 'package:seesaw/choose_hcs_videos.dart';
+import 'package:seesaw/choose_triage_resources.dart';
 import 'package:seesaw/evaluation.dart';
 import 'package:seesaw/make_decision_before_video.dart';
+import 'package:seesaw/make_triage_decision_after_video.dart';
+import 'package:seesaw/make_triage_decision_before_video.dart';
 import 'package:seesaw/perspective_committee_member.dart';
+import 'package:seesaw/perspective_policy_maker.dart';
 import 'package:seesaw/secret_stats_screen.dart';
 import 'package:seesaw/seesaw_widget.dart';
 import 'package:seesaw/show_stats_after_video.dart';
 import 'package:seesaw/show_stats_before_video.dart';
+import 'package:seesaw/show_triage_stats_after_video.dart';
+import 'package:seesaw/show_triage_stats_before_video.dart';
 import 'package:seesaw/sort_pros_cons.dart';
 import 'package:seesaw/state_model.dart';
 import 'package:seesaw/thank_you.dart';
+import 'package:seesaw/triage_expert_video.dart';
+import 'package:seesaw/triage_refresher_video.dart';
 import 'package:seesaw/welcome.dart';
 
 import 'buttons.dart';
@@ -45,7 +53,7 @@ class SeesawApp extends StatelessWidget {
   }
 }
 
-const version = '24.05.13+1';
+const version = '24.05.19+1';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -120,8 +128,26 @@ class _HomeScreenState extends State<HomeScreen> {
         return Welcome(_scrollController);
       case SeesawState.choosePerspective:
         return const ChoosePerspective();
+
+      // perspective policy maker views
       case SeesawState.perspectivePolicyMaker:
-        return ThankYou(_scrollController); //const Text('error: todo'); //todo
+        return const PerspectivePolicyMaker();
+      case SeesawState.doTriageRefresher:
+        return const TriageRefresherVideo();
+      case SeesawState.chooseTriageResources:
+        return const ChooseTriageResources();
+      case SeesawState.makeTriageDecisionBefore:
+        return const MakeTriageDecisionBeforeVideo();
+      case SeesawState.showTriageStatsBeforeVideo:
+        return const ShowTriageStatsBeforeVideo();
+      case SeesawState.triageExpertVideo:
+        return const TriageExpertVideo();
+      case SeesawState.makeTriageDecisionAfter:
+        return const MakeTriageDecisionAfterVideo();
+      case SeesawState.showTriageStatsAfterVideo:
+        return const ShowTriageStatsAfterVideo();
+
+      // perspective committee member views
       case SeesawState.perspectiveCommitteeMember:
         return const PerspectiveCommitteeMember();
       case SeesawState.doHcsRefresher:
@@ -140,10 +166,13 @@ class _HomeScreenState extends State<HomeScreen> {
         return const MakeDecisionAfterVideo();
       case SeesawState.showStatsAfterCharlesWeijerVideo:
         return const ShowStatsAfterVideo();
-      case SeesawState.chooseEvaluation:
-        return const ChooseEvaluation();
-      case SeesawState.evaluation:
-        return const EvaluationPage();
+
+
+      // evaluation
+      // case SeesawState.chooseEvaluation:
+      //   return const ChooseEvaluation();
+      // case SeesawState.evaluation:
+      //   return const EvaluationPage();
       case SeesawState.thankYou:
         return ThankYou(_scrollController);
       default:
@@ -162,30 +191,47 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String _getNavigationLabel(final SeesawState seesawState) {
     switch (seesawState) {
-      // case SeesawState.choosePerspective:
-      //   return 'Choose perspective ...';
+      case SeesawState.choosePerspective:
+        return 'Choose perspective ...';
       case SeesawState.perspectivePolicyMaker:
-        return 'Policy maker Perspective';
+        return 'Policy maker perspective';
+      case SeesawState.doTriageRefresher:
+        return 'Policy maker perspective | Crisis Triage refresher';
+      case SeesawState.chooseTriageResources:
+        return 'Policy maker perspective | Different perspectives';
+      case SeesawState.makeTriageDecisionBefore:
+        return 'Policy maker perspective | What is your decision?';
+      case SeesawState.showTriageStatsBeforeVideo:
+        return 'Policy maker perspective | See what others have decided';
+      case SeesawState.triageExpertVideo:
+        return 'Policy maker perspective | Expert\'s view';
+      case SeesawState.makeTriageDecisionAfter:
+        return 'Policy maker perspective | What is your decision after this video?';
+      case SeesawState.showTriageStatsAfterVideo:
+        return 'Policy maker perspective | See how others have decided';
+
       case SeesawState.perspectiveCommitteeMember:
         return 'Research ethics committee member perspective';
       case SeesawState.doHcsRefresher:
         return 'Research ethics committee member perspective | Human Challenge Studies refresher';
       case SeesawState.chooseHcsVideos:
-        return 'Research ethics committee member Perspective | Videos of different perspectives';
+        return 'Research ethics committee member perspective | Videos of different perspectives';
       case SeesawState.sortProsCons:
-        return 'Research ethics committee member Perspective | Identify pros and cons of Human Challenge Studies';
+        return 'Research ethics committee member perspective | Identify pros and cons of Human Challenge Studies';
       case SeesawState.makeDecisionBeforeCharlesWeijerVideo:
-        return 'Research ethics committee member Perspective | What is your decision?';
+        return 'Research ethics committee member perspective | What is your decision?';
       case SeesawState.showStatsBeforeCharlesWeijerVideo:
-        return 'Research ethics committee member Perspective | See what others have decided';
+        return 'Research ethics committee member perspective | See what others have decided';
       case SeesawState.charlesWeijerVideo:
-        return 'Research ethics committee member Perspective | Expert\'s View';
+        return 'Research ethics committee member perspective | Expert\'s view';
       case SeesawState.makeDecisionAfterCharlesWeijerVideo:
-        return 'Research ethics committee member Perspective | What is your decision after this Video?';
+        return 'Research ethics committee member perspective | What is your decision after this video?';
       case SeesawState.showStatsAfterCharlesWeijerVideo:
-        return 'Research ethics committee member Perspective | See how others have Decided';
-      case SeesawState.evaluation:
-        return 'Evaluation';
+        return 'Research ethics committee member perspective | See how others have decided';
+      // case SeesawState.chooseEvaluation:
+      //   return 'Proceed to evaluation?';
+      // case SeesawState.evaluation:
+      //   return 'Evaluation';
       case SeesawState.thankYou:
         return 'Thank you!';
       case SeesawState.welcome:
@@ -205,27 +251,29 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-                padding: const EdgeInsets.fromLTRB(textSizeSmall, 0, 0, 0),
-                child: Text(
-                  label,
-                  style: const TextStyle(
-                      fontSize: textSizeSmall,
-                      color: preparedSecondaryColor,
-                      fontWeight: FontWeight.normal,
-                      decoration: TextDecoration.none),
-                )),
+                padding: const EdgeInsets.only(left: 10),
+                child: FittedBox(
+                  fit: BoxFit.fitHeight,
+                  child: Text(
+                    label,
+                    style: const TextStyle(
+                        fontSize: textSizeSmall,
+                        color: preparedSecondaryColor,
+                        fontWeight: FontWeight.normal,
+                        decoration: TextDecoration.none),
+                  ),
+                )
+            ),
             Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, textSizeSmall, 0),
+                padding: const EdgeInsets.all(2),
                 child: Builder(
-                    builder: (context) => ElevatedButton(
+                    builder: (context) => IconButton(
                         onPressed: () => _resetInteraction(context),
-                        child: const Row(
-                          children: [
-                            Icon(Icons.delete_forever, color: Colors.black, size: 16,),
-                            SizedBox(width: 10),
-                            Text('RESET', style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold))
-                          ],
-                        )))),
+                        style: IconButton.styleFrom(padding: EdgeInsets.zero),
+                        icon: const FittedBox(child: Icon(Icons.reset_tv, color: preparedSecondaryColor))
+                    )
+                )
+            ),
           ],
         ));
   }
@@ -238,16 +286,45 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Center(
-                    child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                          'An interactive experience demonstrating ethical tradeoffs in times of crisis',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: textSizeLarge,
-                              color: preparedWhiteColor,
-                              decoration: TextDecoration.none)),
-                    )),
+// <<<<<<< Updated upstream
+//                     child: FittedBox(
+//                       fit: BoxFit.fitWidth,
+//                       child: Text(
+//                           'An interactive experience demonstrating ethical tradeoffs in times of crisis',
+//                           textAlign: TextAlign.center,
+//                           style: TextStyle(
+//                               fontSize: textSizeLarge,
+//                               color: preparedWhiteColor,
+//                               decoration: TextDecoration.none)),
+//                     )),
+// =======
+                  child: Column(
+                    children: [
+                      FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                            'An interactive experience demonstrating ethical tradeoffs in times of crisis',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: textSizeLarge,
+                                color: preparedWhiteColor,
+                                decoration: TextDecoration.none)),
+                      ),
+
+                      FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                            'This decision tree takes between 12 and 14 minutes',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: preparedWhiteColor,
+                                fontStyle: FontStyle.italic,
+                                decoration: TextDecoration.none)),
+                      ),
+                    ],
+                  )
+                ),
+// >>>>>>> Stashed changes
               ),
               Align(
                   alignment: Alignment.bottomRight,
