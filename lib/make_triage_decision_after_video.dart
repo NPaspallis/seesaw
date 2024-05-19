@@ -1,11 +1,8 @@
-import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
 import 'package:seesaw/main.dart';
-import 'package:seesaw/make_decision_before_video.dart';
+import 'package:seesaw/make_triage_decision_before_video.dart';
 import 'package:seesaw/state_model.dart';
 
 import 'db.dart';
@@ -58,27 +55,25 @@ class _MakeTriageDecisionAfterVideoState extends State<MakeTriageDecisionAfterVi
 
   void chooseYes() {
     debugPrint('triage-after-yes');
-    // todo
-    // var db = RECCaseStudyDB.instance;
-    // List<Future> futures = [db.incrementFinalYesDecision()];
-    // if (MakeDecisionBeforeVideo.initialDecision == false) {
-    //   futures.add(db.incrementSwitchedToYes());
-    // }
-    // Future.wait(futures).then((value) =>
-        Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
-    // );
+    var db = TriageCaseStudyDB.instance;
+    List<Future> futures = [db.incrementFinalYesDecision()];
+    if (MakeTriageDecisionBeforeVideo.initialDecision == false) {
+      futures.add(db.incrementSwitchedToYes());
+    }
+    Future.wait(futures).then((value) =>
+        Provider.of<StateModel>(context, listen: false).progressToNextSeesawState()
+    );
   }
 
   void chooseNo() {
     debugPrint('triage-after-no');
-    // todo
-    // var db = RECCaseStudyDB.instance;
-    // List<Future> futures = [db.incrementFinalNoDecision()];
-    // if (MakeDecisionBeforeVideo.initialDecision == true) {
-    //   futures.add(db.incrementSwitchedToNo());
-    // }
-    // Future.wait(futures).then((value) =>
-        Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
-    // );
+    var db = TriageCaseStudyDB.instance;
+    List<Future> futures = [db.incrementFinalNoDecision()];
+    if (MakeTriageDecisionBeforeVideo.initialDecision == true) {
+      futures.add(db.incrementSwitchedToNo());
+    }
+    Future.wait(futures).then((value) =>
+        Provider.of<StateModel>(context, listen: false).progressToNextSeesawState()
+    );
   }
 }

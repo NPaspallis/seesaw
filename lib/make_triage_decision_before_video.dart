@@ -56,21 +56,19 @@ class _MakeTriageDecisionBeforeVideoState extends State<MakeTriageDecisionBefore
 
   void chooseYes() {
     debugPrint('triage-before-yes');
-    //todo store in DB
-    // MakeTriageDecisionBeforeVideo.initialDecision = true;
-    // var db = RECCaseStudyDB.instance;
-    // db.incrementInitialYesDecision().then((value) =>
-        Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
-    // );
+    MakeTriageDecisionBeforeVideo.initialDecision = true;
+    var db = TriageCaseStudyDB.instance;
+    db.incrementInitialYesDecision().then((value) =>
+        Provider.of<StateModel>(context, listen: false).progressToNextSeesawState()
+    );
   }
 
   void chooseNo() {
     debugPrint('triage-before-no');
-    //todo store in DB
-    // MakeTriageDecisionBeforeVideo.initialDecision = false;
-    // var db = RECCaseStudyDB.instance;
-    // db.incrementInitialNoDecision().then((value) =>
-        Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
-    // );
+    MakeTriageDecisionBeforeVideo.initialDecision = false;
+    var db = TriageCaseStudyDB.instance;
+    db.incrementInitialNoDecision().then((value) =>
+        Provider.of<StateModel>(context, listen: false).progressToNextSeesawState()
+    );
   }
 }

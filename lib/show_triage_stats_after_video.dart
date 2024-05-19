@@ -31,7 +31,7 @@ class _ShowTriageStatsAfterVideoState extends State<ShowTriageStatsAfterVideo> {
 
   void getDataFromFirebase() async {
 
-    var db = RECCaseStudyDB.instance; // todo
+    var db = TriageCaseStudyDB.instance;
     final PollData pollData = await db.getDecisionCounters();
 
     setState(() {

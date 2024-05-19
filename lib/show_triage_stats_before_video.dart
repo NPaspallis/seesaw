@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,8 +26,8 @@ class _ShowTriageStatsBeforeVideoState extends State<ShowTriageStatsBeforeVideo>
   double _responsesNo = 0;
 
   void getDataFromFirebase() async {
-    var db = RECCaseStudyDB.instance;
-    final PollData pollData = await db.getDecisionCounters(); // todo
+    var db = TriageCaseStudyDB.instance;
+    final PollData pollData = await db.getDecisionCounters();
 
     setState(() {
       _responsesYes = pollData.initialYes as double;

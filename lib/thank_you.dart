@@ -40,9 +40,13 @@ class _ThankYouState extends State<ThankYou> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [ // portraits
+
+                //TODO - Nearchos portrait
+
                 _getPortraitWithName('assets/doris.png', 'Doris Schroeder'),
                 _getPortraitWithName('assets/dave.png', 'David Robinson'),
                 _getPortraitWithName('assets/natalie.png', 'Natalie Evans'),
+                _getPortraitWithName('assets/nicos.jpg', 'Nicos Kasenides'),
               ],
             ),
             const SizedBox(height: 128),
