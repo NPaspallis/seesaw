@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/state_model.dart';
 
@@ -109,6 +110,18 @@ class _ChoosePerspective extends State<ChoosePerspective> {
 
   void choosePolicyMaker() {
     debugPrint('chose: choosePolicyMaker');
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Row(
+          children: [
+            Icon(Icons.info, color: Colors.white, size: 40,),
+            Gap(20),
+            Text("This option will be available soon.", style: TextStyle(fontSize: textSizeMedium),),
+          ],
+        ),
+        backgroundColor: preparedBlueColor,
+      )
+    );
     // final StateModel stateModel = Provider.of<StateModel>(context, listen: false);
     // stateModel.setSeesawState(SeesawState.perspectivePolicyMaker);
   }
