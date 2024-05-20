@@ -30,7 +30,7 @@ enum SeesawState {
 
 class StateModel extends ChangeNotifier {
 
-  SeesawState _seesawState = SeesawState.showStatsBeforeCharlesWeijerVideo;
+  SeesawState _seesawState = SeesawState.welcome;
 
   SeesawState get seesawState => _seesawState;
 
