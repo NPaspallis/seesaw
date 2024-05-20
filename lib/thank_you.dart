@@ -30,7 +30,7 @@ class _ThankYouState extends State<ThankYou> {
           children: [
             const Center(
               child: Text(
-                  'Thank you for participating to this interactive experience.',
+                  'Thank you for participating in this interactive experience.',
                   style: TextStyle(fontSize: textSizeLarger, color: preparedPrimaryColor, fontWeight: FontWeight.w900, decoration: TextDecoration.none),
                   textAlign: TextAlign.center),
             ),

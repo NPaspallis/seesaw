@@ -64,7 +64,7 @@ class _ChoosePerspective extends State<ChoosePerspective> {
                                           decoration: TextDecoration.none),
                                       textAlign: TextAlign.center)
                               )),
-                          getElevatedButton(context, 'SELECT', choosePolicyMaker)
+                          getElevatedButton(context, 'COMING SOON', choosePolicyMaker, Colors.grey)
                         ],
                       ),
                     ),
@@ -109,8 +109,8 @@ class _ChoosePerspective extends State<ChoosePerspective> {
 
   void choosePolicyMaker() {
     debugPrint('chose: choosePolicyMaker');
-    final StateModel stateModel = Provider.of<StateModel>(context, listen: false);
-    stateModel.setSeesawState(SeesawState.perspectivePolicyMaker);
+    // final StateModel stateModel = Provider.of<StateModel>(context, listen: false);
+    // stateModel.setSeesawState(SeesawState.perspectivePolicyMaker);
   }
 
   void chooseCommitteeMember() {
