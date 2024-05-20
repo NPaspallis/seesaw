@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 enum SeesawState {
   welcome,
   choosePerspective,
+
   perspectivePolicyMaker,
   doTriageRefresher,
   chooseTriageResources,
@@ -21,6 +22,7 @@ enum SeesawState {
   charlesWeijerVideo,
   makeDecisionAfterCharlesWeijerVideo,
   showStatsAfterCharlesWeijerVideo,
+
   // chooseEvaluation,
   // evaluation,
   thankYou,

@@ -39,7 +39,7 @@ class _WelcomeState extends State<Welcome> {
     debugPrint('choosePerspective');
     final StateModel stateModel =
         Provider.of<StateModel>(context, listen: false);
-    stateModel.setSeesawState(SeesawState.choosePerspective);
+    stateModel.setSeesawState(SeesawState.perspectiveCommitteeMember);
     widget.scrollController.animateTo(
         widget.scrollController.position.minScrollExtent,
         duration: const Duration(milliseconds: 500),

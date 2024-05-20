@@ -53,7 +53,7 @@ class SeesawApp extends StatelessWidget {
   }
 }
 
-const version = '24.05.19+2';
+const version = '24.05.20+1';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
