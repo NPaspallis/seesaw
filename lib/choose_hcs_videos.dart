@@ -150,7 +150,7 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
                       ),
                       const SizedBox(height: 10),
                       watched ?
-                      Text('WATCHED 🗹', style: TextStyle(fontSize: textSizeSmall, fontWeight: FontWeight.w500, color: color)) :
+                      Text('WATCHED ✓', style: TextStyle(fontSize: textSizeSmall, fontWeight: FontWeight.w500, color: color)) :
                       getElevatedButton(context, 'WATCH', callback, color)
                     ],
                   ),

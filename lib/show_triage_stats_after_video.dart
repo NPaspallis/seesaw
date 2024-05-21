@@ -95,7 +95,7 @@ class _ShowTriageStatsAfterVideoState extends State<ShowTriageStatsAfterVideo> {
 
                           Container(
                               padding: const EdgeInsets.only(right: 10),
-                              child: Text('${_responsesYesAfter.round()} yes\'s',
+                              child: Text('${_responsesYesAfter.round()} yeses',
                                   style: const TextStyle(
                                       fontSize: textSizeSmall,
                                       fontWeight: FontWeight.bold,
@@ -154,7 +154,7 @@ class _ShowTriageStatsAfterVideoState extends State<ShowTriageStatsAfterVideo> {
 
                           Container(
                               padding: const EdgeInsets.only(left: 10),
-                              child: Text('${_responsesNoAfter.round()} no\'s',
+                              child: Text('${_responsesNoAfter.round()} noes',
                                   style: const TextStyle(
                                       fontSize: textSizeSmall,
                                       fontWeight: FontWeight.bold,

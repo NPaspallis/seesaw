@@ -193,11 +193,11 @@ class _ChooseTriageResources extends State<ChooseTriageResources> {
   Widget getActionButton(ResourceType resourceType, Color color, bool watched, VoidCallback callback) {
     if(resourceType == ResourceType.resourceVideo) {
       return watched ?
-        Text('WATCHED 🗹', style: TextStyle(fontSize: textSizeSmall, fontWeight: FontWeight.w500, color: color)) :
+        Text('WATCHED ✓', style: TextStyle(fontSize: textSizeSmall, fontWeight: FontWeight.w500, color: color)) :
         getElevatedButton(context, 'WATCH', callback, color);
     } else if(resourceType == ResourceType.resourceArticle) {
       return watched ?
-      Text('VIEWED 🗹', style: TextStyle(fontSize: textSizeSmall, fontWeight: FontWeight.w500, color: color)) :
+      Text('VIEWED ✓', style: TextStyle(fontSize: textSizeSmall, fontWeight: FontWeight.w500, color: color)) :
       getElevatedButton(context, 'VIEW ARTICLE', callback, color);
     } else {
       return Container();
