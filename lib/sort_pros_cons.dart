@@ -163,9 +163,9 @@ class _SortProsConsState extends State<SortProsCons> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _getBucket(Bucket.pros, 'PROS', preparedSecondaryColor),
+                _getBucket(Bucket.pros, 'PROS', preparedSecondaryColor.withAlpha(100)),
                 _getItemsColumn(),
-                _getBucket(Bucket.cons, 'CONS', Colors.red.shade300),
+                _getBucket(Bucket.cons, 'CONS', Colors.red.shade300.withAlpha(175)),
               ],
             ),
             bucketNone.isNotEmpty ?
