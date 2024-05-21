@@ -18,7 +18,7 @@ class ShowStatsBeforeVideo extends StatefulWidget {
 
 const animationDuration = Duration(seconds: 1);
 const minFontSize = 20;
-const maxFontSize = 520;
+double maxFontSize = 520;
 const lineHeight = 0.78;
 
 class _ShowStatsBeforeVideoState extends State<ShowStatsBeforeVideo> {
@@ -44,6 +44,7 @@ class _ShowStatsBeforeVideoState extends State<ShowStatsBeforeVideo> {
 
   @override
   Widget build(BuildContext context) {
+    maxFontSize = MediaQuery.of(context).size.height * 3/7; // todo confirm
     double sum = _responsesYes + _responsesNo;
     double percentageYes = sum == 0 ? 0 : _responsesYes / sum;
     double percentageNo = sum == 0 ? 0 : _responsesNo / sum;

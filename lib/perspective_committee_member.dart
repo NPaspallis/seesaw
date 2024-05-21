@@ -34,13 +34,28 @@ class _PerspectiveCommitteeMemberState
                   padding: EdgeInsets.all(40),
                   child: FittedBox(
                     fit: BoxFit.fitWidth,
-                    child: Text(
-                      'Go back in time to early 2020.\nAre you ready to take a decision about COVID-19?',
-                      style: TextStyle(
-                          fontSize: textSizeLarge,
-                          color: preparedWhiteColor,
-                          decoration: TextDecoration.none),
-                      textAlign: TextAlign.end,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Go back in time to early 2020.\nAre you ready to take a decision about COVID-19?',
+                          style: TextStyle(
+                              fontSize: textSizeLarge,
+                              color: preparedWhiteColor,
+                              decoration: TextDecoration.none),
+                          textAlign: TextAlign.end,
+                        ),
+                        SizedBox(height: 20,),
+                        Text(
+                          'This decision tree will last 12-14 minutes',
+                          style: TextStyle(
+                              fontSize: textSizeSmall,
+                              fontStyle: FontStyle.italic,
+                              color: preparedWhiteColor,
+                              decoration: TextDecoration.none),
+                          textAlign: TextAlign.end,
+                        )
+                      ],
                     ),
                   ),
                 ),

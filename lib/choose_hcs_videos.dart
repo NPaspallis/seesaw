@@ -188,7 +188,7 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(getTextWithNoLineBreaks(_videoDescriptions[index]), style: const TextStyle(color: preparedWhiteColor)),
+                Text(getTextWithNoLineBreaks(_videoDescriptions[index]), style: const TextStyle(fontSize: textSizeSmall, color: preparedWhiteColor)),
                 const SizedBox(width: 10),
                 getOutlinedButton(context, 'BACK', back)
               ],

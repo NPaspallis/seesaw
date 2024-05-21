@@ -53,7 +53,7 @@ class SeesawApp extends StatelessWidget {
   }
 }
 
-const version = '24.05.20+1';
+const version = '24.05.21+1';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -311,16 +311,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 decoration: TextDecoration.none)),
                       ),
 
-                      FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Text(
-                            'This decision tree takes between 12 and 14 minutes',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: preparedWhiteColor,
-                                fontStyle: FontStyle.italic,
-                                decoration: TextDecoration.none)),
-                      ),
+                      // FittedBox(
+                      //   fit: BoxFit.fitWidth,
+                      //   child: Text(
+                      //       'This decision tree takes between 12 and 14 minutes',
+                      //       textAlign: TextAlign.center,
+                      //       style: TextStyle(
+                      //           color: preparedWhiteColor,
+                      //           fontStyle: FontStyle.italic,
+                      //           decoration: TextDecoration.none)),
+                      // ),
                     ],
                   )
                 ),

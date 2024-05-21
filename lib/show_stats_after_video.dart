@@ -17,7 +17,7 @@ class ShowStatsAfterVideo extends StatefulWidget {
 
 const animationDuration = Duration(seconds: 1);
 const minFontSize = 20;
-const maxFontSize = 420;
+double maxFontSize = 420;
 const minHeightSwitchLine = 18.0;
 const maxHeightSwitchLine = 50.0;
 const lineHeight = 0.78;
@@ -50,6 +50,7 @@ class _ShowStatsAfterVideoState extends State<ShowStatsAfterVideo> {
 
   @override
   Widget build(BuildContext context) {
+    maxFontSize = MediaQuery.of(context).size.height * 3/8; // todo confirm
 
     double sumSwitch = _switchedFromNoToYes + _switchedFromYesToNo;
     double percentageNoToYes = sumSwitch == 0 ? 0 : _switchedFromNoToYes / sumSwitch;
