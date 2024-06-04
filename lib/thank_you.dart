@@ -43,6 +43,7 @@ class _ThankYouState extends State<ThankYou> {
                 _getPortraitWithName('assets/doris.png', 'Doris Schroeder'),
                 _getPortraitWithName('assets/dave.png', 'David Robinson'),
                 _getPortraitWithName('assets/natalie.png', 'Natalie Evans'),
+                _getPortraitWithName('assets/steven.png', 'Steven R. Kraaijeveld'),
                 _getPortraitWithName('assets/nicos.png', 'Nicos Kasenides'),
                 _getPortraitWithName('assets/nearchos.png', 'Nearchos Paspallis'),
               ],
