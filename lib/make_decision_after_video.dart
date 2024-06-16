@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
@@ -11,7 +8,8 @@ import 'package:seesaw/state_model.dart';
 import 'db.dart';
 
 class MakeDecisionAfterVideo extends StatefulWidget {
-  const MakeDecisionAfterVideo({super.key});
+  final String classroomUUID;
+  const MakeDecisionAfterVideo({super.key, required this.classroomUUID});
 
   @override
   State createState() => _MakeDecisionAfterVideoState();
@@ -60,9 +58,9 @@ class _MakeDecisionAfterVideoState extends State<MakeDecisionAfterVideo> {
   void chooseYes() {
     debugPrint('hcs-after-yes');
     var db = RECCaseStudyDB.instance;
-    List<Future> futures = [db.incrementFinalYesDecision()];
+    List<Future> futures = [db.incrementFinalYesDecision(widget.classroomUUID)];
     if (MakeDecisionBeforeVideo.initialDecision == false) {
-      futures.add(db.incrementSwitchedToYes());
+      futures.add(db.incrementSwitchedToYes(widget.classroomUUID));
     }
     Future.wait(futures).then((value) =>
         Provider.of<StateModel>(context, listen: false).progressToNextSeesawState(),
@@ -72,9 +70,9 @@ class _MakeDecisionAfterVideoState extends State<MakeDecisionAfterVideo> {
   void chooseNo() {
     debugPrint('hcs-after-no');
     var db = RECCaseStudyDB.instance;
-    List<Future> futures = [db.incrementFinalNoDecision()];
+    List<Future> futures = [db.incrementFinalNoDecision(widget.classroomUUID)];
     if (MakeDecisionBeforeVideo.initialDecision == true) {
-      futures.add(db.incrementSwitchedToNo());
+      futures.add(db.incrementSwitchedToNo(widget.classroomUUID));
     }
     Future.wait(futures).then((value) =>
         Provider.of<StateModel>(context, listen: false).progressToNextSeesawState(),

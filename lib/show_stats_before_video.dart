@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
@@ -10,7 +8,8 @@ import 'db.dart';
 import 'poll_data.dart';
 
 class ShowStatsBeforeVideo extends StatefulWidget {
-  const ShowStatsBeforeVideo({super.key});
+  final String classroomUUID;
+  const ShowStatsBeforeVideo({super.key, required this.classroomUUID});
 
   @override
   State createState() => _ShowStatsBeforeVideoState();
@@ -28,7 +27,7 @@ class _ShowStatsBeforeVideoState extends State<ShowStatsBeforeVideo> {
 
   void getDataFromFirebase() async {
     var db = RECCaseStudyDB.instance;
-    final PollData pollData = await db.getDecisionCounters();
+    final PollData pollData = await db.getDecisionCounters(widget.classroomUUID);
 
     setState(() {
       _responsesYes = pollData.initialYes as double;
@@ -44,7 +43,7 @@ class _ShowStatsBeforeVideoState extends State<ShowStatsBeforeVideo> {
 
   @override
   Widget build(BuildContext context) {
-    maxFontSize = MediaQuery.of(context).size.height * 3/7; // todo confirm
+    maxFontSize = MediaQuery.of(context).size.height * 3/7; // may need adjustment
     double sum = _responsesYes + _responsesNo;
     double percentageYes = sum == 0 ? 0 : _responsesYes / sum;
     double percentageNo = sum == 0 ? 0 : _responsesNo / sum;

@@ -46,9 +46,18 @@ dependencies:
 
   # https://pub.dev/packages/http
   http: ^1.2.1
+
+  # https://pub.dev/packages/qr_flutter
+  qr_flutter: ^4.1.0
+
+  # https://pub.dev/packages/uuid
+  uuid: ^4.4.0
+
+  # https://pub.dev/packages/url_launcher
+  url_launcher: ^6.3.0
+
   firebase_core: ^2.31.0
   cloud_firestore: ^4.17.3
-  uuid: ^4.4.0
   build_runner: ^2.4.9
   gap: ^3.0.1
   fullscreen_window: ^1.0.4

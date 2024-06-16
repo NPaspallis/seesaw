@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
@@ -9,7 +8,8 @@ import 'db.dart';
 import 'poll_data.dart';
 
 class ShowStatsAfterVideo extends StatefulWidget {
-  const ShowStatsAfterVideo({super.key});
+  final String classroomUUID;
+  const ShowStatsAfterVideo({super.key, required this.classroomUUID});
 
   @override
   State createState() => _ShowStatsAfterVideoState();
@@ -32,7 +32,7 @@ class _ShowStatsAfterVideoState extends State<ShowStatsAfterVideo> {
   void getDataFromFirebase() async {
 
     var db = RECCaseStudyDB.instance;
-    final PollData pollData = await db.getDecisionCounters();
+    final PollData pollData = await db.getDecisionCounters(widget.classroomUUID);
 
     setState(() {
       _responsesYesAfter = pollData.finalYes as double;
@@ -50,7 +50,7 @@ class _ShowStatsAfterVideoState extends State<ShowStatsAfterVideo> {
 
   @override
   Widget build(BuildContext context) {
-    maxFontSize = MediaQuery.of(context).size.height * 3/8; // todo confirm
+    maxFontSize = MediaQuery.of(context).size.height * 3/8; // may need adjustment
 
     double sumSwitch = _switchedFromNoToYes + _switchedFromYesToNo;
     double percentageNoToYes = sumSwitch == 0 ? 0 : _switchedFromNoToYes / sumSwitch;

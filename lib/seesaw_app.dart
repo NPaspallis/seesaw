@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/auto_timeout_layer.dart';
 import 'package:seesaw/charles_weijer_video.dart';
-import 'package:seesaw/choose_evaluation.dart';
 import 'package:seesaw/choose_hcs_videos.dart';
 import 'package:seesaw/choose_triage_resources.dart';
-import 'package:seesaw/evaluation.dart';
 import 'package:seesaw/make_decision_before_video.dart';
 import 'package:seesaw/make_triage_decision_after_video.dart';
 import 'package:seesaw/make_triage_decision_before_video.dart';
@@ -26,9 +24,12 @@ import 'package:seesaw/welcome.dart';
 
 import 'buttons.dart';
 import 'choose_perspective.dart';
+import 'classroom_screen.dart';
 import 'hcs_refresher_video.dart';
 import 'main.dart';
 import 'make_decision_after_video.dart';
+
+const defaultClassroomUUID = "kiosk";
 
 class SeesawApp extends StatelessWidget {
   const SeesawApp({super.key});
@@ -36,19 +37,20 @@ class SeesawApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Seesaw App',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: preparedPrimaryColor),
-          primaryColor: preparedPrimaryColor,
-          splashColor: preparedSecondaryColor,
-          // fontFamily: 'Open Sans',
-          useMaterial3: true,
-        ),
-        routes: {
-          "/": (context) => const HomeScreen(),
-          "/stats":  (context) => const SecretStatsScreen(),
-        },
+      title: 'Seesaw App',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: preparedPrimaryColor),
+        primaryColor: preparedPrimaryColor,
+        splashColor: preparedSecondaryColor,
+        // fontFamily: 'Open Sans',
+        useMaterial3: true,
+      ),
+      routes: {
+        "/": (context) => HomeScreen(classroomUUID: Uri.base.queryParameters['uuid'] ?? defaultClassroomUUID),
+        "/stats":  (context) => const SecretStatsScreen(),
+        "/classroom":  (context) => const ClassroomScreen(),
+      },
     );
   }
 }
@@ -56,7 +58,8 @@ class SeesawApp extends StatelessWidget {
 const version = '24.06.09+1';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String classroomUUID;
+  const HomeScreen({super.key, this.classroomUUID = defaultClassroomUUID});
 
   @override
   State<StatefulWidget> createState() => _HomeScreenState();
@@ -73,6 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _balancingSeesaw = const BalancingSeesaw();
     _seesawState = SeesawState.welcome;
+    print('classroomUUID: ${widget.classroomUUID}');//todo delete
   }
 
   @override
@@ -157,15 +161,15 @@ class _HomeScreenState extends State<HomeScreen> {
       case SeesawState.sortProsCons:
         return const SortProsCons();
       case SeesawState.makeDecisionBeforeCharlesWeijerVideo:
-        return const MakeDecisionBeforeVideo();
+        return MakeDecisionBeforeVideo(classroomUUID: widget.classroomUUID);
       case SeesawState.showStatsBeforeCharlesWeijerVideo:
-        return const ShowStatsBeforeVideo();
+        return ShowStatsBeforeVideo(classroomUUID: widget.classroomUUID);
       case SeesawState.charlesWeijerVideo:
         return const CharlesWeijerVideo();
       case SeesawState.makeDecisionAfterCharlesWeijerVideo:
-        return const MakeDecisionAfterVideo();
+        return MakeDecisionAfterVideo(classroomUUID: widget.classroomUUID);
       case SeesawState.showStatsAfterCharlesWeijerVideo:
-        return const ShowStatsAfterVideo();
+        return ShowStatsAfterVideo(classroomUUID: widget.classroomUUID);
 
 
       // evaluation
@@ -281,23 +285,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _getBottomWidget() {
     return SizedBox(
         height: MediaQuery.of(context).size.height / 3,
-        child: const Stack(
+        child: Stack(
             children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Center(
-// <<<<<<< Updated upstream
-//                     child: FittedBox(
-//                       fit: BoxFit.fitWidth,
-//                       child: Text(
-//                           'An interactive experience demonstrating ethical tradeoffs in times of crisis',
-//                           textAlign: TextAlign.center,
-//                           style: TextStyle(
-//                               fontSize: textSizeLarge,
-//                               color: preparedWhiteColor,
-//                               decoration: TextDecoration.none)),
-//                     )),
-// =======
                   child: Column(
                     children: [
                       FittedBox(
@@ -324,18 +316,28 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   )
                 ),
-// >>>>>>> Stashed changes
               ),
-              Align(
+              const Align(
                   alignment: Alignment.bottomRight,
                   child: Padding(
                     padding: EdgeInsets.all(10),
                     child: Text('Version: $version'),
                   )
               ),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: IconButton(iconSize: 48, icon: const Icon(Icons.school), color: Colors.white, onPressed: createClassroom),
+                ),
+              )
             ]
         )
     );
+  }
+
+  void createClassroom() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const ClassroomScreen()));
   }
 
   @override

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seesaw/buttons.dart';
 import 'package:seesaw/main.dart';
+import 'package:seesaw/seesaw_app.dart';
 import 'package:seesaw/state_model.dart';
 
 import 'db.dart';
 
 class MakeDecisionBeforeVideo extends StatefulWidget {
-  const MakeDecisionBeforeVideo({super.key});
+  final String classroomUUID;
+  const MakeDecisionBeforeVideo({super.key, required this.classroomUUID});
 
   static bool initialDecision = false;
 
@@ -56,19 +58,19 @@ class _MakeDecisionBeforeVideoState extends State<MakeDecisionBeforeVideo> {
   }
 
   void chooseYes() {
-    debugPrint('hcs-before-yes');
+    debugPrint('hcs-before-yes -- ${widget.classroomUUID}');
     MakeDecisionBeforeVideo.initialDecision = true;
     var db = RECCaseStudyDB.instance;
-    db.incrementInitialYesDecision().then((value) =>
+    db.incrementInitialYesDecision(widget.classroomUUID).then((value) =>
         Provider.of<StateModel>(context, listen: false).progressToNextSeesawState(),
     );
   }
 
   void chooseNo() {
-    debugPrint('hcs-before-no');
+    debugPrint('hcs-before-no -- ${widget.classroomUUID}');
     MakeDecisionBeforeVideo.initialDecision = false;
     var db = RECCaseStudyDB.instance;
-    db.incrementInitialNoDecision().then((value) =>
+    db.incrementInitialNoDecision(widget.classroomUUID).then((value) =>
         Provider.of<StateModel>(context, listen: false).progressToNextSeesawState(),
     );
   }

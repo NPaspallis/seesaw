@@ -1,13 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:seesaw/seesaw_app.dart';
 
 import 'db.dart';
 import 'poll_data.dart';
 import 'main.dart';
 
 class SecretStatsScreen extends StatefulWidget {
-
   const SecretStatsScreen({super.key});
 
   @override
@@ -43,7 +42,7 @@ class _SecretStatsScreenState extends State<SecretStatsScreen> {
     var db = RECCaseStudyDB.instance;
 
     //Get poll & feedback values:
-    pollData = await db.getDecisionCounters();
+    pollData = await db.getDecisionCounters(defaultClassroomUUID);
     betterUnderstanding = await db.getFeedbackCounters(RECCaseStudyDB.betterUnderstanding);
     changedOpinion = await db.getFeedbackCounters(RECCaseStudyDB.changedOpinion);
     newInsights = await db.getFeedbackCounters(RECCaseStudyDB.newInsights);
