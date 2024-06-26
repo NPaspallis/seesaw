@@ -29,7 +29,8 @@ import 'hcs_refresher_video.dart';
 import 'main.dart';
 import 'make_decision_after_video.dart';
 
-const defaultClassroomUUID = "kiosk";
+const defaultClassroomUUID = "kioskUUID";
+const defaultClassroomName = "kiosk";
 
 class SeesawApp extends StatelessWidget {
   const SeesawApp({super.key});
@@ -47,7 +48,8 @@ class SeesawApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
-        "/": (context) => HomeScreen(classroomUUID: Uri.base.queryParameters['uuid'] ?? defaultClassroomUUID),
+        "/": (context) => HomeScreen(classroomUUID: Uri.base.queryParameters['uuid'] ?? defaultClassroomUUID, classroomName: Uri.base.queryParameters['name'] ?? defaultClassroomName),
+        "/kiosk": (context) => const HomeScreen(kioskMode: true),
         "/stats":  (context) => const SecretStatsScreen(),
         "/classroom":  (context) => const ClassroomScreen(),
       },
@@ -59,7 +61,9 @@ const version = '24.06.09+1';
 
 class HomeScreen extends StatefulWidget {
   final String classroomUUID;
-  const HomeScreen({super.key, this.classroomUUID = defaultClassroomUUID});
+  final String classroomName;
+  final bool kioskMode;
+  const HomeScreen({super.key, this.classroomUUID = defaultClassroomUUID, this.classroomName = defaultClassroomName, this.kioskMode = false});
 
   @override
   State<StatefulWidget> createState() => _HomeScreenState();
@@ -77,6 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
     _balancingSeesaw = const BalancingSeesaw();
     _seesawState = SeesawState.welcome;
     print('classroomUUID: ${widget.classroomUUID}');//todo delete
+    print('classroomName: ${widget.classroomName}');//todo delete
+    print('kioskMode: ${widget.kioskMode}');//todo delete
   }
 
   @override
@@ -252,7 +258,6 @@ class _HomeScreenState extends State<HomeScreen> {
         height: MediaQuery.of(context).size.height / 24,
         color: preparedShadeColor,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
                 padding: const EdgeInsets.only(left: 10),
@@ -267,6 +272,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         decoration: TextDecoration.none),
                   ),
                 )
+            ),
+            const Spacer(),
+            Visibility(
+              visible: !widget.kioskMode,
+              child: Text(widget.classroomName, style: const TextStyle(color: preparedSecondaryColor, fontStyle: FontStyle.italic)),
             ),
             Padding(
                 padding: const EdgeInsets.all(2),
@@ -324,13 +334,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text('Version: $version'),
                   )
               ),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: IconButton(iconSize: 48, icon: const Icon(Icons.school), color: Colors.white, onPressed: createClassroom),
-                ),
-              )
+              Visibility(
+                visible: !widget.kioskMode,
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: IconButton(iconSize: 48, icon: const Icon(Icons.school), color: Colors.white, onPressed: createClassroom),
+                  ),
+                )
+              ),
             ]
         )
     );

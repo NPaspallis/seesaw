@@ -49,6 +49,8 @@ class RECCaseStudyDB {
   static const String switchedToYes = "switchedToYes";
   static const String switchedToNo = "switchedToNo";
 
+  // todo check and delete all classroom documents that are older than 60 days old
+
   //Retrieves the decision counter values.
   Future<PollData> getDecisionCounters(final String classroomUUID) async {
     print('getDecisionCounters: $classroomUUID'); // todo handle classroomUUID

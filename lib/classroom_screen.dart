@@ -209,6 +209,6 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
 
   String getClassroomUrl() {
     // return '${Uri.base}#/class?uuid=$_classroomUUID';
-    return '${Uri.base}?uuid=$_classroomUUID';
+    return '${Uri.base}?uuid=$_classroomUUID&name=$_classroomName';
   }
 }

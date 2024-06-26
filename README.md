@@ -14,3 +14,9 @@ The app is ideally displayed in `1920 x 1080` resolution.
 ## Deploy on Web (github.io)
 
 Copy the contents of `/build/web` to `/docs`
+
+## Launch the app
+
+* Home Web-browser mode at: https://npaspallis.github.io/seesaw
+* Classroom mode at:        https://npaspallis.github.io/seesaw/#/classroom
+* Run the Kiosk mode at:    https://npaspallis.github.io/seesaw/#/kiosk
