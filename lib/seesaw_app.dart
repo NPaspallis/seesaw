@@ -141,25 +141,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // perspective policy maker views
       case SeesawState.perspectivePolicyMaker:
-        return const PerspectivePolicyMaker();
+        return PerspectivePolicyMaker(classroomUUID: widget.classroomUUID);
       case SeesawState.doTriageRefresher:
         return const TriageRefresherVideo();
       case SeesawState.chooseTriageResources:
         return const ChooseTriageResources();
       case SeesawState.makeTriageDecisionBefore:
-        return const MakeTriageDecisionBeforeVideo();
+        return MakeTriageDecisionBeforeVideo(classroomUUID: widget.classroomUUID);
       case SeesawState.showTriageStatsBeforeVideo:
-        return const ShowTriageStatsBeforeVideo();
+        return ShowTriageStatsBeforeVideo(classroomUUID: widget.classroomUUID);
       case SeesawState.triageExpertVideo:
         return const TriageExpertVideo();
       case SeesawState.makeTriageDecisionAfter:
-        return const MakeTriageDecisionAfterVideo();
+        return MakeTriageDecisionAfterVideo(classroomUUID: widget.classroomUUID);
       case SeesawState.showTriageStatsAfterVideo:
-        return const ShowTriageStatsAfterVideo();
+        return ShowTriageStatsAfterVideo(classroomUUID: widget.classroomUUID);
 
       // perspective committee member views
       case SeesawState.perspectiveCommitteeMember:
-        return const PerspectiveCommitteeMember();
+        return PerspectiveCommitteeMember(classroomUUID: widget.classroomUUID,);
       case SeesawState.doHcsRefresher:
         return const HcsRefresherVideo();
       case SeesawState.chooseHcsVideos:

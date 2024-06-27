@@ -8,7 +8,8 @@ import 'package:seesaw/state_model.dart';
 import 'db.dart';
 
 class MakeTriageDecisionAfterVideo extends StatefulWidget {
-  const MakeTriageDecisionAfterVideo({super.key});
+  final String classroomUUID;
+  const MakeTriageDecisionAfterVideo({super.key, required this.classroomUUID});
 
   @override
   State createState() => _MakeTriageDecisionAfterVideoState();
@@ -56,9 +57,9 @@ class _MakeTriageDecisionAfterVideoState extends State<MakeTriageDecisionAfterVi
   void chooseYes() {
     debugPrint('triage-after-yes');
     var db = TriageCaseStudyDB.instance;
-    List<Future> futures = [db.incrementFinalYesDecision()];
+    List<Future> futures = [db.incrementFinalYesDecision(widget.classroomUUID)];
     if (MakeTriageDecisionBeforeVideo.initialDecision == false) {
-      futures.add(db.incrementSwitchedToYes());
+      futures.add(db.incrementSwitchedToYes(widget.classroomUUID));
     }
     Future.wait(futures).then((value) =>
         Provider.of<StateModel>(context, listen: false).progressToNextSeesawState()
@@ -68,9 +69,9 @@ class _MakeTriageDecisionAfterVideoState extends State<MakeTriageDecisionAfterVi
   void chooseNo() {
     debugPrint('triage-after-no');
     var db = TriageCaseStudyDB.instance;
-    List<Future> futures = [db.incrementFinalNoDecision()];
+    List<Future> futures = [db.incrementFinalNoDecision(widget.classroomUUID)];
     if (MakeTriageDecisionBeforeVideo.initialDecision == true) {
-      futures.add(db.incrementSwitchedToNo());
+      futures.add(db.incrementSwitchedToNo(widget.classroomUUID));
     }
     Future.wait(futures).then((value) =>
         Provider.of<StateModel>(context, listen: false).progressToNextSeesawState()

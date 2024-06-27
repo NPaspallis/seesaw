@@ -41,21 +41,44 @@ class RECCaseStudyDB {
     selection7,
   ];
 
-  static const String poll = "poll";
   static const String initialYes = "initialYes";
   static const String initialNo = "initialNo";
   static const String finalYes = "finalYes";
   static const String finalNo = "finalNo";
   static const String switchedToYes = "switchedToYes";
   static const String switchedToNo = "switchedToNo";
+  static const String createdOn = "createdOn";
+  static const String modifiedOn = "modifiedOn";
+  static const String isClassroom = "isClassroom";
 
   // todo check and delete all classroom documents that are older than 60 days old
+
+  Future<void> initializeCaseStudyCounters(final String classroomUUID) async {
+    print('Initializing case study counters for $id/$classroomUUID...');
+    DocumentSnapshot snapshot = await _i.collection(id).doc(classroomUUID).get();
+    if (!snapshot.exists) {
+      print('Counters for $id/$classroomUUID do not exist. Initializing now...');
+      await _i.collection(id)
+        .doc(classroomUUID)
+        .set({
+          finalNo: 0,
+          finalYes: 0,
+          initialNo: 0,
+          initialYes: 0,
+          switchedToNo: 0,
+          switchedToYes: 0,
+          createdOn: DateTime.now().millisecondsSinceEpoch,
+          modifiedOn: DateTime.now().millisecondsSinceEpoch,
+          isClassroom: classroomUUID != "kioskUUID" ? true : false
+        });
+    }
+  }
 
   //Retrieves the decision counter values.
   Future<PollData> getDecisionCounters(final String classroomUUID) async {
     print('getDecisionCounters: $classroomUUID'); // todo handle classroomUUID
     DocumentSnapshot doc = await _i.collection(id)
-        .doc(poll)
+        .doc(classroomUUID)
         .get();
 
     PollData data = PollData(
@@ -74,8 +97,9 @@ class RECCaseStudyDB {
     print('incrementInitialYesDecision: $classroomUUID'); // todo handle classroomUUID
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
-      .doc(poll).update({
-        initialYes: incrementOp
+      .doc(classroomUUID).update({
+        initialYes: incrementOp,
+        modifiedOn: DateTime.now().millisecondsSinceEpoch
       });
   }
 
@@ -84,8 +108,9 @@ class RECCaseStudyDB {
     print('incrementInitialNoDecision: $classroomUUID'); // todo handle classroomUUID
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
-        .doc(poll).update({
-      initialNo: incrementOp
+        .doc(classroomUUID).update({
+      initialNo: incrementOp,
+      modifiedOn: DateTime.now().millisecondsSinceEpoch
     });
   }
 
@@ -94,8 +119,9 @@ class RECCaseStudyDB {
     print('incrementFinalYesDecision: $classroomUUID'); // todo handle classroomUUID
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
-        .doc(poll).update({
-      finalYes: incrementOp
+        .doc(classroomUUID).update({
+      finalYes: incrementOp,
+      modifiedOn: DateTime.now().millisecondsSinceEpoch
     });
   }
 
@@ -104,8 +130,9 @@ class RECCaseStudyDB {
     print('incrementFinalNoDecision: $classroomUUID'); // todo handle classroomUUID
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
-        .doc(poll).update({
-      finalNo: incrementOp
+        .doc(classroomUUID).update({
+      finalNo: incrementOp,
+      modifiedOn: DateTime.now().millisecondsSinceEpoch
     });
   }
 
@@ -114,8 +141,9 @@ class RECCaseStudyDB {
     print('incrementSwitchedToYes: $classroomUUID'); // todo handle classroomUUID
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
-        .doc(poll).update({
-      switchedToYes: incrementOp
+        .doc(classroomUUID).update({
+      switchedToYes: incrementOp,
+      modifiedOn: DateTime.now().millisecondsSinceEpoch
     });
   }
 
@@ -124,8 +152,9 @@ class RECCaseStudyDB {
     print('incrementSwitchedToNo: $classroomUUID'); // todo handle classroomUUID
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
-        .doc(poll).update({
-      switchedToNo: incrementOp
+        .doc(classroomUUID).update({
+      switchedToNo: incrementOp,
+      modifiedOn: DateTime.now().millisecondsSinceEpoch
     });
   }
 
@@ -214,18 +243,42 @@ class TriageCaseStudyDB {
     selection7,
   ];
 
-  static const String poll = "poll";
   static const String initialYes = "initialYes";
   static const String initialNo = "initialNo";
   static const String finalYes = "finalYes";
   static const String finalNo = "finalNo";
   static const String switchedToYes = "switchedToYes";
   static const String switchedToNo = "switchedToNo";
+  static const String createdOn = "createdOn";
+  static const String modifiedOn = "modifiedOn";
+  static const String isClassroom = "isClassroom";
+
+
+  Future<void> initializeCaseStudyCounters(final String classroomUUID) async {
+    print('Initializing case study counters for $id/$classroomUUID...');
+    DocumentSnapshot snapshot = await _i.collection(id).doc(classroomUUID).get();
+    if (!snapshot.exists) {
+      print('Counters for $id/$classroomUUID do not exist. Initializing now...');
+      await _i.collection(id)
+          .doc(classroomUUID)
+          .set({
+        finalNo: 0,
+        finalYes: 0,
+        initialNo: 0,
+        initialYes: 0,
+        switchedToNo: 0,
+        switchedToYes: 0,
+        createdOn: DateTime.now().millisecondsSinceEpoch,
+        modifiedOn: DateTime.now().millisecondsSinceEpoch,
+        isClassroom: classroomUUID != "kioskUUID" ? true : false
+      });
+    }
+  }
 
   //Retrieves the decision counter values.
-  Future<PollData> getDecisionCounters() async {
+  Future<PollData> getDecisionCounters(final String classroomUUID) async {
     DocumentSnapshot doc = await _i.collection(id)
-        .doc(poll)
+        .doc(classroomUUID)
         .get();
 
     PollData data = PollData(
@@ -240,56 +293,62 @@ class TriageCaseStudyDB {
   }
 
   //Atomically increments the initial yes decision counter.
-  Future incrementInitialYesDecision() async {
+  Future incrementInitialYesDecision(final String classroomUUID) async {
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
-        .doc(poll).update({
-      initialYes: incrementOp
+        .doc(classroomUUID).update({
+      initialYes: incrementOp,
+      modifiedOn: DateTime.now().millisecondsSinceEpoch
     });
   }
 
   //Atomically increments the initial no decision counter.
-  Future incrementInitialNoDecision() async {
+  Future incrementInitialNoDecision(final String classroomUUID) async {
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
-        .doc(poll).update({
-      initialNo: incrementOp
+        .doc(classroomUUID).update({
+      initialNo: incrementOp,
+      modifiedOn: DateTime.now().millisecondsSinceEpoch
     });
   }
 
   //Atomically increments the final yes decision counter.
-  Future incrementFinalYesDecision() async {
+  Future incrementFinalYesDecision(final String classroomUUID) async {
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
-        .doc(poll).update({
-      finalYes: incrementOp
+        .doc(classroomUUID).update({
+      finalYes: incrementOp,
+      modifiedOn: DateTime.now().millisecondsSinceEpoch
     });
   }
 
   //Atomically increments the final no decision counter.
-  Future incrementFinalNoDecision() async {
+  Future incrementFinalNoDecision(final String classroomUUID) async {
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
-        .doc(poll).update({
-      finalNo: incrementOp
+        .doc(classroomUUID).update({
+      finalNo: incrementOp,
+      modifiedOn: DateTime.now().millisecondsSinceEpoch
     });
   }
 
   //Atomically increments the switched to yes counter.
-  Future incrementSwitchedToYes() async {
+  Future incrementSwitchedToYes(final String classroomUUID) async {
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
-        .doc(poll).update({
-      switchedToYes: incrementOp
+        .doc(classroomUUID).update({
+      switchedToYes: incrementOp,
+      modifiedOn: DateTime.now().millisecondsSinceEpoch
     });
   }
 
   //Atomically increments the switched to no counter.
-  Future incrementSwitchedToNo() async {
+  Future incrementSwitchedToNo(final String classroomUUID) async {
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
-        .doc(poll).update({
-      switchedToNo: incrementOp
+        .doc(classroomUUID).update({
+      switchedToNo: incrementOp,
+      modifiedOn: DateTime.now().millisecondsSinceEpoch
     });
   }
 

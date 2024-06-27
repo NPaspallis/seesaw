@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:seesaw/db.dart';
 import 'package:seesaw/main.dart';
 import 'package:seesaw/state_model.dart';
 
 import 'buttons.dart';
 
 class PerspectivePolicyMaker extends StatefulWidget {
-  const PerspectivePolicyMaker({super.key});
+  final String classroomUUID;
+  PerspectivePolicyMaker({super.key, required this.classroomUUID});
 
   @override
   State createState() => _PerspectivePolicyMakerState();
@@ -17,6 +19,7 @@ class _PerspectivePolicyMakerState
   @override
   void initState() {
     super.initState();
+    TriageCaseStudyDB().initializeCaseStudyCounters(widget.classroomUUID);
   }
 
   @override

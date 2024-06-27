@@ -7,7 +7,8 @@ import 'package:seesaw/state_model.dart';
 import 'db.dart';
 
 class MakeTriageDecisionBeforeVideo extends StatefulWidget {
-  const MakeTriageDecisionBeforeVideo({super.key});
+  final String classroomUUID;
+  MakeTriageDecisionBeforeVideo({super.key, required this.classroomUUID});
 
   static bool initialDecision = false;
 
@@ -58,7 +59,7 @@ class _MakeTriageDecisionBeforeVideoState extends State<MakeTriageDecisionBefore
     debugPrint('triage-before-yes');
     MakeTriageDecisionBeforeVideo.initialDecision = true;
     var db = TriageCaseStudyDB.instance;
-    db.incrementInitialYesDecision().then((value) =>
+    db.incrementInitialYesDecision(widget.classroomUUID).then((value) =>
         Provider.of<StateModel>(context, listen: false).progressToNextSeesawState()
     );
   }
@@ -67,7 +68,7 @@ class _MakeTriageDecisionBeforeVideoState extends State<MakeTriageDecisionBefore
     debugPrint('triage-before-no');
     MakeTriageDecisionBeforeVideo.initialDecision = false;
     var db = TriageCaseStudyDB.instance;
-    db.incrementInitialNoDecision().then((value) =>
+    db.incrementInitialNoDecision(widget.classroomUUID).then((value) =>
         Provider.of<StateModel>(context, listen: false).progressToNextSeesawState()
     );
   }

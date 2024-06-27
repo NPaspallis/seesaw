@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:seesaw/db.dart';
 import 'package:seesaw/main.dart';
 import 'package:seesaw/state_model.dart';
 
 import 'buttons.dart';
 
 class PerspectiveCommitteeMember extends StatefulWidget {
-  const PerspectiveCommitteeMember({super.key});
+  final String classroomUUID;
+  PerspectiveCommitteeMember({super.key, required this.classroomUUID});
 
   @override
   State createState() => _PerspectiveCommitteeMemberState();
@@ -16,6 +18,7 @@ class _PerspectiveCommitteeMemberState
     extends State<PerspectiveCommitteeMember> {
   @override
   void initState() {
+    RECCaseStudyDB().initializeCaseStudyCounters(widget.classroomUUID);
     super.initState();
   }
 

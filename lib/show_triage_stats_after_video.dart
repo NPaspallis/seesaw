@@ -9,7 +9,8 @@ import 'db.dart';
 import 'poll_data.dart';
 
 class ShowTriageStatsAfterVideo extends StatefulWidget {
-  const ShowTriageStatsAfterVideo({super.key});
+  final String classroomUUID;
+  ShowTriageStatsAfterVideo({super.key, required this.classroomUUID});
 
   @override
   State createState() => _ShowTriageStatsAfterVideoState();
@@ -32,7 +33,7 @@ class _ShowTriageStatsAfterVideoState extends State<ShowTriageStatsAfterVideo> {
   void getDataFromFirebase() async {
 
     var db = TriageCaseStudyDB.instance;
-    final PollData pollData = await db.getDecisionCounters();
+    final PollData pollData = await db.getDecisionCounters(widget.classroomUUID);
 
     setState(() {
       _responsesYesAfter = pollData.finalYes as double;
