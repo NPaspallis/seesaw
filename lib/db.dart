@@ -51,7 +51,22 @@ class RECCaseStudyDB {
   static const String modifiedOn = "modifiedOn";
   static const String isClassroom = "isClassroom";
 
-  // todo check and delete all classroom documents that are older than 60 days old
+  Future<void> cleanClassrooms() async {
+    print("Cleaning classrooms...");
+    DateTime sixtyDaysAgo = DateTime.now().subtract(const Duration(days: 60));
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _i.collection(id)
+        .where("isClassroom", isEqualTo: true)
+        .where("modifiedOn", isLessThan: sixtyDaysAgo.millisecondsSinceEpoch)
+        .get();
+
+    WriteBatch batch = _i.batch();
+
+    for (DocumentChange<Map<String, dynamic>> doc in snapshot.docChanges) {
+      batch.delete(doc.doc.reference);
+    }
+
+    await batch.commit();
+  }
 
   Future<void> initializeCaseStudyCounters(final String classroomUUID) async {
     print('Initializing case study counters for $id/$classroomUUID...');
@@ -72,6 +87,7 @@ class RECCaseStudyDB {
           isClassroom: classroomUUID != "kioskUUID" ? true : false
         });
     }
+    cleanClassrooms();
   }
 
   //Retrieves the decision counter values.
@@ -253,6 +269,22 @@ class TriageCaseStudyDB {
   static const String modifiedOn = "modifiedOn";
   static const String isClassroom = "isClassroom";
 
+  Future<void> cleanClassrooms() async {
+    print("Cleaning classrooms...");
+    DateTime sixtyDaysAgo = DateTime.now().subtract(const Duration(days: 60));
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _i.collection(id)
+        .where("isClassroom", isEqualTo: true)
+        .where("modifiedOn", isLessThan: sixtyDaysAgo.millisecondsSinceEpoch)
+        .get();
+
+    WriteBatch batch = _i.batch();
+
+    for (DocumentChange<Map<String, dynamic>> doc in snapshot.docChanges) {
+      batch.delete(doc.doc.reference);
+    }
+
+    await batch.commit();
+  }
 
   Future<void> initializeCaseStudyCounters(final String classroomUUID) async {
     print('Initializing case study counters for $id/$classroomUUID...');
@@ -273,6 +305,7 @@ class TriageCaseStudyDB {
         isClassroom: classroomUUID != "kioskUUID" ? true : false
       });
     }
+    cleanClassrooms();
   }
 
   //Retrieves the decision counter values.
