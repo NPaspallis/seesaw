@@ -27,6 +27,7 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Seesaw App',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: preparedPrimaryColor),
           primaryColor: preparedPrimaryColor,

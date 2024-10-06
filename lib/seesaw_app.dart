@@ -57,7 +57,7 @@ class SeesawApp extends StatelessWidget {
   }
 }
 
-const version = '24.06.29+1';
+const version = '24.10.06+1';
 
 class HomeScreen extends StatefulWidget {
   final String classroomUUID;
@@ -387,6 +387,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Visibility(
                                       visible: state.seesawState != SeesawState.thankYou,
                                       child: _getNavigationWidget(state.seesawState)),
+                                  LinearProgressIndicator(value: state.getProgress(), backgroundColor: preparedDarkShadeColor, color: preparedSecondaryColor),
                                   _getMainContainer(state), // 2/3
                                   _getBalancingSeesaw(), // 1/3
                                   Visibility(
