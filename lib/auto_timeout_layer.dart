@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:seesaw/state_model.dart';
 
 class AutoTimeoutLayer extends StatefulWidget {
 
@@ -14,20 +16,21 @@ class AutoTimeoutLayer extends StatefulWidget {
   State<StatefulWidget> createState() => _AutoTimeoutLayerState();
 }
 
-const int defaultTimeoutInSeconds = 300; // 5 minutes
-const int defaultTimeoutInSecondsInDebugMode = 120; // // in debug mode simply wait for 2 minutes
+const int defaultTimeoutInSeconds = 120; // 2 minutes
+const int defaultTimeoutInSecondsInDebugMode = 60; // // in debug mode simply wait for 1 minute
 const int timeoutInSeconds = kDebugMode ? defaultTimeoutInSecondsInDebugMode : defaultTimeoutInSeconds;
 
 class _AutoTimeoutLayerState extends State<AutoTimeoutLayer> {
 
   DateTime _lastInteraction = DateTime.timestamp();
   late Timer _timer;
+  late StateModel _stateModel;
 
   @override
   void initState() {
     super.initState();
     _timer = _timer = Timer.periodic(const Duration(seconds: 1), _handleTick);
-    _resetTimer();
+    _stateModel = Provider.of<StateModel>(context, listen: false);
   }
 
   @override
@@ -51,6 +54,9 @@ class _AutoTimeoutLayerState extends State<AutoTimeoutLayer> {
   }
 
   void _resetTimer([_]) {
+    if(_stateModel.seesawState == SeesawState.splashVideo) {
+      _stateModel.progressToNextSeesawState();
+    }
     _lastInteraction = DateTime.timestamp();
   }
 

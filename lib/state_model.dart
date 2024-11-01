@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 enum SeesawState {
+  splashVideo,
+
   welcome,
   choosePerspective,
 
@@ -31,7 +33,6 @@ enum SeesawState {
 class StateModel extends ChangeNotifier {
 
   SeesawState _seesawState = SeesawState.welcome;
-
 
   SeesawState get seesawState => _seesawState;
 

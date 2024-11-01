@@ -25,6 +25,7 @@ import 'package:seesaw/welcome.dart';
 import 'buttons.dart';
 import 'choose_perspective.dart';
 import 'classroom_screen.dart';
+import 'splash_video.dart';
 import 'hcs_refresher_video.dart';
 import 'main.dart';
 import 'make_decision_after_video.dart';
@@ -79,10 +80,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _balancingSeesaw = const BalancingSeesaw();
-    _seesawState = SeesawState.welcome;
-    print('classroomUUID: ${widget.classroomUUID}');//todo delete
-    print('classroomName: ${widget.classroomName}');//todo delete
-    print('kioskMode: ${widget.kioskMode}');//todo delete
+    // if in kiosk mode, show splash video
+    _seesawState = widget.kioskMode ? SeesawState.splashVideo : SeesawState.welcome;
+    // debug info
+    // debugPrint('classroomUUID: ${widget.classroomUUID}');
+    // debugPrint('classroomName: ${widget.classroomName}');
+    // debugPrint('kioskMode: ${widget.kioskMode}');
   }
 
   @override
@@ -119,6 +122,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ));
   }
 
+  void _showSplashVideo() {
+    final StateModel stateModel =
+        Provider.of<StateModel>(context, listen: false);
+    stateModel.setSeesawState(SeesawState.splashVideo);
+  }
+
   void _doResetInteraction() {
     final StateModel stateModel =
         Provider.of<StateModel>(context, listen: false);
@@ -134,6 +143,9 @@ class _HomeScreenState extends State<HomeScreen> {
     // must add up to 2/3 of height
     debugPrint('state: ${state.seesawState}');
     switch (state.seesawState) {
+      case SeesawState.splashVideo:
+        return const SplashVideo();
+
       case SeesawState.welcome:
         return Welcome(_scrollController);
       case SeesawState.choosePerspective:
@@ -370,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: AutoTimeoutLayer(
-            callback: _doResetInteraction,
+            callback: _showSplashVideo,
             child: ScrollConfiguration(
                 behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
                 child: SingleChildScrollView(
