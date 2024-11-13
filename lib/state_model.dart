@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 enum SeesawState {
-  splashVideo,
 
   welcome,
   choosePerspective,
@@ -46,5 +45,19 @@ class StateModel extends ChangeNotifier {
     int nextSeesawStateIndex = (_seesawState.index + 1) % allValues.length;
     SeesawState nextSeesawState = allValues[nextSeesawStateIndex];
     setSeesawState(nextSeesawState);
+  }
+
+  bool _splashVideo = false;
+
+  bool get splashVideo => _splashVideo;
+
+  void setSplashVideoOn() {
+    _splashVideo = true;
+    notifyListeners();
+  }
+
+  void setSplashVideoOff() {
+    _splashVideo = false;
+    notifyListeners();
   }
 }
