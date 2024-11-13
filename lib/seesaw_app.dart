@@ -10,6 +10,7 @@ import 'package:seesaw/make_triage_decision_before_video.dart';
 import 'package:seesaw/perspective_committee_member.dart';
 import 'package:seesaw/perspective_policy_maker.dart';
 import 'package:seesaw/secret_stats_screen.dart';
+import 'package:seesaw/seesaw_widget.dart';
 import 'package:seesaw/show_stats_after_video.dart';
 import 'package:seesaw/show_stats_before_video.dart';
 import 'package:seesaw/show_triage_stats_after_video.dart';
@@ -57,7 +58,7 @@ class SeesawApp extends StatelessWidget {
   }
 }
 
-const version = '24.06.29+1';
+const version = '24.11.13+1';
 
 class HomeScreen extends StatefulWidget {
   final String classroomUUID;
@@ -72,6 +73,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
 
+  late BalancingSeesaw _balancingSeesaw;
   late SeesawState _seesawState;
 
   late SplashVideo _splashVideo;

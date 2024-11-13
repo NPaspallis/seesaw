@@ -35,7 +35,27 @@ class StateModel extends ChangeNotifier {
 
   SeesawState get seesawState => _seesawState;
 
-  void setSeesawState(SeesawState seesawState) {
+  double getProgress() {
+    var allValues = SeesawState.values;
+    final indexOfChoosePerspective = allValues.indexOf(SeesawState.choosePerspective);
+    final indexOfPartPolicyMakerEnd = allValues.indexOf(SeesawState.showTriageStatsAfterVideo);
+    final indexOfPartCommitteeMemberEnd = allValues.indexOf(SeesawState.showStatsAfterCharlesWeijerVideo);
+    final numOfStatesInPolicyMakerRoute = indexOfPartPolicyMakerEnd - indexOfChoosePerspective;
+    final numOfStatesInCommitteeMemberRoute = indexOfPartCommitteeMemberEnd - indexOfPartPolicyMakerEnd;
+    final numOfStatesInTheEnd = allValues.length - indexOfPartCommitteeMemberEnd;
+
+    final index = _seesawState.index - indexOfChoosePerspective;
+    // debugPrint('**  index: $index, numOfStatesInPolicyMakerRoute: $numOfStatesInPolicyMakerRoute, numOfStatesInCommitteeMemberRoute: $numOfStatesInCommitteeMemberRoute, numOfStatesInTheEnd: $numOfStatesInTheEnd');
+    if(_seesawState.index <= indexOfPartPolicyMakerEnd) { // following the PolicyMaker path
+      // debugPrint('<<< ${_seesawState.index / (numOfStatesInPolicyMakerRoute + numOfStatesInTheEnd)}');
+      return _seesawState.index / (numOfStatesInPolicyMakerRoute + numOfStatesInTheEnd);
+    } else {
+      // debugPrint('>>> ${(_seesawState.index - numOfStatesInPolicyMakerRoute) / (numOfStatesInCommitteeMemberRoute + numOfStatesInTheEnd)}');
+      return (_seesawState.index - numOfStatesInPolicyMakerRoute) / (numOfStatesInCommitteeMemberRoute + numOfStatesInTheEnd);
+    }
+  }
+
+  void setSeesawState(final SeesawState seesawState) {
     _seesawState = seesawState;
     notifyListeners();
   }

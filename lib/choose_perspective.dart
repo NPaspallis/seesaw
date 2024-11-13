@@ -65,7 +65,8 @@ class _ChoosePerspective extends State<ChoosePerspective> {
                                           decoration: TextDecoration.none),
                                       textAlign: TextAlign.center)
                               )),
-                          getElevatedButton(context, 'COMING SOON', choosePolicyMaker, Colors.grey)
+                          // getElevatedButton(context, 'COMING SOON', choosePolicyMaker, Colors.grey)
+                          getElevatedButton(context, 'SELECT', choosePolicyMaker)
                         ],
                       ),
                     ),
@@ -110,20 +111,20 @@ class _ChoosePerspective extends State<ChoosePerspective> {
 
   void choosePolicyMaker() {
     debugPrint('chose: choosePolicyMaker');
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Row(
-          children: [
-            Icon(Icons.info, color: Colors.white, size: 40,),
-            Gap(20),
-            Text("This option will be available soon.", style: TextStyle(fontSize: textSizeMedium),),
-          ],
-        ),
-        backgroundColor: preparedBlueColor,
-      )
-    );
-    // final StateModel stateModel = Provider.of<StateModel>(context, listen: false);
-    // stateModel.setSeesawState(SeesawState.perspectivePolicyMaker);
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(
+    //     content: Row(
+    //       children: [
+    //         Icon(Icons.info, color: Colors.white, size: 40,),
+    //         Gap(20),
+    //         Text("This option will be available soon.", style: TextStyle(fontSize: textSizeMedium),),
+    //       ],
+    //     ),
+    //     backgroundColor: preparedBlueColor,
+    //   )
+    // );
+    final StateModel stateModel = Provider.of<StateModel>(context, listen: false);
+    stateModel.setSeesawState(SeesawState.perspectivePolicyMaker);
   }
 
   void chooseCommitteeMember() {
