@@ -41,14 +41,35 @@ class _PerspectiveCommitteeMemberState
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          'Go back in time to early 2020.\nAre you ready to take a decision about COVID-19?',
+                          'Go back in time to early 2020.',
                           style: TextStyle(
-                              fontSize: textSizeLarge,
+                              fontSize: 128,
                               color: preparedWhiteColor,
                               decoration: TextDecoration.none),
                           textAlign: TextAlign.end,
                         ),
-                        SizedBox(height: 20,),
+                        SizedBox(height: 64),
+                        Text(
+                              'Many countries were facing the possibility of having too few\n'
+                              'Intensive Care Unit (ICU) beds to care for all patients with COVID-19.\n'
+                              'Decisions had to be made about how to allocate ICU beds.',
+                          style: TextStyle(
+                              fontSize: 96,
+                              color: preparedWhiteColor,
+                              decoration: TextDecoration.none),
+                          textAlign: TextAlign.end,
+                        ),
+                        SizedBox(height: 64),
+                        Text(
+                              'This is also known as triage. Which patients should get access\n'
+                              'to ICU beds if not everyone can be accommodated?',
+                          style: TextStyle(
+                              fontSize: 96,
+                              color: preparedWhiteColor,
+                              decoration: TextDecoration.none),
+                          textAlign: TextAlign.end,
+                        ),
+                        SizedBox(height: 64),
                         Text(
                           'This decision tree will last 12-14 minutes',
                           style: TextStyle(
