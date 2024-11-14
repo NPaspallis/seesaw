@@ -92,30 +92,38 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
+
         Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             SizedBox(
-                height: MediaQuery.of(context).size.height / 12,
-                child: const FittedBox(
-                  fit: BoxFit.fitHeight,
-                  child: Text(
-                    'Human Challenge Studies Seesaw',
-                    style: TextStyle(color: preparedWhiteColor),
-                    textAlign: TextAlign.center,
-                  ),
-                )
+              height: MediaQuery.of(context).size.height / 12,
+              child: const FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Text(
+                  'Human Challenge Studies Seesaw',
+                  style: TextStyle(color: preparedWhiteColor),
+                  textAlign: TextAlign.center,
+                ),
+              )
             ),
+
+            // const SizedBox(height: 50),
+
             Row(
-                children: [
-                  _getClickableBall(colors[0], _side, _lp[0], _tp[0], _videoDescriptions[0], watched[0], watchVideo0),
-                  _getClickableBall(colors[1], _side, _lp[1], _tp[1], _videoDescriptions[1], watched[1], watchVideo1),
-                  _getClickableBall(colors[2], _side, _lp[2], _tp[2], _videoDescriptions[2], watched[2], watchVideo2)
-                ]
+              children: [
+                _getClickableBall(colors[0], _side, _lp[0], _tp[0], _videoDescriptions[0], watched[0], watchVideo0),
+                _getClickableBall(colors[1], _side, _lp[1], _tp[1], _videoDescriptions[1], watched[1], watchVideo1),
+                _getClickableBall(colors[2], _side, _lp[2], _tp[2], _videoDescriptions[2], watched[2], watchVideo2)
+              ]
             ),
+
+            // const SizedBox(height: 50),
+
             getOutlinedButton(context, 'CARRY ON', proceed)
           ],
         ),
+
         // video layer
         _videoState != VideoState.showNone ? _getVideoLayer() : Container()
       ],

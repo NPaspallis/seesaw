@@ -42,7 +42,7 @@ dependencies:
   provider: ^6.1.2
 
   # https://pub.dev/packages/video_player
-  video_player: ^2.8.5
+  video_player: ^2.9.2
 
   # https://pub.dev/packages/http
   http: ^1.2.1

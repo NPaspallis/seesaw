@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fullscreen_window/fullscreen_window.dart';
 import 'package:provider/provider.dart';
+import 'package:seesaw/seesaw_widget.dart';
 import 'package:seesaw/state_model.dart';
 
 import 'buttons.dart';
@@ -16,21 +17,42 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
+
+  late BalancingSeesaw _balancingSeesaw;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _balancingSeesaw = const BalancingSeesaw();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: MediaQuery.of(context).size.height / 3,
-        child: Align(
-            alignment: Alignment.bottomCenter,
-            child: SizedBox(
-                width: 300,
-                height: 300,
-                child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 30),
-                    child: getStartButton(context, pressedStart)
-                )
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 300,
+            height: 300,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 30),
+              child: getStartButton(context, pressedStart)
             )
-        )
+          ),
+
+          const SizedBox(height: 100),
+
+          _getBalancingSeesaw()
+        ]
+    );
+  }
+
+  Widget _getBalancingSeesaw() {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 3,
+      width: MediaQuery.of(context).size.width * 2 / 3,
+      child: _balancingSeesaw,
     );
   }
 

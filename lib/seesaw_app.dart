@@ -25,6 +25,7 @@ import 'package:seesaw/welcome.dart';
 import 'buttons.dart';
 import 'choose_perspective.dart';
 import 'classroom_screen.dart';
+import 'splash_video.dart';
 import 'hcs_refresher_video.dart';
 import 'main.dart';
 import 'make_decision_after_video.dart';
@@ -57,7 +58,7 @@ class SeesawApp extends StatelessWidget {
   }
 }
 
-const version = '24.10.06+1';
+const version = '24.11.13+1';
 
 class HomeScreen extends StatefulWidget {
   final String classroomUUID;
@@ -75,14 +76,20 @@ class _HomeScreenState extends State<HomeScreen> {
   late BalancingSeesaw _balancingSeesaw;
   late SeesawState _seesawState;
 
+  late SplashVideo _splashVideo;
+
   @override
   void initState() {
     super.initState();
-    _balancingSeesaw = const BalancingSeesaw();
+    // if in kiosk mode, show splash video
     _seesawState = SeesawState.welcome;
-    print('classroomUUID: ${widget.classroomUUID}');//todo delete
-    print('classroomName: ${widget.classroomName}');//todo delete
-    print('kioskMode: ${widget.kioskMode}');//todo delete
+
+    _splashVideo = const SplashVideo();
+
+    // debug info
+    // debugPrint('classroomUUID: ${widget.classroomUUID}');
+    // debugPrint('classroomName: ${widget.classroomName}');
+    debugPrint('kioskMode: ${widget.kioskMode}');
   }
 
   @override
@@ -119,6 +126,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ));
   }
 
+  void _showSplashVideo() {
+    final StateModel stateModel =
+        Provider.of<StateModel>(context, listen: false);
+    stateModel.setSplashVideoOn();
+  }
+
   void _doResetInteraction() {
     final StateModel stateModel =
         Provider.of<StateModel>(context, listen: false);
@@ -134,6 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // must add up to 2/3 of height
     debugPrint('state: ${state.seesawState}');
     switch (state.seesawState) {
+
       case SeesawState.welcome:
         return Welcome(_scrollController);
       case SeesawState.choosePerspective:
@@ -189,14 +203,6 @@ class _HomeScreenState extends State<HomeScreen> {
         return Text('error: unknown state: ${state.seesawState}',
             style: const TextStyle(color: Colors.red));
     }
-  }
-
-  Widget _getBalancingSeesaw() {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height / 3,
-      width: MediaQuery.of(context).size.width * 2 / 3,
-      child: _balancingSeesaw,
-    );
   }
 
   String _getNavigationLabel(final SeesawState seesawState) {
@@ -294,7 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _getBottomWidget() {
     return SizedBox(
-        height: MediaQuery.of(context).size.height / 3,
+        height: MediaQuery.of(context).size.height,
         child: Stack(
             children: [
               const Padding(
@@ -312,17 +318,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: preparedWhiteColor,
                                 decoration: TextDecoration.none)),
                       ),
-
-                      // FittedBox(
-                      //   fit: BoxFit.fitWidth,
-                      //   child: Text(
-                      //       'This decision tree takes between 12 and 14 minutes',
-                      //       textAlign: TextAlign.center,
-                      //       style: TextStyle(
-                      //           color: preparedWhiteColor,
-                      //           fontStyle: FontStyle.italic,
-                      //           decoration: TextDecoration.none)),
-                      // ),
                     ],
                   )
                 ),
@@ -330,8 +325,15 @@ class _HomeScreenState extends State<HomeScreen> {
               const Align(
                   alignment: Alignment.bottomRight,
                   child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text('Version: $version'),
+                    padding: EdgeInsets.fromLTRB(10, 10, 60, 20),
+                    child: Text('Version: $version', style: TextStyle(color: Colors.grey)),
+                  )
+              ),
+              Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: IconButton(iconSize: 24, icon: const Icon(Icons.ondemand_video_rounded), color: Colors.grey, onPressed: startScreensaver),
                   )
               ),
               Visibility(
@@ -340,7 +342,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignment: Alignment.bottomLeft,
                   child: Padding(
                     padding: const EdgeInsets.all(10),
-                    child: IconButton(iconSize: 48, icon: const Icon(Icons.school), color: Colors.white, onPressed: createClassroom),
+                    child: IconButton(iconSize: 48, icon: const Icon(Icons.school), color: Colors.grey, onPressed: createClassroom),
                   ),
                 )
               ),
@@ -349,55 +351,59 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void startScreensaver() {
+    final StateModel stateModel = Provider.of<StateModel>(context, listen: false);
+    stateModel.setSplashVideoOn();
+  }
+
   void createClassroom() {
     Navigator.push(context, MaterialPageRoute(builder: (context) => const ClassroomScreen()));
   }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_seesawState == SeesawState.welcome) {
-        debugPrint('animateTo maxScrollExtent');
-        _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 500), curve: Curves.ease);
-      } else {
-        debugPrint('animateTo minScrollExtent');
-        _scrollController.animateTo(_scrollController.position.minScrollExtent,
-            duration: const Duration(milliseconds: 500), curve: Curves.ease);
-      }
-    });
 
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: AutoTimeoutLayer(
-            callback: _doResetInteraction,
-            child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  controller: _scrollController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  child: Container(
-                      color: preparedPrimaryColor,
-                      child: Consumer<StateModel>(
-                          builder: (context, state, child) {
-                            debugPrint('drawing main screen with state: ${state.seesawState}');
-                            return Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Visibility(
-                                      visible: state.seesawState != SeesawState.thankYou,
-                                      child: _getNavigationWidget(state.seesawState)),
-                                  LinearProgressIndicator(value: state.getProgress(), backgroundColor: preparedDarkShadeColor, color: preparedSecondaryColor),
-                                  _getMainContainer(state), // 2/3
-                                  _getBalancingSeesaw(), // 1/3
-                                  Visibility(
-                                      visible:
-                                      state.seesawState == SeesawState.welcome,
-                                      child: _getBottomWidget()) // 1/6
-                                ]);
-                          })),
-                )
+            callback: _showSplashVideo,
+            child: Consumer<StateModel>(
+                builder: (context, state, child) {
+                  debugPrint('drawing main screen with state: ${state.seesawState}');
+                  return state.splashVideo ? _splashVideo : buildInteractiveScreen(state);
+                }
             )
+        )
+    );
+  }
+
+  Widget buildInteractiveScreen(StateModel state) {
+    return ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          physics: const NeverScrollableScrollPhysics(),
+          child: Container(
+              color: preparedPrimaryColor,
+              child: Stack(
+                children: [
+                  Visibility(
+                      visible: state.seesawState != SeesawState.thankYou,
+                      child: Align(alignment: Alignment.topCenter, child: _getNavigationWidget(state.seesawState))
+                  ),
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: _getMainContainer(state),
+                      )
+                  ),
+                  Visibility(
+                      visible: state.seesawState == SeesawState.welcome,
+                      child: Align(alignment: Alignment.bottomCenter, child: _getBottomWidget())
+                  ),
+                ],
+              )),
         )
     );
   }
