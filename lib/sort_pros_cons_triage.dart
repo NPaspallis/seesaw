@@ -6,12 +6,12 @@ import 'package:seesaw/state_model.dart';
 import 'buttons.dart';
 import 'main.dart';
 
-class SortProsCons extends StatefulWidget {
+class SortProsConsTriage extends StatefulWidget {
 
-  const SortProsCons({super.key});
+  const SortProsConsTriage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _SortProsConsState();
+  State<StatefulWidget> createState() => _SortProsConsTriageState();
 }
 
 enum Bucket { none, pros, cons }
@@ -106,12 +106,13 @@ class DraggingListItem extends StatelessWidget {
 }
 
 const List<BucketItem> bucketItems = [
-  BucketItem(1, 'People take risks all the time and should be able to decide themselves whether to become a study volunteer or not.', Bucket.pros),
-  BucketItem(2, 'Human Challenges Studies have the potential to advance medical science quickly.', Bucket.pros),
-  BucketItem(3, 'A very large public health threat can justify higher research risks.', Bucket.pros),
-  BucketItem(4, 'There is no good rescue therapy for severe forms of COVID-19.', Bucket.cons),
-  BucketItem(5, 'Physicians should never impose intentional harm, but they do in human challenge studies.', Bucket.cons),
-  BucketItem(6, 'If high amounts are paid for study participation, as in a UK trial, the poor are at risk of being exploited.', Bucket.cons),
+  BucketItem(1, 'It is important to treat patients immediately when they require care. Treating patients as they come in, recognizes this idea.', Bucket.pros),
+  BucketItem(2, 'It is wrong to discriminate among patients based on characteristics like age. Treating patients as they arrive avoids discrimination based on such characteristics.', Bucket.pros),
+  BucketItem(3, 'Treating patients as they arrive, until the last ICU bed is filled, can be an egalitarian way of dividing healthcare, since it is only concerned with immediate need.', Bucket.pros),
+  BucketItem(4, 'People should not just be treated as they arrive since some people (e.g., with higher social-economic status) may be able to reach hospitals and health services more quickly.', Bucket.cons),
+  BucketItem(5, 'It would be fair to give people who have not had a good shot at a full life (i.e., younger people) priority to maximize everyone\'s chances at a good life.', Bucket.cons),
+  BucketItem(6, 'If people are treated as they come in, valuable resources are wasted, for instance when patients with a worse prognosis happen to arrive slightly earlier than others.', Bucket.cons),
+  BucketItem(7, 'If one were to prioritize healthcare workers who come in, one might be able to ensure that more people can be rescued and lead full lives.', Bucket.cons),
 ];
 
 final List<Color> bucketItemColors = [
@@ -121,9 +122,10 @@ final List<Color> bucketItemColors = [
   preparedRedColor,
   preparedDarkRedColor,
   preparedBlueColor,
+  preparedPurpleColor,
 ];
 
-class _SortProsConsState extends State<SortProsCons> {
+class _SortProsConsTriageState extends State<SortProsConsTriage> {
 
   final List<BucketItemWithColor> bucketPros = [];
   final List<BucketItemWithColor> bucketCons = [];
@@ -144,7 +146,7 @@ class _SortProsConsState extends State<SortProsCons> {
 
     return SizedBox(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 2 / 3,
+        height: MediaQuery.of(context).size.height,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -152,7 +154,7 @@ class _SortProsConsState extends State<SortProsCons> {
                 padding: EdgeInsets.symmetric(horizontal: 160),
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
-                  child: Text('Before you make a decision, please use this exercise to drag and drop six statements into pro or con boxes. Please remember, it is the year 2020.',
+                  child: Text('Are you ready to start a short information gathering and decision-making process on access to ICU beds during pandemics?',
                       style: TextStyle(
                           fontSize: textSizeLarge,
                           color: preparedWhiteColor,
@@ -189,18 +191,6 @@ class _SortProsConsState extends State<SortProsCons> {
   }
 
   Widget _getItemsColumn() {
-// <<<<<<< Updated upstream
-//     final List<Widget> bucketItemWidgets = [
-//       const Padding(
-//           padding: EdgeInsets.symmetric(vertical: 10),
-//           child: FittedBox(
-//             fit: BoxFit.fitWidth,
-//             child: Text('Press and hold on each item, then drag it to the correct bucket.',
-//               style: TextStyle(fontSize: textSizeMedium, color: preparedWhiteColor)),
-//           )
-//       )
-//     ];
-// =======
     final List<Widget> bucketItemWidgets = [];
     if(bucketNone.isNotEmpty) {
       bucketItemWidgets.add(const Padding(
@@ -211,7 +201,6 @@ class _SortProsConsState extends State<SortProsCons> {
           )
       ));
     }
-// >>>>>>> Stashed changes
     for(int i = 0; i < bucketNone.length; i++) {
       bucketItemWidgets.add(_buildBucketItemDraggableView(bucketNone[i]));
     }
@@ -220,26 +209,8 @@ class _SortProsConsState extends State<SortProsCons> {
 
     return SizedBox(
         width: MediaQuery.of(context).size.width / 3,
-// <<<<<<< Updated upstream
-//         height: MediaQuery.of(context).size.height / 2,
-//         child: RawScrollbar(
-//           thumbColor: Colors.white,
-//           thumbVisibility: true,
-//           controller: itemsScrollController,
-//           child: SingleChildScrollView(
-//             controller: itemsScrollController,
-//             child: Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-//               child: Column(
-//                   mainAxisAlignment: MainAxisAlignment.start,
-//                   children: bucketItemWidgets
-//               ),
-//             ),
-//           ),
-// =======
         child: Column(
             children: bucketItemWidgets
-// >>>>>>> Stashed changes
         )
     );
   }
@@ -250,7 +221,7 @@ class _SortProsConsState extends State<SortProsCons> {
 
     return SizedBox(
       width: MediaQuery.of(context).size.width / 3,
-      height: MediaQuery.of(context).size.height / 2,
+      height: MediaQuery.of(context).size.height * 2 / 3,
       child: DragTarget<BucketItemWithColor>(
         builder: (context, candidateItems, rejectedItems) {
           List<Widget> bucketWidgets = (bucket == Bucket.pros ? bucketPros : bucketCons).map((bucketItem) => BucketItemWidget(bucketItem: bucketItem, currentBucket: bucket, isCompleted: true)).toList();

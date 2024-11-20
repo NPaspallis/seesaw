@@ -7,7 +7,9 @@ enum SeesawState {
 
   perspectivePolicyMaker,
   doTriageRefresher,
-  chooseTriageResources,
+  firstComeFirstServeDefinition,
+  sortProsConsTriage,
+  // chooseTriageResources,
   makeTriageDecisionBefore,
   showTriageStatsBeforeVideo,
   triageExpertVideo,

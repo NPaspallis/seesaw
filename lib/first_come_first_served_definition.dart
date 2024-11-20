@@ -1,26 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:seesaw/db.dart';
 import 'package:seesaw/main.dart';
 import 'package:seesaw/state_model.dart';
 
 import 'buttons.dart';
 
-class PerspectiveCommitteeMember extends StatefulWidget {
-  final String classroomUUID;
-  PerspectiveCommitteeMember({super.key, required this.classroomUUID});
+class FirstComeFirstServedDefinition extends StatefulWidget {
+
+  const FirstComeFirstServedDefinition({super.key});
 
   @override
-  State createState() => _PerspectiveCommitteeMemberState();
+  State createState() => _FirstComeFirstServedDefinitionState();
 }
 
-class _PerspectiveCommitteeMemberState
-    extends State<PerspectiveCommitteeMember> {
-  @override
-  void initState() {
-    RECCaseStudyDB().initializeCaseStudyCounters(widget.classroomUUID);
-    super.initState();
-  }
+class _FirstComeFirstServedDefinitionState extends State<FirstComeFirstServedDefinition> {
 
   @override
   Widget build(BuildContext context) {
@@ -41,23 +34,29 @@ class _PerspectiveCommitteeMemberState
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          'Go back in time to early 2020.\nAre you ready to take a decision about COVID-19?',
+                          'A principle that might be used to allocate ICU beds is',
                           style: TextStyle(
                               fontSize: textSizeLarge,
                               color: preparedWhiteColor,
                               decoration: TextDecoration.none),
                           textAlign: TextAlign.end,
                         ),
-                        SizedBox(height: 20,),
                         Text(
-                          'This decision tree will last 12-14 minutes',
+                          'first come, first served,',
                           style: TextStyle(
-                              fontSize: textSizeSmall,
-                              fontStyle: FontStyle.italic,
+                              fontSize: textSizeHuge,
                               color: preparedWhiteColor,
                               decoration: TextDecoration.none),
                           textAlign: TextAlign.end,
-                        )
+                        ),
+                        Text(
+                          'which means that people should be treated\nin the order in which they have arrived at the ICU.',
+                          style: TextStyle(
+                              fontSize: textSizeLarge,
+                              color: preparedWhiteColor,
+                              decoration: TextDecoration.none),
+                          textAlign: TextAlign.end,
+                        ),
                       ],
                     ),
                   ),

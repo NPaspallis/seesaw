@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:seesaw/auto_timeout_layer.dart';
 import 'package:seesaw/charles_weijer_video.dart';
 import 'package:seesaw/choose_hcs_videos.dart';
-import 'package:seesaw/choose_triage_resources.dart';
 import 'package:seesaw/make_decision_before_video.dart';
 import 'package:seesaw/make_triage_decision_after_video.dart';
 import 'package:seesaw/make_triage_decision_before_video.dart';
@@ -15,7 +14,8 @@ import 'package:seesaw/show_stats_after_video.dart';
 import 'package:seesaw/show_stats_before_video.dart';
 import 'package:seesaw/show_triage_stats_after_video.dart';
 import 'package:seesaw/show_triage_stats_before_video.dart';
-import 'package:seesaw/sort_pros_cons.dart';
+import 'package:seesaw/sort_pros_cons_hcs.dart';
+import 'package:seesaw/sort_pros_cons_triage.dart';
 import 'package:seesaw/state_model.dart';
 import 'package:seesaw/thank_you.dart';
 import 'package:seesaw/triage_expert_video.dart';
@@ -25,6 +25,7 @@ import 'package:seesaw/welcome.dart';
 import 'buttons.dart';
 import 'choose_perspective.dart';
 import 'classroom_screen.dart';
+import 'first_come_first_served_definition.dart';
 import 'splash_video.dart';
 import 'hcs_refresher_video.dart';
 import 'main.dart';
@@ -58,7 +59,7 @@ class SeesawApp extends StatelessWidget {
   }
 }
 
-const version = '24.11.13+1';
+const version = '24.11.20+1';
 
 class HomeScreen extends StatefulWidget {
   final String classroomUUID;
@@ -158,8 +159,12 @@ class _HomeScreenState extends State<HomeScreen> {
         return PerspectivePolicyMaker(classroomUUID: widget.classroomUUID);
       case SeesawState.doTriageRefresher:
         return const TriageRefresherVideo();
-      case SeesawState.chooseTriageResources:
-        return const ChooseTriageResources();
+      case SeesawState.firstComeFirstServeDefinition:
+        return const FirstComeFirstServedDefinition();
+      case SeesawState.sortProsConsTriage:
+        return const SortProsConsTriage();
+      // case SeesawState.chooseTriageResources:
+      //   return const ChooseTriageResources();
       case SeesawState.makeTriageDecisionBefore:
         return MakeTriageDecisionBeforeVideo(classroomUUID: widget.classroomUUID);
       case SeesawState.showTriageStatsBeforeVideo:
@@ -213,8 +218,12 @@ class _HomeScreenState extends State<HomeScreen> {
         return 'Policy maker perspective';
       case SeesawState.doTriageRefresher:
         return 'Policy maker perspective | Crisis Triage refresher';
-      case SeesawState.chooseTriageResources:
-        return 'Policy maker perspective | Different perspectives';
+      case SeesawState.firstComeFirstServeDefinition:
+        return 'Policy maker perspective | Define first-come-first-serve';
+      case SeesawState.sortProsConsTriage:
+        return 'Policy maker perspective | Identify pros and cons of first-come-first-serve';
+      // case SeesawState.chooseTriageResources:
+      //   return 'Policy maker perspective | Different perspectives';
       case SeesawState.makeTriageDecisionBefore:
         return 'Policy maker perspective | What is your decision?';
       case SeesawState.showTriageStatsBeforeVideo:
@@ -314,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             'An interactive experience demonstrating ethical tradeoffs in times of crisis',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: textSizeLarge,
+                                fontSize: textSizeMedium,
                                 color: preparedWhiteColor,
                                 decoration: TextDecoration.none)),
                       ),

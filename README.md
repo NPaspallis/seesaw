@@ -14,8 +14,8 @@ Copy the contents of `/build/web` to `/docs`
 
 ## Launch the app
 
-The app is ideally displayed in `1920 x 1080` resolution, which is the target resolution for the Kiosk.
+The app is ideally displayed in `1920 x 1080` resolution, which is the target resolution for the Kiosk display.
 
-* Home Web-browser mode at: https://npaspallis.github.io/seesaw
-* Classroom mode at:        https://npaspallis.github.io/seesaw/#/classroom
-* Run the Kiosk mode at:    https://npaspallis.github.io/seesaw/#/kiosk
+* Home use mode at:  https://npaspallis.github.io/seesaw
+* Classroom mode at: https://npaspallis.github.io/seesaw/#/classroom
+* Kiosk mode at:     https://npaspallis.github.io/seesaw/#/kiosk

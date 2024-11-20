@@ -37,13 +37,28 @@ class _PerspectivePolicyMakerState
                   padding: EdgeInsets.all(40),
                   child: FittedBox(
                     fit: BoxFit.fitWidth,
-                    child: Text(
-                      'Go back in time to early 2020.\nAre you ready to take a decision about COVID-19?',
-                      style: TextStyle(
-                          fontSize: textSizeLarge,
-                          color: preparedWhiteColor,
-                          decoration: TextDecoration.none),
-                      textAlign: TextAlign.end,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Go back in time to early 2020.\n\nMany countries were facing the possibility of having too few\nIntensive Care Unit (ICU) beds to care for all patients with COVID-19.\nDecisions had to be made about how to allocate ICU beds.\n\nThis is also known as triage. Which patients should get access\nto ICU beds if not everyone can be accommodated?',
+                          style: TextStyle(
+                              fontSize: textSizeLarge,
+                              color: preparedWhiteColor,
+                              decoration: TextDecoration.none),
+                          textAlign: TextAlign.end,
+                        ),
+                        SizedBox(height: 20,),
+                        Text(
+                          'This decision tree will last 8-10 minutes',
+                          style: TextStyle(
+                              fontSize: textSizeSmall,
+                              fontStyle: FontStyle.italic,
+                              color: preparedWhiteColor,
+                              decoration: TextDecoration.none),
+                          textAlign: TextAlign.end,
+                        )
+                      ],
                     ),
                   ),
                 ),

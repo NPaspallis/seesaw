@@ -15,6 +15,7 @@ const preparedWhiteColor = Color(0xFFFFFFFF);
 const preparedBlackColor = Color(0xFF000000);
 const preparedCyanColor = Color(0xFF29BCE2);
 const preparedDarkCyanColor = Color(0xFF30B3D5);
+const preparedPurpleColor = Colors.purple;
 const preparedOrangeColor = Color(0xFFFD9E22);
 const preparedDarkOrangeColor = Color(0xFFC97C17);
 const preparedBrightRedColor = Color(0xFFE7263B);
@@ -39,6 +40,9 @@ const preparedBallColors = [
   preparedDarkRedColor,
 ];
 
+const double textSizeHuge = 128;
+const double textSizeBigger = 96;
+const double textSizeBig = 64;
 const double textSizeLarger = 48;
 const double textSizeLarge = 42;
 const double textSizeMedium = 32;
