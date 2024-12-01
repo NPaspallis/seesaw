@@ -81969,7 +81969,7 @@ W(){return new A.Gg()}}
 A.Gg.prototype={
 aa(){var s,r=this
 r.au()
-s=A.CA(A.eI("https://storage.googleapis.com/prepared-project.appspot.com/seesaw/What%20is%20Crisis%20Triage_.mp4",0,null))
+s=A.CA(A.eI("https://storage.googleapis.com/prepared-project.appspot.com/seesaw/triage.mp4",0,null))
 r.d=s
 s.N(0,new A.apB(r))
 r.d.eo(0).bb(new A.apC(r),t.H)},
@@ -85685,7 +85685,7 @@ B.me=new A.n(4280361249)
 B.Nm=new A.cm([50,B.mr,100,B.Dn,200,B.Df,300,B.mo,350,B.dn,400,B.D5,500,B.mj,600,B.eg,700,B.iU,800,B.ch,850,B.iP,900,B.me],t.pl)
 B.jV=new A.pk(B.Nm,4288585374)
 B.Wx=new A.k(!0,B.jV,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.Y2=new A.br("Version: 24.11.20+1",null,B.Wx,null,null,null,null,null,null)
+B.Y2=new A.br("Version: 24.12.01+1",null,B.Wx,null,null,null,null,null,null)
 B.OS=new A.aP(B.EK,B.Y2,null)
 B.Ag=new A.dn(B.lq,null,null,B.OS,null)
 B.Ah=new A.ep(0,1)
@@ -88024,7 +88024,7 @@ B.mV=new A.aj(160,0,160,0)
 B.Yr=new A.br("Are you ready to start a short information gathering and decision-making process on Human Challenge Studies?",null,B.bP,B.aF,null,null,null,null,null)
 B.Ft=new A.dB(B.iv,B.Yr,null)
 B.OQ=new A.aP(B.mV,B.Ft,null)
-B.Y_=new A.br("Version: 24.11.20+1",null,null,B.bp,null,null,null,null,null)
+B.Y_=new A.br("Version: 24.12.01+1",null,null,B.bp,null,null,null,null,null)
 B.OR=new A.aP(B.cj,B.Y_,null)
 B.ER=new A.aj(20,0,20,0)
 B.U3=new A.k(!0,B.i,null,null,null,null,32,null,null,null,null,null,null,null,null,null,null,B.f,null,null,null,null,null,null,null,null)

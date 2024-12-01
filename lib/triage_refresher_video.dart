@@ -16,7 +16,7 @@ class TriageRefresherVideo extends StatefulWidget {
 }
 
 const videoUrl =
-    'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/What%20is%20Crisis%20Triage_.mp4';
+    'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/triage.mp4';
 
 class _TriageRefresherVideoState extends State<TriageRefresherVideo> {
   late VideoPlayerController _controller;
