@@ -79,7 +79,7 @@ class _ShowTriageStatsBeforeVideoState extends State<ShowTriageStatsBeforeVideo>
                             child: const Text('YES', textAlign: TextAlign.end),
                           ),
                           const SizedBox(height: 20),
-                          Text('${_responsesYes.round()} yeses',
+                          Text('${_responsesYes.round()} votes YES',
                               style: const TextStyle(
                                   fontSize: textSizeSmall,
                                   fontWeight: FontWeight.bold,
@@ -107,7 +107,7 @@ class _ShowTriageStatsBeforeVideoState extends State<ShowTriageStatsBeforeVideo>
                               child: const Text('NO', textAlign: TextAlign.start)
                           ),
                           const SizedBox(height: 20),
-                          Text('${_responsesNo.round()} noes',
+                          Text('${_responsesNo.round()} votes NO',
                               style: const TextStyle(
                                   fontSize: textSizeSmall,
                                   fontWeight: FontWeight.bold,
