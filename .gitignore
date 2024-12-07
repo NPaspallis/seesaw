@@ -20,3 +20,4 @@ doc/api/
 # this contains private secrets so it should not be version controlled
 lib/firebase_options.dart
 /.idea/studiobot.xml
+/.idea/caches/deviceStreaming.xml

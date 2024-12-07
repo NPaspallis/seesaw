@@ -59,7 +59,7 @@ class SeesawApp extends StatelessWidget {
   }
 }
 
-const version = '24.12.06+1';
+const version = '24.12.07+1';
 
 class HomeScreen extends StatefulWidget {
   final String classroomUUID;
