@@ -81554,13 +81554,13 @@ c-=20
 s=A.a9(a,e,d).w
 r=A.a9(a,e,d).w
 p=A.ho(B.zB,B.Q,B.aa,A.cR(e,e,B.aL,e,B.f,e,e,e,e,e,e,20+c*l,e,e,B.aN,e,0.78,!0,e,e,e,e,e,e,e,e))
-j=A.bs(e,A.ax(""+B.e.a1(f.f)+" yeses",e,e,e,B.hY,e,e),B.k,e,e,e,e,e,e,B.fI,e,e,e)
+j=A.bs(e,A.ax(""+B.e.a1(f.f)+" votes YES",e,e,e,B.hY,e,e),B.k,e,e,e,e,e,e,B.fI,e,e,e)
 i=A.cR(e,e,B.fq,e,B.f,e,e,e,e,e,e,18+32*o,e,e,B.aZ,e,0.78,!0,e,e,e,e,e,e,e,e)
 h=f.e
 g=t.p
 i=A.eu(A.bp(A.a([p,B.aR,j,B.aR,A.bs(e,A.ho(A.ax(A.j(h===0?"none":B.e.a1(h))+" changed their answer to YES",e,e,e,e,e,e),B.Q,B.aa,i),B.k,e,e,e,e,50,e,B.fI,e,e,e),B.c3,A.Zr(B.fq,B.aa,4,o*A.a9(a,e,d).w.a.a/2)],g),B.aw,B.ah,B.l),1)
 c=A.ho(B.zx,B.Q,B.aa,A.cR(e,e,B.aM,e,B.f,e,e,e,e,e,e,20+c*k,e,e,B.aN,e,0.78,!0,e,e,e,e,e,e,e,e))
-h=A.bs(e,A.ax(""+B.e.a1(f.r)+" noes",e,e,e,B.i_,e,e),B.k,e,e,e,e,e,e,B.er,e,e,e)
+h=A.bs(e,A.ax(""+B.e.a1(f.r)+" votes NO",e,e,e,B.i_,e,e),B.k,e,e,e,e,e,e,B.er,e,e,e)
 j=A.cR(e,e,B.fs,e,B.f,e,e,e,e,e,e,18+32*n,e,e,B.aZ,e,0.78,!0,e,e,e,e,e,e,e,e)
 p=f.d
 return A.bv(A.bp(A.a([new A.aP(B.bi,A.cC(A.a([i,A.eu(A.bp(A.a([c,B.aR,h,B.aR,A.bs(e,A.ho(A.ax(A.j(p===0?"none":B.e.a1(p))+" changed their answer to NO",e,e,e,e,e,e),B.Q,B.aa,j),B.k,e,e,e,e,50,e,B.er,e,e,e),B.c3,A.Zr(B.fs,B.aa,4,n*A.a9(a,e,d).w.a.a/2)],g),B.ao,B.ah,B.l),1)],g),B.aw,B.ah,B.l),e),A.j5(a,"CARRY ON",f.gmI(),B.U)],g),B.t,B.c0,B.l),r.a.b*2/3,s.a.a)},
@@ -81602,7 +81602,7 @@ j-=20
 s=A.a9(a,l,k).w
 k=A.a9(a,l,k).w
 r=t.p
-return A.bv(A.bp(A.a([new A.aP(B.bi,A.cC(A.a([A.eu(A.bp(A.a([A.ho(B.zA,B.Q,B.aa,A.cR(l,l,B.aL,l,B.f,l,l,l,l,l,l,20+j*o,l,l,B.aN,l,0.78,!0,l,l,l,l,l,l,l,l)),B.aR,A.ax(""+B.e.a1(m.d)+" yeses",l,l,l,B.hY,l,l)],r),B.aw,B.ah,B.l),1),B.yY,A.eu(A.bp(A.a([A.ho(B.zy,B.Q,B.aa,A.cR(l,l,B.aM,l,B.f,l,l,l,l,l,l,20+j*n,l,l,B.aN,l,0.78,!0,l,l,l,l,l,l,l,l)),B.aR,A.ax(""+B.e.a1(m.e)+" noes",l,l,l,B.i_,l,l)],r),B.ao,B.ah,B.l),1)],r),B.aw,B.ah,B.l),l),A.j5(a,"CARRY ON",m.gmI(),B.U)],r),B.t,B.c0,B.l),k.a.b*2/3,s.a.a)},
+return A.bv(A.bp(A.a([new A.aP(B.bi,A.cC(A.a([A.eu(A.bp(A.a([A.ho(B.zA,B.Q,B.aa,A.cR(l,l,B.aL,l,B.f,l,l,l,l,l,l,20+j*o,l,l,B.aN,l,0.78,!0,l,l,l,l,l,l,l,l)),B.aR,A.ax(""+B.e.a1(m.d)+" votes YES",l,l,l,B.hY,l,l)],r),B.aw,B.ah,B.l),1),B.yY,A.eu(A.bp(A.a([A.ho(B.zy,B.Q,B.aa,A.cR(l,l,B.aM,l,B.f,l,l,l,l,l,l,20+j*n,l,l,B.aN,l,0.78,!0,l,l,l,l,l,l,l,l)),B.aR,A.ax(""+B.e.a1(m.e)+" votes NO",l,l,l,B.i_,l,l)],r),B.ao,B.ah,B.l),1)],r),B.aw,B.ah,B.l),l),A.j5(a,"CARRY ON",m.gmI(),B.U)],r),B.t,B.c0,B.l),k.a.b*2/3,s.a.a)},
 mJ(){A.bS().$1("carryOn")
 var s=this.c
 s.toString
@@ -81636,13 +81636,13 @@ h=t.w
 g=A.a9(a,i,h).w
 e=A.a9(a,i,h).w
 p=A.ho(B.zB,B.Q,B.aa,A.cR(i,i,B.aL,i,B.f,i,i,i,i,i,i,20+400*r,i,i,B.aN,i,0.78,!0,i,i,i,i,i,i,i,i))
-o=A.bs(i,A.ax(""+B.e.a1(j.f)+" yeses",i,i,i,B.hY,i,i),B.k,i,i,i,i,i,i,B.fI,i,i,i)
+o=A.bs(i,A.ax(""+B.e.a1(j.f)+" votes YES",i,i,i,B.hY,i,i),B.k,i,i,i,i,i,i,B.fI,i,i,i)
 n=A.cR(i,i,B.fq,i,B.f,i,i,i,i,i,i,18+32*d,i,i,B.aZ,i,0.78,!0,i,i,i,i,i,i,i,i)
 m=j.e
 l=t.p
 n=A.eu(A.bp(A.a([p,B.aR,o,B.aR,A.bs(i,A.ho(A.ax(A.j(m===0?"none":B.e.a1(m))+" changed their answer to YES",i,i,i,i,i,i),B.Q,B.aa,n),B.k,i,i,i,i,50,i,B.fI,i,i,i),B.c3,A.Zr(B.fq,B.aa,4,d*A.a9(a,i,h).w.a.a/2)],l),B.aw,B.ah,B.l),1)
 m=A.ho(B.zx,B.Q,B.aa,A.cR(i,i,B.aM,i,B.f,i,i,i,i,i,i,20+400*q,i,i,B.aN,i,0.78,!0,i,i,i,i,i,i,i,i))
-o=A.bs(i,A.ax(""+B.e.a1(j.r)+" noes",i,i,i,B.i_,i,i),B.k,i,i,i,i,i,i,B.er,i,i,i)
+o=A.bs(i,A.ax(""+B.e.a1(j.r)+" votes NO",i,i,i,B.i_,i,i),B.k,i,i,i,i,i,i,B.er,i,i,i)
 p=A.cR(i,i,B.fs,i,B.f,i,i,i,i,i,i,18+32*c,i,i,B.aZ,i,0.78,!0,i,i,i,i,i,i,i,i)
 k=j.d
 return A.bv(A.bp(A.a([new A.aP(B.bi,A.cC(A.a([n,A.eu(A.bp(A.a([m,B.aR,o,B.aR,A.bs(i,A.ho(A.ax(A.j(k===0?"none":B.e.a1(k))+" changed their answer to NO",i,i,i,i,i,i),B.Q,B.aa,p),B.k,i,i,i,i,50,i,B.er,i,i,i),B.c3,A.Zr(B.fs,B.aa,4,c*A.a9(a,i,h).w.a.a/2)],l),B.ao,B.ah,B.l),1)],l),B.aw,B.ah,B.l),i),A.j5(a,"CARRY ON",j.gmI(),B.U)],l),B.t,B.c0,B.l),e.a.b*2/3,g.a.a)},
@@ -81677,7 +81677,7 @@ q=t.w
 p=A.a9(a,r,q).w
 q=A.a9(a,r,q).w
 n=t.p
-return A.bv(A.bp(A.a([new A.aP(B.bi,A.cC(A.a([A.eu(A.bp(A.a([A.ho(B.zA,B.Q,B.aa,A.cR(r,r,B.aL,r,B.f,r,r,r,r,r,r,20+500*m,r,r,B.aN,r,0.78,!0,r,r,r,r,r,r,r,r)),B.aR,A.ax(""+B.e.a1(s.d)+" yeses",r,r,r,B.hY,r,r)],n),B.aw,B.ah,B.l),1),B.yY,A.eu(A.bp(A.a([A.ho(B.zy,B.Q,B.aa,A.cR(r,r,B.aM,r,B.f,r,r,r,r,r,r,20+500*l,r,r,B.aN,r,0.78,!0,r,r,r,r,r,r,r,r)),B.aR,A.ax(""+B.e.a1(s.e)+" noes",r,r,r,B.i_,r,r)],n),B.ao,B.ah,B.l),1)],n),B.aw,B.ah,B.l),r),A.j5(a,"CARRY ON",s.gmI(),B.U)],n),B.t,B.c0,B.l),q.a.b*2/3,p.a.a)},
+return A.bv(A.bp(A.a([new A.aP(B.bi,A.cC(A.a([A.eu(A.bp(A.a([A.ho(B.zA,B.Q,B.aa,A.cR(r,r,B.aL,r,B.f,r,r,r,r,r,r,20+500*m,r,r,B.aN,r,0.78,!0,r,r,r,r,r,r,r,r)),B.aR,A.ax(""+B.e.a1(s.d)+" votes YES",r,r,r,B.hY,r,r)],n),B.aw,B.ah,B.l),1),B.yY,A.eu(A.bp(A.a([A.ho(B.zy,B.Q,B.aa,A.cR(r,r,B.aM,r,B.f,r,r,r,r,r,r,20+500*l,r,r,B.aN,r,0.78,!0,r,r,r,r,r,r,r,r)),B.aR,A.ax(""+B.e.a1(s.e)+" votes NO",r,r,r,B.i_,r,r)],n),B.ao,B.ah,B.l),1)],n),B.aw,B.ah,B.l),r),A.j5(a,"CARRY ON",s.gmI(),B.U)],n),B.t,B.c0,B.l),q.a.b*2/3,p.a.a)},
 mJ(){A.bS().$1("carryOn")
 var s=this.c
 s.toString
@@ -81969,7 +81969,7 @@ W(){return new A.Gg()}}
 A.Gg.prototype={
 aa(){var s,r=this
 r.au()
-s=A.CA(A.eI("https://storage.googleapis.com/prepared-project.appspot.com/seesaw/What%20is%20Crisis%20Triage_.mp4",0,null))
+s=A.CA(A.eI("https://storage.googleapis.com/prepared-project.appspot.com/seesaw/triage.mp4",0,null))
 r.d=s
 s.N(0,new A.apB(r))
 r.d.eo(0).bb(new A.apC(r),t.H)},
@@ -85685,7 +85685,7 @@ B.me=new A.n(4280361249)
 B.Nm=new A.cm([50,B.mr,100,B.Dn,200,B.Df,300,B.mo,350,B.dn,400,B.D5,500,B.mj,600,B.eg,700,B.iU,800,B.ch,850,B.iP,900,B.me],t.pl)
 B.jV=new A.pk(B.Nm,4288585374)
 B.Wx=new A.k(!0,B.jV,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.Y2=new A.br("Version: 24.11.20+1",null,B.Wx,null,null,null,null,null,null)
+B.Y2=new A.br("Version: 24.12.06+1",null,B.Wx,null,null,null,null,null,null)
 B.OS=new A.aP(B.EK,B.Y2,null)
 B.Ag=new A.dn(B.lq,null,null,B.OS,null)
 B.Ah=new A.ep(0,1)
@@ -88024,7 +88024,7 @@ B.mV=new A.aj(160,0,160,0)
 B.Yr=new A.br("Are you ready to start a short information gathering and decision-making process on Human Challenge Studies?",null,B.bP,B.aF,null,null,null,null,null)
 B.Ft=new A.dB(B.iv,B.Yr,null)
 B.OQ=new A.aP(B.mV,B.Ft,null)
-B.Y_=new A.br("Version: 24.11.20+1",null,null,B.bp,null,null,null,null,null)
+B.Y_=new A.br("Version: 24.12.06+1",null,null,B.bp,null,null,null,null,null)
 B.OR=new A.aP(B.cj,B.Y_,null)
 B.ER=new A.aj(20,0,20,0)
 B.U3=new A.k(!0,B.i,null,null,null,null,32,null,null,null,null,null,null,null,null,null,null,B.f,null,null,null,null,null,null,null,null)

@@ -96,7 +96,7 @@ class _ShowStatsAfterVideoState extends State<ShowStatsAfterVideo> {
 
                           Container(
                               padding: const EdgeInsets.only(right: 10),
-                              child: Text('${_responsesYesAfter.round()} yeses',
+                              child: Text('${_responsesYesAfter.round()} votes YES',
                                   style: const TextStyle(
                                       fontSize: textSizeSmall,
                                       fontWeight: FontWeight.bold,
@@ -155,7 +155,7 @@ class _ShowStatsAfterVideoState extends State<ShowStatsAfterVideo> {
 
                           Container(
                               padding: const EdgeInsets.only(left: 10),
-                              child: Text('${_responsesNoAfter.round()} noes',
+                              child: Text('${_responsesNoAfter.round()} votes NO',
                                   style: const TextStyle(
                                       fontSize: textSizeSmall,
                                       fontWeight: FontWeight.bold,
