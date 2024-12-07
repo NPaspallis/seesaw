@@ -182,7 +182,7 @@ class _SortProsConsTriageState extends State<SortProsConsTriage> {
   Widget _buildBucketItemDraggableView(BucketItemWithColor bucketItem) {
     return LongPressDraggable<BucketItem>(
       data: bucketItem,
-      delay: const Duration(milliseconds: 300),
+      delay: const Duration(milliseconds: 100),
       dragAnchorStrategy: pointerDragAnchorStrategy,
       feedback: DraggingListItem(dragKey: _draggableKey, bucketItemWithColor: bucketItem),
       childWhenDragging: BucketItemWidget(bucketItem: bucketItem),
