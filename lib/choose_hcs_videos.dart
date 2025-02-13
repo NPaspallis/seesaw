@@ -231,16 +231,6 @@ class _ChooseHcsVideos extends State<ChooseHcsVideos> {
   }
 
   void proceed() {
-    // //todo
-    // setState(() {
-    //   final double ballPaddingSide = _side / 3;
-    //   _lp0 = random.nextDouble() * ballPaddingSide;
-    //   _tp0 = random.nextDouble() * ballPaddingSide;
-    //   _lp1 = random.nextDouble() * ballPaddingSide;
-    //   _tp1 = random.nextDouble() * ballPaddingSide;
-    //   _lp2 = random.nextDouble() * ballPaddingSide;
-    //   _tp2 = random.nextDouble() * ballPaddingSide;
-    // });
     Provider.of<StateModel>(context, listen: false).progressToNextSeesawState();
   }
 

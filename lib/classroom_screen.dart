@@ -21,6 +21,7 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
 
   String? _classroomName;
   String? _classroomUUID;
+  String? _errorMessage;
   final TextEditingController _nameController = TextEditingController();
 
   @override
@@ -107,6 +108,12 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
               ),
 
               const Gap(30),
+              Visibility(
+                visible: _errorMessage != null,
+                child: Text(_errorMessage ?? '', style: const TextStyle(color: Colors.orange, fontSize: 18, fontWeight: FontWeight.bold)),
+              ),
+
+              const Gap(30),
 
               //Ok button
               ElevatedButton(
@@ -154,7 +161,7 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
                 IconButton(
                   icon: const Icon(Icons.content_copy),
                   color: preparedWhiteColor,
-                  onPressed: copyUrl,
+                  onPressed:() => copyUrl(context),
                 )
               ],
             ),
@@ -178,14 +185,21 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
 
   void createClassroom() {
     String name = _nameController.text;
-    //todo check name is valid
+    // check name is valid
+
+    if(name.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please define a name')));
+      setState(() => _errorMessage = 'Please specify a name');
+      return;
+    }
     final String longUuid = const Uuid().v4();  // create random uuid
     final uuid = longUuid.substring(longUuid.length - 8); // keep last 8 chars
-    // todo save to firebase: name & uuid
 
+    // todo save to firebase: name & uuid
     setState(() {
       _classroomName = name;
       _classroomUUID = uuid;
+      _errorMessage = null;
     });
   }
 
@@ -202,9 +216,9 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
     }
   }
 
-  void copyUrl() async {
+  void copyUrl(BuildContext parentContext) async {
     Clipboard.setData(ClipboardData(text: getClassroomUrl())).then((_) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Copied to clipboard'))); // todo figure out why snack doesnt show up
+      ScaffoldMessenger.of(parentContext).showSnackBar(const SnackBar(content: Text('Copied to clipboard'))); // todo figure out why snack doesn't show up
     });
   }
 

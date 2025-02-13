@@ -92,7 +92,7 @@ class RECCaseStudyDB {
 
   //Retrieves the decision counter values.
   Future<PollData> getDecisionCounters(final String classroomUUID) async {
-    print('getDecisionCounters: $classroomUUID'); // todo handle classroomUUID
+    // handle classroomUUID
     DocumentSnapshot doc = await _i.collection(id)
         .doc(classroomUUID)
         .get();
@@ -110,7 +110,7 @@ class RECCaseStudyDB {
 
   //Atomically increments the initial yes decision counter.
   Future incrementInitialYesDecision(final String classroomUUID) async {
-    print('incrementInitialYesDecision: $classroomUUID'); // todo handle classroomUUID
+    // handle classroomUUID
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
       .doc(classroomUUID).update({
@@ -121,7 +121,7 @@ class RECCaseStudyDB {
 
   //Atomically increments the initial no decision counter.
   Future incrementInitialNoDecision(final String classroomUUID) async {
-    print('incrementInitialNoDecision: $classroomUUID'); // todo handle classroomUUID
+    // handle classroomUUID
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
         .doc(classroomUUID).update({
@@ -132,7 +132,7 @@ class RECCaseStudyDB {
 
   //Atomically increments the final yes decision counter.
   Future incrementFinalYesDecision(final String classroomUUID) async {
-    print('incrementFinalYesDecision: $classroomUUID'); // todo handle classroomUUID
+    // handle classroomUUID
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
         .doc(classroomUUID).update({
@@ -143,7 +143,7 @@ class RECCaseStudyDB {
 
   //Atomically increments the final no decision counter.
   Future incrementFinalNoDecision(final String classroomUUID) async {
-    print('incrementFinalNoDecision: $classroomUUID'); // todo handle classroomUUID
+    // handle classroomUUID
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
         .doc(classroomUUID).update({
@@ -154,7 +154,7 @@ class RECCaseStudyDB {
 
   //Atomically increments the switched to yes counter.
   Future incrementSwitchedToYes(final String classroomUUID) async {
-    print('incrementSwitchedToYes: $classroomUUID'); // todo handle classroomUUID
+    // handle classroomUUID
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
         .doc(classroomUUID).update({
@@ -165,7 +165,7 @@ class RECCaseStudyDB {
 
   //Atomically increments the switched to no counter.
   Future incrementSwitchedToNo(final String classroomUUID) async {
-    print('incrementSwitchedToNo: $classroomUUID'); // todo handle classroomUUID
+    // handle classroomUUID
     var incrementOp = FieldValue.increment(1);
     await _i.collection(id)
         .doc(classroomUUID).update({

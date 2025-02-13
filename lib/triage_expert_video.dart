@@ -16,7 +16,7 @@ class TriageExpertVideo extends StatefulWidget {
 }
 
 const videoUrl =
-    'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/Covid%2019%20_%20Triage%20in%20an%20Italian%20ICU%20During%20the%20Pandemic.mp4';
+    'https://storage.googleapis.com/prepared-project.appspot.com/seesaw/Why%20first%20come%20first%20served%20is%20not%20fair.mp4';
 
 class _TriageExpertVideoState extends State<TriageExpertVideo> {
   late VideoPlayerController _controller;
@@ -75,7 +75,7 @@ class _TriageExpertVideoState extends State<TriageExpertVideo> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('What does an expert think? Meet Dr. Marco Vergano.', style: TextStyle(fontSize: textSizeSmall, color: preparedWhiteColor)),
+                const Text('What does an expert think? Meet Prof. Dick Willems.', style: TextStyle(fontSize: textSizeSmall, color: preparedWhiteColor)),
                 const SizedBox(width: 10),
                 getOutlinedButton(context, 'SKIP', proceed)
               ],
